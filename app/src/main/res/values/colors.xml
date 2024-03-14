@@ -5,6 +5,13 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
+    <color name="brand_color">#FF11A867</color>
+    <color name="primary_color">#FFF5B704</color>
+    <color name="grey_color">#FFF2F2F2</color>
+    <color name="dark_grey_color">#FF7A7A7A</color>
+
+    <color name="soft_background">#FFF2FFF0</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
