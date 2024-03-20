@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextStyle.Loading">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+    </style>
+
+    <style name="TextStyle.DropdownItem">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextStyle.Heading">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/brand_color</item>
+        <item name="android:fontFamily">@font/opensans_semibold</item>
+    </style>
+
+    <style name="TextStyle.MenuTitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextStyle.MenuDescription">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dark_grey_color</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+    </style>
+</resources>

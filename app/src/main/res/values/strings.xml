@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">GiziPlan</string>
+    <string name="btn_measure">Data Bayi</string>
+    <string name="btn_show_menu">Lihat Menu</string>
+    <string name="text_menu">Daftar Menu</string>
+    <string name="text_measure">Data Bayi</string>
+    <string name="menu_preview">Menu Preview</string>
+    <string name="dummy_text_menu_title">Menu Title</string>
+    <string name="dummy_text_menu_description">Menu Description</string>
+    <string name="btn_submit">Kirim</string>
+    <string name="hint_age">Umur (Bulan)</string>
+    <string name="hint_gender">Jenis Kelamin</string>
+    <string name="hint_weight">Berat Badan (Kg)</string>
+    <string name="hint_height">Tinggi Badan (cm)</string>
+
+    <string name="message_age_required">Umur tidak boleh kosong</string>
+    <string name="message_min_age_required">Umur minimal 4 bulan</string>
+    <string name="message_gender_required">Pilih jenis kelamin terlebih dahulu</string>
+    <string name="message_weight_required">Berat badan tidak boleh kosong</string>
+    <string name="message_height_required">Tinggi badan tidak boleh kosong</string>
+    <string name="text_loading">Sedang memproses</string>
+
+    <string-array name="gender">
+        <item>--Jenis Kelamin--</item>
+        <item>Laki-laki</item>
+        <item>Perempuan</item>
+    </string-array>
 </resources>

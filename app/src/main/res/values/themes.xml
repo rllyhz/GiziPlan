@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.GiziPlan" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.GiziPlan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryVariant">@color/primary_color</item>
@@ -10,7 +10,8 @@
         <item name="colorSecondaryVariant">@color/brand_color</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/soft_background</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/soft_background</item>
         <item name="backgroundColor">@color/soft_background</item>
@@ -20,5 +21,6 @@
     <style name="SplashScreenTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_image</item>
         <item name="android:statusBarColor">@color/soft_background</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

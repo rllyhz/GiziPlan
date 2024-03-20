@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EditStyle">
+        <item name="android:background">@drawable/bg_edit</item>
+        <item name="android:textColorHint">@color/dark_grey_color</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <style name="DropdownMenuStyle">
+        <item name="android:background">@drawable/bg_edit</item>
+        <item name="android:textColorHint">@color/dark_grey_color</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>
