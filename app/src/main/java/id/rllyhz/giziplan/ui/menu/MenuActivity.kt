@@ -20,7 +20,7 @@ class MenuActivity : AppCompatActivity() {
         menuAdapter = MenuListAdapter().apply {
             submitList(DataUtil.createDummyMenuData(20))
 
-            setOnItemClickedListener { menuModel, i ->
+            setOnItemClickedListener { menuModel, _ ->
                 Toast.makeText(
                     this@MenuActivity, menuModel.title,
                     Toast.LENGTH_SHORT,

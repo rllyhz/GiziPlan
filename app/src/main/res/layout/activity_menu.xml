@@ -36,7 +36,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menu_tv_heading"
         tools:itemCount="10"
-        tools:listitem="@layout/menu_item" />
+        tools:listitem="@layout/item_menu" />
 
     <View
         android:layout_width="0dp"

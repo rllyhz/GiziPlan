@@ -37,4 +37,165 @@
             android:indeterminateTint="@color/primary_color" />
     </LinearLayout>
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/result_layout_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_app_bar_layout"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/result_tv_heading_status_result"
+                style="@style/TextStyle.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/text_status_result" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:paddingVertical="24dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_result_status_size"
+                            android:layout_height="@dimen/icon_result_status_size"
+                            android:contentDescription="@string/description_icon_height"
+                            android:src="@drawable/icon_height" />
+
+                        <TextView
+                            style="@style/TextStyle.StatusValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_status_by_pbu_value" />
+
+                        <TextView
+                            android:id="@+id/result_status_pbu_value"
+                            style="@style/TextStyle.StatusLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_status_by_pbu_label" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_result_status_size"
+                            android:layout_height="@dimen/icon_result_status_size"
+                            android:contentDescription="@string/description_icon_weight"
+                            android:src="@drawable/icon_weight" />
+
+                        <TextView
+                            style="@style/TextStyle.StatusValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_status_by_bbu_value" />
+
+                        <TextView
+                            android:id="@+id/result_status_bbu_value"
+                            style="@style/TextStyle.StatusLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_status_by_bbu_label" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_result_status_size"
+                            android:layout_height="@dimen/icon_result_status_size"
+                            android:contentDescription="@string/description_icon_baby"
+                            android:src="@drawable/icon_baby" />
+
+                        <TextView
+                            style="@style/TextStyle.StatusValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/text_status_by_bbpb_value" />
+
+                        <TextView
+                            android:id="@+id/result_status_bbpb_value"
+                            style="@style/TextStyle.StatusLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_status_by_bbpb_label" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/result_tv_heading_recommendation"
+                style="@style/TextStyle.Heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/text_recommendation_result" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/result_rv_menu_recommendation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:paddingBottom="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_menu" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_overlay_transparent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_app_bar_layout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

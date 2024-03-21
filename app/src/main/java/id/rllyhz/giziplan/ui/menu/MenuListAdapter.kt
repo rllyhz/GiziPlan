@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import id.rllyhz.giziplan.databinding.MenuItemBinding
+import id.rllyhz.giziplan.databinding.ItemMenuBinding
 import id.rllyhz.giziplan.domain.model.MenuModel
 
 class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(Comparator) {
@@ -18,7 +18,7 @@ class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(C
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder =
         MenuViewHolder(
-            MenuItemBinding.inflate(
+            ItemMenuBinding.inflate(
                 LayoutInflater.from(parent.context)
             )
         )
@@ -30,7 +30,7 @@ class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(C
     }
 
     inner class MenuViewHolder(
-        private val binding: MenuItemBinding
+        private val binding: ItemMenuBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(menu: MenuModel, position: Int) {

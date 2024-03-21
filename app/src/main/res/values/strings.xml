@@ -4,7 +4,12 @@
     <string name="btn_show_menu">Lihat Menu</string>
     <string name="text_menu">Daftar Menu</string>
     <string name="text_measure">Data Bayi</string>
-    <string name="menu_preview">Menu Preview</string>
+    <string name="text_loading">Sedang memproses</string>
+    <string name="text_status_result">Status Gizi</string>
+    <string name="description_menu_preview">Menu Preview</string>
+    <string name="description_icon_height">Measure Icon</string>
+    <string name="description_icon_weight">Weight Icon</string>
+    <string name="description_icon_baby">Baby Icon</string>
     <string name="dummy_text_menu_title">Menu Title</string>
     <string name="dummy_text_menu_description">Menu Description</string>
     <string name="btn_submit">Kirim</string>
@@ -18,7 +23,13 @@
     <string name="message_gender_required">Pilih jenis kelamin terlebih dahulu</string>
     <string name="message_weight_required">Berat badan tidak boleh kosong</string>
     <string name="message_height_required">Tinggi badan tidak boleh kosong</string>
-    <string name="text_loading">Sedang memproses</string>
+    <string name="text_status_by_pbu_label">PB/U</string>
+    <string name="text_status_by_bbu_label">BB/U</string>
+    <string name="text_status_by_bbpb_label">BB/PB</string>
+    <string name="text_status_by_pbu_value">Tinggi</string>
+    <string name="text_status_by_bbu_value">Berat Badan \nNormal</string>
+    <string name="text_status_by_bbpb_value">Gizi\nBaik</string>
+    <string name="text_recommendation_result">Menu Rekomendasi</string>
 
     <string-array name="gender">
         <item>--Jenis Kelamin--</item>

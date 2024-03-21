@@ -33,7 +33,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
-                android:contentDescription="@string/menu_preview"
+                android:contentDescription="@string/description_menu_preview"
                 android:src="@drawable/bg_image_preview" />
 
             <TextView
