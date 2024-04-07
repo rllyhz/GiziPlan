@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">GiziPlan</string>
-    <string name="btn_measure">Data Bayi</string>
+    <string name="btn_measure">Isi Data Bayi</string>
     <string name="btn_show_menu">Lihat Menu</string>
     <string name="text_menu">Daftar Menu</string>
     <string name="text_measure">Data Bayi</string>

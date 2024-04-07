@@ -35,7 +35,7 @@ class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(C
 
         fun bind(menu: MenuModel, position: Int) {
             with(binding) {
-                menuItemTvMenuTitle.text = menu.title
+                menuItemTvMenuTitle.text = menu.name
                 menuItemTvMenuDescription.text = menu.description
 
                 menuItemCardBackground.setOnClickListener {

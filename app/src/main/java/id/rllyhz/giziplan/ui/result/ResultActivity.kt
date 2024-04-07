@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import id.rllyhz.giziplan.databinding.ActivityResultBinding
 import id.rllyhz.giziplan.ui.menu.MenuListAdapter
-import id.rllyhz.giziplan.utils.DataUtil
-import id.rllyhz.giziplan.utils.hide
-import id.rllyhz.giziplan.utils.show
+import id.rllyhz.giziplan.ui.utils.hide
+import id.rllyhz.giziplan.ui.utils.show
+import id.rllyhz.giziplan.utils.createDummyMenuData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ class ResultActivity : AppCompatActivity() {
         menuAdapter = MenuListAdapter().apply {
             setOnItemClickedListener { menuModel, _ ->
                 Toast.makeText(
-                    this@ResultActivity, menuModel.title,
+                    this@ResultActivity, menuModel.name,
                     Toast.LENGTH_SHORT,
                 ).show()
             }
@@ -45,7 +45,7 @@ class ResultActivity : AppCompatActivity() {
         delay(1000)
 
         withContext(Dispatchers.Main) {
-            menuAdapter.submitList(DataUtil.createDummyMenuData(20))
+            menuAdapter.submitList(createDummyMenuData(20))
             binding.resultLayoutLoading.hide()
             binding.resultLayoutContent.show()
         }

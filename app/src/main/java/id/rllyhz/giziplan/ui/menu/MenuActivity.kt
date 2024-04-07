@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import id.rllyhz.giziplan.databinding.ActivityMenuBinding
-import id.rllyhz.giziplan.utils.DataUtil
+import id.rllyhz.giziplan.utils.createDummyMenuData
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -18,11 +18,11 @@ class MenuActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         menuAdapter = MenuListAdapter().apply {
-            submitList(DataUtil.createDummyMenuData(20))
+            submitList(createDummyMenuData(20))
 
             setOnItemClickedListener { menuModel, _ ->
                 Toast.makeText(
-                    this@MenuActivity, menuModel.title,
+                    this@MenuActivity, menuModel.name,
                     Toast.LENGTH_SHORT,
                 )
                     .show()

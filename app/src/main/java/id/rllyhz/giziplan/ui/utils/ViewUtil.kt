@@ -1,4 +1,4 @@
-package id.rllyhz.giziplan.utils
+package id.rllyhz.giziplan.ui.utils
 
 import android.view.View
 

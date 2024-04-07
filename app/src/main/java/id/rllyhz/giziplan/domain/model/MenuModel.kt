@@ -1,8 +1,16 @@
 package id.rllyhz.giziplan.domain.model
 
 data class MenuModel(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val imageSrc: String,
+    val id: Int = 0,
+    val name: String,
+    val ingredients: String,
+    val instruction: String,
+    val nutritionalStatusCategory: String,
+    val ageCategory: String,
+    val energyKiloCal: Double,
+    val proteinGr: Double,
+    val fatGr: Double,
+    val description: String? = "",
+    val notes: String? = "",
+    val imagePath: Int? = null,
 )
