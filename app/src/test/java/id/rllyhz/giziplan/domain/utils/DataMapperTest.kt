@@ -1,7 +1,9 @@
 package id.rllyhz.giziplan.domain.utils
 
+import id.rllyhz.giziplan.createDummyMenuEntities
 import id.rllyhz.giziplan.createDummyMenuEntity
 import id.rllyhz.giziplan.createDummyMenuModel
+import id.rllyhz.giziplan.createDummyMenuModels
 import id.rllyhz.giziplan.createDummyRecommendationResultEntity
 import id.rllyhz.giziplan.createDummyRecommendationResultModel
 import id.rllyhz.giziplan.domain.model.AgeCategory
@@ -28,6 +30,28 @@ class DataMapperTest {
             menuEntity.nutritionalStatusCategory
         )
         Assert.assertEquals(menuModel.description, menuEntity.description)
+    }
+
+    @Test
+    fun `successfully convert all menu entity types into menu model types`() {
+        val expectedLength = 3
+        val entities = createDummyMenuEntities(expectedLength)
+        val expectedFirstModelId = entities.first().id
+        val expectedFirstModelName = entities.first().name
+        val expectedFirstModelAgeCategory = entities.first().ageCategory
+        val expectedFirstModelNutritionalStatusCategory = entities.first().nutritionalStatusCategory
+
+        val models = entities.toModels()
+        val firstModel = models.first()
+
+        Assert.assertEquals(expectedLength, models.count())
+        Assert.assertEquals(expectedFirstModelId, firstModel.id)
+        Assert.assertEquals(expectedFirstModelName, firstModel.name)
+        Assert.assertEquals(expectedFirstModelAgeCategory, firstModel.ageCategory)
+        Assert.assertEquals(
+            expectedFirstModelNutritionalStatusCategory,
+            firstModel.nutritionalStatusCategory
+        )
     }
 
     @Test
@@ -83,6 +107,28 @@ class DataMapperTest {
             entity.nutritionalStatusCategory
         )
         Assert.assertEquals(menuModel.description, entity.description)
+    }
+
+    @Test
+    fun `successfully convert all menu model types into menu entity types`() {
+        val expectedLength = 3
+        val models = createDummyMenuModels(expectedLength)
+        val expectedFirstEntityId = models.first().id
+        val expectedFirstEntityName = models.first().name
+        val expectedFirstEntityAgeCategory = models.first().ageCategory
+        val expectedFirstEntityNutritionalStatusCategory = models.first().nutritionalStatusCategory
+
+        val entities = models.toEntities()
+        val firstEntity = entities.first()
+
+        Assert.assertEquals(expectedLength, entities.count())
+        Assert.assertEquals(expectedFirstEntityId, firstEntity.id)
+        Assert.assertEquals(expectedFirstEntityName, firstEntity.name)
+        Assert.assertEquals(expectedFirstEntityAgeCategory, firstEntity.ageCategory)
+        Assert.assertEquals(
+            expectedFirstEntityNutritionalStatusCategory,
+            firstEntity.nutritionalStatusCategory
+        )
     }
 
     @Test

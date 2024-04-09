@@ -55,6 +55,30 @@ fun createDummyMenuEntities(amount: Int = 20): List<MenuEntity> {
     return entities
 }
 
+fun createDummyMenuModels(amount: Int = 20): List<MenuModel> {
+    val models = arrayListOf<MenuModel>()
+
+    for (i in 0..<amount) {
+        val newModel = MenuModel(
+            i,
+            "Simple Menu $i",
+            "Ingredients Menu $i",
+            "Ingredients Menu $i",
+            getRandomAgeCategory().stringCategory,
+            getRandomNutritionalStatusCategory().stringCategory,
+            randomEnergy(),
+            randomProtein(),
+            randomFat(),
+            "Simple Description Menu $i",
+            "Notes for simple Menu $i",
+        )
+
+        models.add(newModel)
+    }
+
+    return models
+}
+
 fun createDummyRecommendationResultEntity(
     id: Int = 0,
     resultId: Int = 0,

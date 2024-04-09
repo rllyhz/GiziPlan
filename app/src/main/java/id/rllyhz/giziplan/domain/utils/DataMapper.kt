@@ -21,6 +21,8 @@ fun MenuEntity.toModel(): MenuModel = MenuModel(
     imagePath
 )
 
+fun List<MenuEntity>.toModels(): List<MenuModel> = map { it.toModel() }
+
 fun List<RecommendationResultEntity>.toModel(): List<RecommendationResultModel> {
     if (isEmpty()) return emptyList()
 
@@ -71,6 +73,8 @@ fun MenuModel.toEntity(): MenuEntity = MenuEntity(
     notes,
     imagePath
 )
+
+fun List<MenuModel>.toEntities(): List<MenuEntity> = map { it.toEntity() }
 
 fun RecommendationResultModel.toEntities(): List<RecommendationResultEntity> {
     val entities = arrayListOf<RecommendationResultEntity>()
