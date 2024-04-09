@@ -8,10 +8,13 @@ import id.rllyhz.giziplan.domain.model.NutritionalStatusCategory
 import id.rllyhz.giziplan.domain.model.RecommendationResultModel
 import id.rllyhz.giziplan.utils.getRandomAgeCategory
 import id.rllyhz.giziplan.utils.getRandomNutritionalStatusCategory
+import id.rllyhz.giziplan.utils.randomAge
 import id.rllyhz.giziplan.utils.randomEnergy
 import id.rllyhz.giziplan.utils.randomFat
+import id.rllyhz.giziplan.utils.randomHeight
 import id.rllyhz.giziplan.utils.randomNum
 import id.rllyhz.giziplan.utils.randomProtein
+import java.util.Date
 
 fun createDummyMenuEntity(
     id: Int = 0,
@@ -94,6 +97,32 @@ fun createDummyRecommendationResultEntity(
     nutritionalStatusCategory.stringCategory,
     0
 )
+
+fun createDummyRecommendationResultEntities(
+    amount: Int = 20
+): List<RecommendationResultEntity> {
+    val recommendationResults = arrayListOf<RecommendationResultEntity>()
+
+    val range = 3
+    val lastResultId = 0
+
+    for (i in 0..<amount) {
+        val newRecommendationResult = RecommendationResultEntity(
+            i,
+            lastResultId,
+            i + 2,
+            randomAge(),
+            randomHeight(),
+            randomHeight(),
+            getRandomNutritionalStatusCategory().stringCategory,
+            Date().time,
+        )
+
+        recommendationResults.add(newRecommendationResult)
+    }
+
+    return recommendationResults
+}
 
 fun createDummyMenuModel(
     id: Int = 0,

@@ -1,7 +1,7 @@
 package id.rllyhz.giziplan.domain.utils
 
 data class DataStateError(
-    val errorType: Exception,
+    val exception: Exception,
     val message: String
 )
 
@@ -11,13 +11,15 @@ sealed class DataState<T>(
 ) {
     class Loading<T> : DataState<T>()
 
-    class Error(
-        private val exception: Exception,
-        private val message: String
-    ) : DataState<Unit>(
+    class Error<T>(
+        exception: Exception,
+        message: String
+    ) : DataState<T>(
         DataStateError(exception, message),
         null
     )
+
+    class SuccessWithNullableData<T>(data: T?) : DataState<T>(null, data)
 
     class Success<T>(data: T) : DataState<T>(null, data)
 }

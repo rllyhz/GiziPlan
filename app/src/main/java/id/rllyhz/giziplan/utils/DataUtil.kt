@@ -9,6 +9,12 @@ fun randomNum(min: Int, max: Int, exclude: Boolean = false) =
     if (exclude) (min..<max).random()
     else (min..max).random()
 
+fun randomAge(): Int = randomNum(12, 60)
+
+fun randomHeight(): Double = Random.nextDouble(12.0, 120.0)
+
+fun randomWeight(): Double = Random.nextDouble(3.0, 7.0)
+
 fun randomEnergy(): Double = Random.nextDouble(1.0, 5.0)
 fun randomFat(): Double = Random.nextFloat().toDouble()
 fun randomProtein(): Double = Random.nextDouble(3.0, 12.0)

@@ -10,9 +10,13 @@ interface GiziRepository {
 
     suspend fun insertAllMenus(menus: List<MenuModel>): Flow<DataState<Boolean>>
 
+    suspend fun deleteAllMenus(): Flow<DataState<Boolean>>
+
     suspend fun getMenuById(menuId: Int): Flow<DataState<MenuModel?>>
 
     suspend fun getAllRecommendationResults(): Flow<DataState<List<RecommendationResultModel>>>
 
     suspend fun deleteRecommendationResultOf(resultId: Int): Flow<DataState<Boolean>>
+
+    suspend fun deleteAllRecommendationResults(): Flow<DataState<Boolean>>
 }
