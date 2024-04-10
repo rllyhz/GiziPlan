@@ -79,7 +79,7 @@ class DataMapperTest {
             ),
         )
 
-        val recommendationResultModel = entities.toModel()
+        val recommendationResultModel = entities.toResultModels()
         Assert.assertEquals(recommendationResultModel.count(), 2)
 
         val firstResult = recommendationResultModel.first()

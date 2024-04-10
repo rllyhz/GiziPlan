@@ -8,12 +8,17 @@ import id.rllyhz.giziplan.domain.utils.DataState
 import id.rllyhz.giziplan.domain.utils.toEntities
 import id.rllyhz.giziplan.domain.utils.toModel
 import id.rllyhz.giziplan.domain.utils.toModels
+import id.rllyhz.giziplan.domain.utils.toResultModels
 import id.rllyhz.giziplan.utils.RepositoryIOException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlin.coroutines.CoroutineContext
 
 class GiziRepositoryImpl(
     private val localDataSource: LocalDataSource,
+    private val ioDispatcher: CoroutineContext,
+    private val isOnTesting: Boolean = false,
 ) : GiziRepository {
     override suspend fun getAllMenus(): Flow<DataState<List<MenuModel>>> =
         flow {
@@ -23,7 +28,7 @@ class GiziRepositoryImpl(
                 val menus = localDataSource.getAllMenus().toModels()
                 emit(DataState.Success(menus))
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (!isOnTesting) e.printStackTrace()
                 emit(
                     DataState.Error(
                         RepositoryIOException(e.message.toString()),
@@ -31,7 +36,7 @@ class GiziRepositoryImpl(
                     )
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
 
     override suspend fun insertAllMenus(menus: List<MenuModel>): Flow<DataState<Boolean>> =
         flow {
@@ -41,7 +46,7 @@ class GiziRepositoryImpl(
                 localDataSource.insertAllMenus(menus.toEntities())
                 emit(DataState.Success(true))
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (!isOnTesting) e.printStackTrace()
                 emit(
                     DataState.Error(
                         RepositoryIOException(e.message.toString()),
@@ -49,17 +54,17 @@ class GiziRepositoryImpl(
                     )
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
 
     override suspend fun getMenuById(menuId: Int): Flow<DataState<MenuModel?>> =
-        flow {
+        flow<DataState<MenuModel?>> {
             emit(DataState.Loading())
 
             try {
                 val menu = localDataSource.getMenuById(menuId)
                 emit(DataState.SuccessWithNullableData(menu?.toModel()))
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (!isOnTesting) e.printStackTrace()
                 emit(
                     DataState.Error(
                         RepositoryIOException(e.message.toString()),
@@ -67,7 +72,7 @@ class GiziRepositoryImpl(
                     )
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
 
     override suspend fun deleteAllMenus(): Flow<DataState<Boolean>> =
         flow {
@@ -77,7 +82,7 @@ class GiziRepositoryImpl(
                 localDataSource.deleteAllMenus()
                 emit(DataState.Success(true))
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (!isOnTesting) e.printStackTrace()
                 emit(
                     DataState.Error(
                         RepositoryIOException(e.message.toString()),
@@ -85,17 +90,18 @@ class GiziRepositoryImpl(
                     )
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
 
     override suspend fun getAllRecommendationResults(): Flow<DataState<List<RecommendationResultModel>>> =
         flow {
             emit(DataState.Loading())
 
             try {
-                val recommendationResults = localDataSource.getAllRecommendationResults().toModel()
+                val recommendationResults =
+                    localDataSource.getAllRecommendationResults().toResultModels()
                 emit(DataState.Success(recommendationResults))
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (!isOnTesting) e.printStackTrace()
                 emit(
                     DataState.Error(
                         RepositoryIOException(e.message.toString()),
@@ -103,7 +109,7 @@ class GiziRepositoryImpl(
                     )
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
 
     override suspend fun deleteRecommendationResultOf(resultId: Int): Flow<DataState<Boolean>> =
         flow {
@@ -113,7 +119,7 @@ class GiziRepositoryImpl(
                 localDataSource.deleteRecommendationResultOf(resultId)
                 emit(DataState.Success(true))
             } catch (e: Exception) {
-                e.printStackTrace()
+                if (!isOnTesting) e.printStackTrace()
                 emit(
                     DataState.Error(
                         RepositoryIOException(e.message.toString()),
@@ -121,22 +127,23 @@ class GiziRepositoryImpl(
                     )
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
 
-    override suspend fun deleteAllRecommendationResults(): Flow<DataState<Boolean>> = flow {
-        emit(DataState.Loading())
+    override suspend fun deleteAllRecommendationResults(): Flow<DataState<Boolean>> =
+        flow {
+            emit(DataState.Loading())
 
-        try {
-            localDataSource.deleteAllRecommendationResults()
-            emit(DataState.Success(true))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emit(
-                DataState.Error(
-                    RepositoryIOException(e.message.toString()),
-                    "Something went wrong when deleting all recommendation results",
+            try {
+                localDataSource.deleteAllRecommendationResults()
+                emit(DataState.Success(true))
+            } catch (e: Exception) {
+                if (!isOnTesting) e.printStackTrace()
+                emit(
+                    DataState.Error(
+                        RepositoryIOException(e.message.toString()),
+                        "Something went wrong when deleting all recommendation results",
+                    )
                 )
-            )
-        }
-    }
+            }
+        }.flowOn(ioDispatcher)
 }

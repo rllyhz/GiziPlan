@@ -23,7 +23,7 @@ fun MenuEntity.toModel(): MenuModel = MenuModel(
 
 fun List<MenuEntity>.toModels(): List<MenuModel> = map { it.toModel() }
 
-fun List<RecommendationResultEntity>.toModel(): List<RecommendationResultModel> {
+fun List<RecommendationResultEntity>.toResultModels(): List<RecommendationResultModel> {
     if (isEmpty()) return emptyList()
 
     val recommendationResults = arrayListOf<RecommendationResultModel>()

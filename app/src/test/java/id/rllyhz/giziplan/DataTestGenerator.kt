@@ -104,13 +104,17 @@ fun createDummyRecommendationResultEntities(
     val recommendationResults = arrayListOf<RecommendationResultEntity>()
 
     val range = 3
-    val lastResultId = 0
+    var lastResultId = 0
+    var menuId: Int
+    var counter = 1
 
     for (i in 0..<amount) {
+        menuId = i + 1
+
         val newRecommendationResult = RecommendationResultEntity(
             i,
             lastResultId,
-            i + 2,
+            menuId,
             randomAge(),
             randomHeight(),
             randomHeight(),
@@ -119,6 +123,13 @@ fun createDummyRecommendationResultEntities(
         )
 
         recommendationResults.add(newRecommendationResult)
+
+        if (counter >= range) {
+            counter = 1 // reset
+            lastResultId += 1
+        } else {
+            counter += 1
+        }
     }
 
     return recommendationResults
