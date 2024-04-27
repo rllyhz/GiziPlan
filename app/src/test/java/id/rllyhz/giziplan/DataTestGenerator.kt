@@ -1,5 +1,9 @@
 package id.rllyhz.giziplan
 
+import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryDataTable
+import id.rllyhz.giziplan.data.anthropometry.model.PopulationRow
+import id.rllyhz.giziplan.data.anthropometry.type.MeasuredValueType
+import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
 import id.rllyhz.giziplan.domain.model.AgeCategory
@@ -15,6 +19,7 @@ import id.rllyhz.giziplan.utils.randomHeight
 import id.rllyhz.giziplan.utils.randomNum
 import id.rllyhz.giziplan.utils.randomProtein
 import java.util.Date
+import kotlin.random.Random
 
 fun createDummyMenuEntity(
     id: Int = 0,
@@ -168,3 +173,68 @@ fun createDummyRecommendationResultModel(
     nutritionalStatusCategory.stringCategory,
     0
 )
+
+private fun createDummyPopulationRows(
+    measuredValueType: MeasuredValueType,
+    populationValueType: PopulationValueType,
+    measuredValueStart: Int = 0,
+    populationValueStart: Int? = null,
+    size: Int = 20
+): List<PopulationRow> {
+    val populationRows = arrayListOf<PopulationRow>()
+    var measuredValue = measuredValueStart
+    var populationValue = populationValueStart ?: Random.nextInt(12, 80)
+
+    for (i in 0..size) {
+        val min3SD = populationValue.toDouble() + 0.2
+        val min2SD = min3SD + 0.2
+        val min1SD = min2SD + 0.2
+        val median = min1SD + 0.2
+        val plus1SD = median + 0.2
+        val plus2SD = plus1SD + 0.2
+        val plus3SD = plus2SD + 0.2
+
+        val newPopulationRow = PopulationRow(
+            measuredValueType, populationValueType,
+            measuredValue.toDouble(),
+            min3SD, min2SD, min1SD, median, plus1SD, plus2SD, plus3SD,
+        )
+
+        populationRows.add(newPopulationRow)
+        measuredValue++
+        populationValue++
+    }
+
+    return populationRows
+}
+
+fun createDummyDataTable(
+    measuredValueType: MeasuredValueType,
+    populationValueType: PopulationValueType
+): AnthropometryDataTable {
+    val malePopulationRows = createDummyPopulationRows(
+        measuredValueType, populationValueType
+    )
+
+    val femalePopulationRows = createDummyPopulationRows(
+        measuredValueType, populationValueType
+    )
+
+    return AnthropometryDataTable(
+        measuredValueType, populationValueType,
+        malePopulationRows,
+        femalePopulationRows,
+    )
+}
+
+fun createDummyPopulationCSVContent(): String =
+    """
+        "Umur (bulan)","Berat Badan (Kg)","","","","","",""
+        "","-3 SD","-2 SD","-1 SD","Median","+1 SD","+2 SD","+3 SD"
+        "0","2.1","2.5","2.9","3.3","3.9","4.4","5.0"
+        "1","2.9","3.4","3.9","4.5","5.1","5.8","6.6"
+        "2","3.8","4.3","4.9","5.6","6.3","7.1","8.0"
+        "3","4.4","5.0","5.7","6.4","7.2","8.0","9.0"
+        "4","4.9","5.6","6.2","7.0","7.8","8.7","9.7"
+        "5","5.3","6.0","6.7","7.5","8.4","9.3","10.4"
+    """.trimIndent()

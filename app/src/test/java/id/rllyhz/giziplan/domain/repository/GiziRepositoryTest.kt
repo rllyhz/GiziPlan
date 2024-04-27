@@ -1,5 +1,6 @@
 package id.rllyhz.giziplan.domain.repository
 
+import android.content.Context
 import id.rllyhz.giziplan.createDummyMenuEntities
 import id.rllyhz.giziplan.createDummyMenuEntity
 import id.rllyhz.giziplan.createDummyMenuModels
@@ -10,6 +11,7 @@ import id.rllyhz.giziplan.domain.utils.toEntities
 import id.rllyhz.giziplan.domain.utils.toModels
 import id.rllyhz.giziplan.domain.utils.toResultModels
 import id.rllyhz.giziplan.utils.CoroutineTestRule
+import id.rllyhz.giziplan.utils.fakes.FakeAnthropometryDataSource
 import id.rllyhz.giziplan.utils.fakes.FakeGiziDao
 import id.rllyhz.giziplan.utils.fakes.FakeLocalDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,12 +36,16 @@ class GiziRepositoryTest {
     @Mock
     private lateinit var giziDao: FakeGiziDao
 
+    @Mock
+    private lateinit var context: Context
+
     @get:Rule
     var coroutineTestRule = CoroutineTestRule()
 
     @Before
     fun setup() {
         repository = GiziRepositoryImpl(
+            FakeAnthropometryDataSource(context),
             FakeLocalDataSource(giziDao),
             UnconfinedTestDispatcher(),
             true,

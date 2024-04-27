@@ -1,5 +1,6 @@
 package id.rllyhz.giziplan.data
 
+import id.rllyhz.giziplan.data.anthropometry.AnthropometryDataSource
 import id.rllyhz.giziplan.data.local.LocalDataSource
 import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.RecommendationResultModel
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlin.coroutines.CoroutineContext
 
 class GiziRepositoryImpl(
+    private val anthropometryDataSource: AnthropometryDataSource,
     private val localDataSource: LocalDataSource,
     private val ioDispatcher: CoroutineContext,
     private val isOnTesting: Boolean = false,

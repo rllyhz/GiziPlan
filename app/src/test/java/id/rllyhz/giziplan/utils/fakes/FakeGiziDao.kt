@@ -13,7 +13,7 @@ class FakeGiziDao(
     override suspend fun getAllMenus(): List<MenuEntity> =
         createDummyMenuEntities(menuCount)
 
-    override suspend fun getMenuById(menuId: Int): MenuEntity? =
+    override suspend fun getMenuById(menuId: Int): MenuEntity =
         createDummyMenuEntity(id = menuId)
 
     override suspend fun insertAllMenus(menus: List<MenuEntity>) {}
