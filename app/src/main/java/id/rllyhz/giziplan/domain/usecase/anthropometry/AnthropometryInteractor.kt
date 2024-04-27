@@ -19,8 +19,8 @@ import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreClassificationData
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
 import id.rllyhz.giziplan.domain.repository.AnthropometryRepository
+import id.rllyhz.giziplan.utils.roundToNearestHalf
 import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class AnthropometryInteractor(
     private val repository: AnthropometryRepository,
@@ -78,7 +78,7 @@ class AnthropometryInteractor(
     override suspend fun measureZScoreForHeightToAge(
         measuredHeight: Double, age: Int, gender: Gender
     ): ZScoreData {
-        val dataTable = repository.getWeightToHeightPopulation(gender)
+        val dataTable = repository.getHeightToAgePopulation(gender)
 
         var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
@@ -125,16 +125,18 @@ class AnthropometryInteractor(
     }
 
     override suspend fun measureZScoreForWeightToHeight(
-        measuredWeight: Double, height: Double, gender: Gender
+        measuredWeight: Double, height: Double, isAgeLessThan24: Boolean, gender: Gender
     ): ZScoreData {
-        val dataTable = repository.getWeightToHeightPopulation(gender)
+        val dataTable = if (isAgeLessThan24) {
+            repository.getWeightToHeightLessThan24Population(gender)
+        } else repository.getWeightToHeightGreaterThan24Population(gender)
 
         var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
 
         for (i in dataTable.indices) {
             // find the same age
-            if (dataTable[i].referenceValue.toDouble() == height) {
+            if (dataTable[i].referenceValue.toDouble() == height.roundToNearestHalf()) {
                 isOutOfRangePopulation = false
                 foundIndexPopulation = i
                 break

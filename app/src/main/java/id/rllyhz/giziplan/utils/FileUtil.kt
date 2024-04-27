@@ -44,9 +44,20 @@ fun getHeightToAgePopulationTableData(context: Context, gender: Gender): List<Li
     )
     else getPopulationTableDataByCSVFile(context, R.raw.perem_pb_tb_per_u_0_60)
 
-fun getWeightToHeightPopulationTableData(context: Context, gender: Gender): List<List<String>> =
+fun getWeightToHeightLessThan24PopulationTableData(
+    context: Context,
+    gender: Gender
+): List<List<String>> =
     if (gender == Gender.Male) getPopulationTableDataByCSVFile(
-        context, R.raw.bb_menurut_pb_atau_tb_laki_laki // TODO replace with the actual table
+        context, R.raw.lklk_bb_per_pb_0_24
     )
-    // TODO replace with the actual table
-    else getPopulationTableDataByCSVFile(context, R.raw.bb_menurut_pb_atau_tb_perempuan)
+    else getPopulationTableDataByCSVFile(context, R.raw.perem_bb_per_pb_0_24)
+
+fun getWeightToHeightGreaterThan24PopulationTableData(
+    context: Context,
+    gender: Gender
+): List<List<String>> =
+    if (gender == Gender.Male) getPopulationTableDataByCSVFile(
+        context, R.raw.lklk_bb_per_tb_24_60
+    )
+    else getPopulationTableDataByCSVFile(context, R.raw.perem_bb_per_tb_24_60)

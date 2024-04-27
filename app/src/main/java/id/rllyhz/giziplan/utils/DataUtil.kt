@@ -11,6 +11,18 @@ import id.rllyhz.giziplan.domain.model.classification.SeverelyWasted
 import id.rllyhz.giziplan.domain.model.classification.Wasted
 import kotlin.random.Random
 
+/**
+ * Round the [Double] value to be either x.0 or x.5
+ */
+fun Double.roundToNearestHalf(): Double {
+    val remainder = this % 1
+    return when {
+        remainder <= 0.25 -> this - remainder
+        remainder <= 0.75 -> this - remainder + 0.5
+        else -> this - remainder + 1
+    }
+}
+
 fun randomNum(min: Int, max: Int, exclude: Boolean = false) =
     if (exclude) (min..<max).random()
     else (min..max).random()

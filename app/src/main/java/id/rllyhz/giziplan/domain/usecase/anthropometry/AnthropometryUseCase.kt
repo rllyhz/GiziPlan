@@ -35,6 +35,7 @@ interface AnthropometryUseCase {
     suspend fun measureZScoreForWeightToHeight(
         measuredWeight: Double,
         height: Double,
+        isAgeLessThan24: Boolean,
         gender: Gender,
     ): ZScoreData
 

@@ -13,11 +13,6 @@ class AnthropometryRepositoryImpl(
     private val ioDispatcher: CoroutineContext,
 ) : AnthropometryRepository {
 
-    override suspend fun getAllAnthropometryTables(): AnthropometryTables =
-        withContext(ioDispatcher) {
-            anthropometryDataSource.getAnthropometryTables()
-        }
-
     override suspend fun getWeightToAgePopulation(gender: Gender): List<PopulationRow> =
         withContext(ioDispatcher) {
             when (gender) {
@@ -34,11 +29,19 @@ class AnthropometryRepositoryImpl(
             }
         }
 
-    override suspend fun getWeightToHeightPopulation(gender: Gender): List<PopulationRow> =
+    override suspend fun getWeightToHeightLessThan24Population(gender: Gender): List<PopulationRow> =
         withContext(ioDispatcher) {
             when (gender) {
-                Gender.Male -> anthropometryDataSource.getWeightToHeightDataTable().malePopulationTable
-                else -> anthropometryDataSource.getWeightToHeightDataTable().femalePopulationTable
+                Gender.Male -> anthropometryDataSource.getWeightToHeightLessThan24DataTable().malePopulationTable
+                else -> anthropometryDataSource.getWeightToHeightLessThan24DataTable().femalePopulationTable
+            }
+        }
+
+    override suspend fun getWeightToHeightGreaterThan24Population(gender: Gender): List<PopulationRow> =
+        withContext(ioDispatcher) {
+            when (gender) {
+                Gender.Male -> anthropometryDataSource.getWeightToHeightGreaterThan24DataTable().malePopulationTable
+                else -> anthropometryDataSource.getWeightToHeightGreaterThan24DataTable().femalePopulationTable
             }
         }
 }

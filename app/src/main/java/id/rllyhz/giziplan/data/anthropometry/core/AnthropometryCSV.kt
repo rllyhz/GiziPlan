@@ -7,6 +7,8 @@ import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.utils.toPopulationRow
 import id.rllyhz.giziplan.utils.getHeightToAgePopulationTableData
+import id.rllyhz.giziplan.utils.getWeightToHeightGreaterThan24PopulationTableData
+import id.rllyhz.giziplan.utils.getWeightToHeightLessThan24PopulationTableData
 
 class AnthropometryCSV(
     private val context: Context
@@ -36,17 +38,39 @@ class AnthropometryCSV(
                 ),
             )
 
-        override suspend fun getWeightToHeightDataTable(): AnthropometryDataTable =
+        override suspend fun getWeightToHeightLessThan24DataTable(): AnthropometryDataTable =
             AnthropometryDataTable(
                 ReferenceValueType.HeightInCentimeters,
                 PopulationValueType.WeightInKilograms,
-                getHeightToAgePopulationTableData(context, Gender.Male).toPopulationRow(
-                    ReferenceValueType.HeightInCentimeters,
-                    PopulationValueType.WeightInKilograms,
+                getWeightToHeightLessThan24PopulationTableData(
+                    context,
+                    Gender.Male
+                ).toPopulationRow(
+                    ReferenceValueType.HeightInCentimeters, PopulationValueType.WeightInKilograms
                 ),
-                getHeightToAgePopulationTableData(context, Gender.Female).toPopulationRow(
-                    ReferenceValueType.HeightInCentimeters,
-                    PopulationValueType.WeightInKilograms,
+                getWeightToHeightLessThan24PopulationTableData(
+                    context,
+                    Gender.Female
+                ).toPopulationRow(
+                    ReferenceValueType.HeightInCentimeters, PopulationValueType.WeightInKilograms
+                ),
+            )
+
+        override suspend fun getWeightToHeightGreaterThan24DataTable(): AnthropometryDataTable =
+            AnthropometryDataTable(
+                ReferenceValueType.HeightInCentimeters,
+                PopulationValueType.WeightInKilograms,
+                getWeightToHeightGreaterThan24PopulationTableData(
+                    context,
+                    Gender.Male
+                ).toPopulationRow(
+                    ReferenceValueType.HeightInCentimeters, PopulationValueType.WeightInKilograms
+                ),
+                getWeightToHeightGreaterThan24PopulationTableData(
+                    context,
+                    Gender.Female
+                ).toPopulationRow(
+                    ReferenceValueType.HeightInCentimeters, PopulationValueType.WeightInKilograms
                 ),
             )
     }

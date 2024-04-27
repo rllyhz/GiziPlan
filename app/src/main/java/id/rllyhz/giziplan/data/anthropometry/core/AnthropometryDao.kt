@@ -7,5 +7,7 @@ interface AnthropometryDao {
 
     suspend fun getHeightToAgeDataTable(): AnthropometryDataTable
 
-    suspend fun getWeightToHeightDataTable(): AnthropometryDataTable
+    suspend fun getWeightToHeightLessThan24DataTable(): AnthropometryDataTable
+
+    suspend fun getWeightToHeightGreaterThan24DataTable(): AnthropometryDataTable
 }

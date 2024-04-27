@@ -6,11 +6,11 @@ import id.rllyhz.giziplan.data.anthropometry.type.Gender
 
 interface AnthropometryRepository {
 
-    suspend fun getAllAnthropometryTables(): AnthropometryTables
-
     suspend fun getWeightToAgePopulation(gender: Gender): List<PopulationRow>
 
     suspend fun getHeightToAgePopulation(gender: Gender): List<PopulationRow>
 
-    suspend fun getWeightToHeightPopulation(gender: Gender): List<PopulationRow>
+    suspend fun getWeightToHeightLessThan24Population(gender: Gender): List<PopulationRow>
+
+    suspend fun getWeightToHeightGreaterThan24Population(gender: Gender): List<PopulationRow>
 }
