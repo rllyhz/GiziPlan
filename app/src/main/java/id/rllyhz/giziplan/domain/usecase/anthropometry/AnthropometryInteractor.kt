@@ -1,6 +1,5 @@
 package id.rllyhz.giziplan.domain.usecase.anthropometry
 
-import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryTables
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import id.rllyhz.giziplan.domain.model.classification.NormalHeight
@@ -19,16 +18,15 @@ import id.rllyhz.giziplan.domain.model.classification.Wasted
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreClassificationData
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
+import id.rllyhz.giziplan.domain.repository.AnthropometryRepository
 
 class AnthropometryInteractor(
-    private val anthropometryTables: AnthropometryTables,
+    private val repository: AnthropometryRepository,
 ) : AnthropometryUseCase {
-    override fun measureZScoreForWeightToAge(
+    override suspend fun measureZScoreForWeightToAge(
         measuredWeight: Double, age: Int, gender: Gender
     ): ZScoreData {
-        val dataTable = if (gender == Gender.Male) {
-            anthropometryTables.weightToAgeDataTable.malePopulationTable
-        } else anthropometryTables.weightToAgeDataTable.femalePopulationTable
+        val dataTable = repository.getWeightToAgePopulation(gender)
 
         var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
@@ -68,12 +66,10 @@ class AnthropometryInteractor(
         )
     }
 
-    override fun measureZScoreForHeightToAge(
+    override suspend fun measureZScoreForHeightToAge(
         measuredHeight: Double, age: Int, gender: Gender
     ): ZScoreData {
-        val dataTable = if (gender == Gender.Male) {
-            anthropometryTables.heightToAgeDataTable.malePopulationTable
-        } else anthropometryTables.heightToAgeDataTable.femalePopulationTable
+        val dataTable = repository.getWeightToHeightPopulation(gender)
 
         var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
@@ -113,12 +109,10 @@ class AnthropometryInteractor(
         )
     }
 
-    override fun measureZScoreForWeightToHeight(
+    override suspend fun measureZScoreForWeightToHeight(
         measuredWeight: Double, height: Double, gender: Gender
     ): ZScoreData {
-        val dataTable = if (gender == Gender.Male) {
-            anthropometryTables.weightToHeightDataTable.malePopulationTable
-        } else anthropometryTables.weightToHeightDataTable.femalePopulationTable
+        val dataTable = repository.getWeightToHeightPopulation(gender)
 
         var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
@@ -158,7 +152,7 @@ class AnthropometryInteractor(
         )
     }
 
-    override fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData =
+    override suspend fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData =
         when (zScoreData.zScoreCategory) {
             ZScoreCategory.WeightToAge -> {
                 if (zScoreData.zScore < -3.0) ZScoreClassificationData(

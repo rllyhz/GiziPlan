@@ -1,36 +1,29 @@
-package id.rllyhz.giziplan
+package id.rllyhz.giziplan.utils
 
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryDataTable
 import id.rllyhz.giziplan.data.anthropometry.model.PopulationRow
-import id.rllyhz.giziplan.data.anthropometry.type.MeasuredValueType
+import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
 import id.rllyhz.giziplan.domain.model.AgeCategory
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.model.NutritionalStatusCategory
 import id.rllyhz.giziplan.domain.model.RecommendationResultModel
-import id.rllyhz.giziplan.utils.getRandomAgeCategory
-import id.rllyhz.giziplan.utils.getRandomNutritionalStatusCategory
-import id.rllyhz.giziplan.utils.randomAge
-import id.rllyhz.giziplan.utils.randomEnergy
-import id.rllyhz.giziplan.utils.randomFat
-import id.rllyhz.giziplan.utils.randomHeight
-import id.rllyhz.giziplan.utils.randomNum
-import id.rllyhz.giziplan.utils.randomProtein
+import id.rllyhz.giziplan.domain.model.classification.ClassificationData
+import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import java.util.Date
 import kotlin.random.Random
 
 fun createDummyMenuEntity(
     id: Int = 0,
-    nutritionalStatusCategory: NutritionalStatusCategory = getRandomNutritionalStatusCategory(),
+    classificationData: ClassificationData = getRandomNutritionalStatusCategory(),
     ageCategory: AgeCategory = getRandomAgeCategory()
 ): MenuEntity = MenuEntity(
     id,
     "Simple Menu",
     "Ingredients Menu",
     "Ingredients Menu",
-    nutritionalStatusCategory.stringCategory,
+    classificationData.getClassificationName(),
     ageCategory.stringCategory,
     randomEnergy(),
     randomProtein(),
@@ -49,7 +42,7 @@ fun createDummyMenuEntities(amount: Int = 20): List<MenuEntity> {
             "Ingredients Menu $i",
             "Ingredients Menu $i",
             getRandomAgeCategory().stringCategory,
-            getRandomNutritionalStatusCategory().stringCategory,
+            getRandomNutritionalStatusCategory().getClassificationName(),
             randomEnergy(),
             randomProtein(),
             randomFat(),
@@ -73,7 +66,7 @@ fun createDummyMenuModels(amount: Int = 20): List<MenuModel> {
             "Ingredients Menu $i",
             "Ingredients Menu $i",
             getRandomAgeCategory().stringCategory,
-            getRandomNutritionalStatusCategory().stringCategory,
+            getRandomNutritionalStatusCategory().getClassificationName(),
             randomEnergy(),
             randomProtein(),
             randomFat(),
@@ -91,7 +84,7 @@ fun createDummyRecommendationResultEntity(
     id: Int = 0,
     resultId: Int = 0,
     menuId: Int = 0,
-    nutritionalStatusCategory: NutritionalStatusCategory = NutritionalStatusCategory.Normal
+    classificationData: ClassificationData = GoodNutritionalStatus
 ): RecommendationResultEntity = RecommendationResultEntity(
     id,
     resultId,
@@ -99,7 +92,7 @@ fun createDummyRecommendationResultEntity(
     randomNum(60, 120),
     randomNum(60, 120).toDouble(),
     12.0,
-    nutritionalStatusCategory.stringCategory,
+    classificationData.getClassificationName(),
     0
 )
 
@@ -123,7 +116,7 @@ fun createDummyRecommendationResultEntities(
             randomAge(),
             randomHeight(),
             randomHeight(),
-            getRandomNutritionalStatusCategory().stringCategory,
+            getRandomNutritionalStatusCategory().getClassificationName(),
             Date().time,
         )
 
@@ -142,14 +135,14 @@ fun createDummyRecommendationResultEntities(
 
 fun createDummyMenuModel(
     id: Int = 0,
-    nutritionalStatusCategory: NutritionalStatusCategory = getRandomNutritionalStatusCategory(),
+    classificationData: ClassificationData = getRandomNutritionalStatusCategory(),
     ageCategory: AgeCategory = getRandomAgeCategory()
 ): MenuModel = MenuModel(
     id,
     "Simple Menu",
     "Ingredients Menu",
     "Ingredients Menu",
-    nutritionalStatusCategory.stringCategory,
+    classificationData.getClassificationName(),
     ageCategory.stringCategory,
     randomEnergy(),
     randomProtein(),
@@ -162,7 +155,7 @@ fun createDummyRecommendationResultModel(
     id: Int,
     resultId: Int,
     menuIds: String,
-    nutritionalStatusCategory: NutritionalStatusCategory = NutritionalStatusCategory.Normal
+    classificationData: ClassificationData = GoodNutritionalStatus
 ): RecommendationResultModel = RecommendationResultModel(
     id,
     resultId,
@@ -170,12 +163,12 @@ fun createDummyRecommendationResultModel(
     randomNum(60, 120),
     randomNum(60, 120).toDouble(),
     12.0,
-    nutritionalStatusCategory.stringCategory,
+    classificationData.getClassificationName(),
     0
 )
 
 private fun createDummyPopulationRows(
-    measuredValueType: MeasuredValueType,
+    referenceValueType: ReferenceValueType,
     populationValueType: PopulationValueType,
     measuredValueStart: Int = 0,
     populationValueStart: Int? = null,
@@ -195,7 +188,7 @@ private fun createDummyPopulationRows(
         val plus3SD = plus2SD + 0.2
 
         val newPopulationRow = PopulationRow(
-            measuredValueType, populationValueType,
+            referenceValueType, populationValueType,
             measuredValue.toDouble(),
             min3SD, min2SD, min1SD, median, plus1SD, plus2SD, plus3SD,
         )
@@ -209,19 +202,19 @@ private fun createDummyPopulationRows(
 }
 
 fun createDummyDataTable(
-    measuredValueType: MeasuredValueType,
+    referenceValueType: ReferenceValueType,
     populationValueType: PopulationValueType
 ): AnthropometryDataTable {
     val malePopulationRows = createDummyPopulationRows(
-        measuredValueType, populationValueType
+        referenceValueType, populationValueType
     )
 
     val femalePopulationRows = createDummyPopulationRows(
-        measuredValueType, populationValueType
+        referenceValueType, populationValueType
     )
 
     return AnthropometryDataTable(
-        measuredValueType, populationValueType,
+        referenceValueType, populationValueType,
         malePopulationRows,
         femalePopulationRows,
     )

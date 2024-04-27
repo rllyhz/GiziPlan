@@ -5,7 +5,7 @@ import id.rllyhz.giziplan.domain.model.RecommendationResultModel
 import id.rllyhz.giziplan.domain.utils.DataState
 import kotlinx.coroutines.flow.Flow
 
-interface GiziRepository {
+interface DatabaseRepository {
     suspend fun getAllMenus(): Flow<DataState<List<MenuModel>>>
 
     suspend fun insertAllMenus(menus: List<MenuModel>): Flow<DataState<Boolean>>

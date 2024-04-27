@@ -1,10 +1,10 @@
 package id.rllyhz.giziplan.data.anthropometry.model
 
-import id.rllyhz.giziplan.data.anthropometry.type.MeasuredValueType
+import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 
 data class PopulationRow(
-    val measuredValueType: MeasuredValueType,
+    val referenceValueType: ReferenceValueType,
     val populationValueType: PopulationValueType,
     val referenceValue: Double,
     val min3SD: Double,

@@ -1,18 +1,18 @@
 package id.rllyhz.giziplan.data.anthropometry.utils
 
 import id.rllyhz.giziplan.data.anthropometry.model.PopulationRow
-import id.rllyhz.giziplan.data.anthropometry.type.MeasuredValueType
+import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 
 fun List<List<Double>>.toPopulationRow(
-    measuredValueType: MeasuredValueType,
+    referenceValueType: ReferenceValueType,
     populationValueType: PopulationValueType
 ): List<PopulationRow> {
     val populationRows = arrayListOf<PopulationRow>()
 
     forEach {
         val newPopulationRow = PopulationRow(
-            measuredValueType, populationValueType,
+            referenceValueType, populationValueType,
             it[0],
             it[1],
             it[2],

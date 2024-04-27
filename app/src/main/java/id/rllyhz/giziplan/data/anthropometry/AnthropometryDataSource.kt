@@ -1,58 +1,24 @@
 package id.rllyhz.giziplan.data.anthropometry
 
-import android.content.Context
+import id.rllyhz.giziplan.data.anthropometry.core.AnthropometryDao
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryDataTable
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryTables
-import id.rllyhz.giziplan.data.anthropometry.type.Gender
-import id.rllyhz.giziplan.data.anthropometry.type.MeasuredValueType
-import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
-import id.rllyhz.giziplan.data.anthropometry.utils.toPopulationRow
-import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
-import id.rllyhz.giziplan.utils.getWeightToAgePopulationTableData
 
-open class AnthropometryDataSource(
-    private val context: Context
+class AnthropometryDataSource(
+    private val dao: AnthropometryDao,
 ) {
-    open fun createAnthropometryTables(): AnthropometryTables = AnthropometryTables(
-        weightToAgeDataTable(context),
-        heightToAgeDataTable(context),
-        weightToHeightDataTable(context),
+    suspend fun getAnthropometryTables(): AnthropometryTables = AnthropometryTables(
+        dao.getWeightToAgeDataTable(),
+        dao.getHeightToAgeDataTable(),
+        dao.getWeightToHeightDataTable(),
     )
 
-    open fun classifyZScore(category: ZScoreCategory, value: Double) {}
+    suspend fun getWeightToAgeDataTable(): AnthropometryDataTable =
+        dao.getWeightToAgeDataTable()
 
-    private fun weightToAgeDataTable(context: Context) = AnthropometryDataTable(
-        MeasuredValueType.AgeInMonths,
-        PopulationValueType.WeightInKilograms,
-        getWeightToAgePopulationTableData(context, Gender.Male).toPopulationRow(
-            MeasuredValueType.AgeInMonths, PopulationValueType.WeightInKilograms
-        ),
-        getWeightToAgePopulationTableData(context, Gender.Female).toPopulationRow(
-            MeasuredValueType.AgeInMonths, PopulationValueType.WeightInKilograms
-        ),
-    )
+    suspend fun getHeightToAgeDataTable(): AnthropometryDataTable =
+        dao.getHeightToAgeDataTable()
 
-    private fun heightToAgeDataTable(context: Context) = AnthropometryDataTable(
-        MeasuredValueType.AgeInMonths,
-        PopulationValueType.HeightInCentimeters,
-        getWeightToAgePopulationTableData(context, Gender.Male).toPopulationRow(
-            MeasuredValueType.AgeInMonths, PopulationValueType.HeightInCentimeters
-        ),
-        getWeightToAgePopulationTableData(context, Gender.Female).toPopulationRow(
-            MeasuredValueType.AgeInMonths, PopulationValueType.HeightInCentimeters
-        ),
-    )
-
-    private fun weightToHeightDataTable(context: Context) = AnthropometryDataTable(
-        MeasuredValueType.HeightInCentimeters,
-        PopulationValueType.WeightInKilograms,
-        getWeightToAgePopulationTableData(context, Gender.Male).toPopulationRow(
-            MeasuredValueType.HeightInCentimeters,
-            PopulationValueType.WeightInKilograms,
-        ),
-        getWeightToAgePopulationTableData(context, Gender.Female).toPopulationRow(
-            MeasuredValueType.HeightInCentimeters,
-            PopulationValueType.WeightInKilograms,
-        ),
-    )
+    suspend fun getWeightToHeightDataTable(): AnthropometryDataTable =
+        dao.getWeightToHeightDataTable()
 }

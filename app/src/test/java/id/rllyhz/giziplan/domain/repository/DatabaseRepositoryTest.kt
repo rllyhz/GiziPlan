@@ -1,17 +1,16 @@
 package id.rllyhz.giziplan.domain.repository
 
 import android.content.Context
-import id.rllyhz.giziplan.createDummyMenuEntities
-import id.rllyhz.giziplan.createDummyMenuEntity
-import id.rllyhz.giziplan.createDummyMenuModels
-import id.rllyhz.giziplan.createDummyRecommendationResultEntities
-import id.rllyhz.giziplan.data.GiziRepositoryImpl
+import id.rllyhz.giziplan.data.DatabaseRepositoryImpl
 import id.rllyhz.giziplan.domain.utils.DataState
 import id.rllyhz.giziplan.domain.utils.toEntities
 import id.rllyhz.giziplan.domain.utils.toModels
 import id.rllyhz.giziplan.domain.utils.toResultModels
 import id.rllyhz.giziplan.utils.CoroutineTestRule
-import id.rllyhz.giziplan.utils.fakes.FakeAnthropometryDataSource
+import id.rllyhz.giziplan.utils.createDummyMenuEntities
+import id.rllyhz.giziplan.utils.createDummyMenuEntity
+import id.rllyhz.giziplan.utils.createDummyMenuModels
+import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntities
 import id.rllyhz.giziplan.utils.fakes.FakeGiziDao
 import id.rllyhz.giziplan.utils.fakes.FakeLocalDataSource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,8 +29,8 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner.Silent::class)
-class GiziRepositoryTest {
-    private lateinit var repository: GiziRepository
+class DatabaseRepositoryTest {
+    private lateinit var repository: DatabaseRepository
 
     @Mock
     private lateinit var giziDao: FakeGiziDao
@@ -44,8 +43,7 @@ class GiziRepositoryTest {
 
     @Before
     fun setup() {
-        repository = GiziRepositoryImpl(
-            FakeAnthropometryDataSource(context),
+        repository = DatabaseRepositoryImpl(
             FakeLocalDataSource(giziDao),
             UnconfinedTestDispatcher(),
             true,

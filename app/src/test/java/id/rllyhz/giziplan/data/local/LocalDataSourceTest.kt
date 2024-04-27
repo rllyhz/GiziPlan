@@ -1,8 +1,8 @@
 package id.rllyhz.giziplan.data.local
 
-import id.rllyhz.giziplan.createDummyMenuEntities
-import id.rllyhz.giziplan.createDummyMenuEntity
-import id.rllyhz.giziplan.createDummyRecommendationResultEntities
+import id.rllyhz.giziplan.utils.createDummyMenuEntities
+import id.rllyhz.giziplan.utils.createDummyMenuEntity
+import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntities
 import id.rllyhz.giziplan.domain.utils.toModels
 import id.rllyhz.giziplan.utils.fakes.FakeGiziDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi

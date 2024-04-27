@@ -10,7 +10,7 @@ interface AnthropometryUseCase {
      * @param Int age
      * @return [ZScoreData] Z-Score data
      */
-    fun measureZScoreForWeightToAge(
+    suspend fun measureZScoreForWeightToAge(
         measuredWeight: Double,
         age: Int,
         gender: Gender,
@@ -21,7 +21,7 @@ interface AnthropometryUseCase {
      * @param Int age
      * @return [ZScoreData] Z-Score data
      */
-    fun measureZScoreForHeightToAge(
+    suspend fun measureZScoreForHeightToAge(
         measuredHeight: Double,
         age: Int,
         gender: Gender,
@@ -32,7 +32,7 @@ interface AnthropometryUseCase {
      * @param Double height
      * @return [ZScoreData] Z-Score data
      */
-    fun measureZScoreForWeightToHeight(
+    suspend fun measureZScoreForWeightToHeight(
         measuredWeight: Double,
         height: Double,
         gender: Gender,
@@ -42,5 +42,5 @@ interface AnthropometryUseCase {
      * @param ZScoreData zScoreData
      * @return [ZScoreClassificationData] Z-Score classification data
      */
-    fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData
+    suspend fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData
 }

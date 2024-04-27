@@ -1,13 +1,15 @@
 package id.rllyhz.giziplan.domain.utils
 
-import id.rllyhz.giziplan.createDummyMenuEntities
-import id.rllyhz.giziplan.createDummyMenuEntity
-import id.rllyhz.giziplan.createDummyMenuModel
-import id.rllyhz.giziplan.createDummyMenuModels
-import id.rllyhz.giziplan.createDummyRecommendationResultEntity
-import id.rllyhz.giziplan.createDummyRecommendationResultModel
+import id.rllyhz.giziplan.utils.createDummyMenuEntities
+import id.rllyhz.giziplan.utils.createDummyMenuEntity
+import id.rllyhz.giziplan.utils.createDummyMenuModel
+import id.rllyhz.giziplan.utils.createDummyMenuModels
+import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntity
+import id.rllyhz.giziplan.utils.createDummyRecommendationResultModel
 import id.rllyhz.giziplan.domain.model.AgeCategory
-import id.rllyhz.giziplan.domain.model.NutritionalStatusCategory
+import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
+import id.rllyhz.giziplan.domain.model.classification.Overweight
+import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
 import id.rllyhz.giziplan.utils.toIntList
 import org.junit.Assert
 import org.junit.Test
@@ -17,7 +19,7 @@ class DataMapperTest {
     @Test
     fun `successfully convert menu entity type into menu model type`() {
         val menuEntity = createDummyMenuEntity(
-            0, NutritionalStatusCategory.Overweight, AgeCategory.B
+            0, Overweight, AgeCategory.B
         )
 
         val menuModel = menuEntity.toModel()
@@ -58,8 +60,8 @@ class DataMapperTest {
     fun `successfully convert recommendation result entities type into recommendation result model type`() {
         val resultId1 = 3
         val resultId2 = 7
-        val nutritionalStatusCategory1 = NutritionalStatusCategory.Normal
-        val nutritionalStatusCategory2 = NutritionalStatusCategory.PossibleRiskOfOverweight
+        val nutritionalStatusCategory1 = GoodNutritionalStatus
+        val nutritionalStatusCategory2 = PossibleRiskOfOverweight
 
         val entities = arrayListOf(
             createDummyRecommendationResultEntity(
@@ -94,7 +96,7 @@ class DataMapperTest {
     @Test
     fun `successfully convert menu model type into menu entity type`() {
         val menuModel = createDummyMenuModel(
-            0, NutritionalStatusCategory.Overweight, AgeCategory.B
+            0, Overweight, AgeCategory.B
         )
 
         val entity = menuModel.toEntity()

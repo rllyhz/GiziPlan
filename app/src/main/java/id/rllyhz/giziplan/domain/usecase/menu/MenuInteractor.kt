@@ -1,12 +1,12 @@
 package id.rllyhz.giziplan.domain.usecase.menu
 
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.repository.GiziRepository
+import id.rllyhz.giziplan.domain.repository.DatabaseRepository
 import id.rllyhz.giziplan.domain.utils.DataState
 import kotlinx.coroutines.flow.Flow
 
 class MenuInteractor(
-    private val repository: GiziRepository
+    private val repository: DatabaseRepository
 ) : MenuUseCase {
     override suspend fun getAllMenus(): Flow<DataState<List<MenuModel>>> =
         repository.getAllMenus()

@@ -1,8 +1,8 @@
 package id.rllyhz.giziplan.utils.fakes
 
-import id.rllyhz.giziplan.createDummyMenuEntities
-import id.rllyhz.giziplan.createDummyMenuEntity
-import id.rllyhz.giziplan.createDummyRecommendationResultEntities
+import id.rllyhz.giziplan.utils.createDummyMenuEntities
+import id.rllyhz.giziplan.utils.createDummyMenuEntity
+import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntities
 import id.rllyhz.giziplan.data.local.db.GiziDao
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity

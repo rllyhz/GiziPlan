@@ -2,7 +2,13 @@ package id.rllyhz.giziplan.utils
 
 import id.rllyhz.giziplan.domain.model.AgeCategory
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.model.NutritionalStatusCategory
+import id.rllyhz.giziplan.domain.model.classification.ClassificationData
+import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
+import id.rllyhz.giziplan.domain.model.classification.Obese
+import id.rllyhz.giziplan.domain.model.classification.Overweight
+import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
+import id.rllyhz.giziplan.domain.model.classification.SeverelyWasted
+import id.rllyhz.giziplan.domain.model.classification.Wasted
 import kotlin.random.Random
 
 fun randomNum(min: Int, max: Int, exclude: Boolean = false) =
@@ -19,14 +25,14 @@ fun randomEnergy(): Double = Random.nextDouble(1.0, 5.0)
 fun randomFat(): Double = Random.nextFloat().toDouble()
 fun randomProtein(): Double = Random.nextDouble(3.0, 12.0)
 
-fun getRandomNutritionalStatusCategory(): NutritionalStatusCategory =
+fun getRandomNutritionalStatusCategory(): ClassificationData =
     when (randomNum(1, 5)) {
-        1 -> NutritionalStatusCategory.SeverelyWasted
-        2 -> NutritionalStatusCategory.Wasted
-        3 -> NutritionalStatusCategory.Normal
-        4 -> NutritionalStatusCategory.PossibleRiskOfOverweight
-        5 -> NutritionalStatusCategory.Overweight
-        else -> NutritionalStatusCategory.Normal
+        1 -> SeverelyWasted
+        2 -> Wasted
+        3 -> GoodNutritionalStatus
+        4 -> PossibleRiskOfOverweight
+        5 -> Overweight
+        else -> Obese
     }
 
 fun getRandomAgeCategory(): AgeCategory =

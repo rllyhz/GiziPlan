@@ -1,10 +1,9 @@
 package id.rllyhz.giziplan.data
 
-import id.rllyhz.giziplan.data.anthropometry.AnthropometryDataSource
 import id.rllyhz.giziplan.data.local.LocalDataSource
 import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.RecommendationResultModel
-import id.rllyhz.giziplan.domain.repository.GiziRepository
+import id.rllyhz.giziplan.domain.repository.DatabaseRepository
 import id.rllyhz.giziplan.domain.utils.DataState
 import id.rllyhz.giziplan.domain.utils.toEntities
 import id.rllyhz.giziplan.domain.utils.toModel
@@ -16,12 +15,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlin.coroutines.CoroutineContext
 
-class GiziRepositoryImpl(
-    private val anthropometryDataSource: AnthropometryDataSource,
+class DatabaseRepositoryImpl(
     private val localDataSource: LocalDataSource,
     private val ioDispatcher: CoroutineContext,
     private val isOnTesting: Boolean = false,
-) : GiziRepository {
+) : DatabaseRepository {
+
     override suspend fun getAllMenus(): Flow<DataState<List<MenuModel>>> =
         flow {
             emit(DataState.Loading())

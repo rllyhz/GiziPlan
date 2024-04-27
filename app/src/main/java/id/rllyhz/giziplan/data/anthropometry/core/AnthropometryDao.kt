@@ -1,0 +1,11 @@
+package id.rllyhz.giziplan.data.anthropometry.core
+
+import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryDataTable
+
+interface AnthropometryDao {
+    suspend fun getWeightToAgeDataTable(): AnthropometryDataTable
+
+    suspend fun getHeightToAgeDataTable(): AnthropometryDataTable
+
+    suspend fun getWeightToHeightDataTable(): AnthropometryDataTable
+}
