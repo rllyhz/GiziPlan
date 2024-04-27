@@ -2,34 +2,50 @@ package id.rllyhz.giziplan.domain.usecase.anthropometry
 
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryTables
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
-import id.rllyhz.giziplan.domain.model.NutritionalStatusCategory
+import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
+import id.rllyhz.giziplan.domain.model.classification.NormalHeight
+import id.rllyhz.giziplan.domain.model.classification.NormalWeight
+import id.rllyhz.giziplan.domain.model.classification.Obese
+import id.rllyhz.giziplan.domain.model.classification.Overweight
+import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
+import id.rllyhz.giziplan.domain.model.classification.RiskOfOverweight
+import id.rllyhz.giziplan.domain.model.classification.SeverelyStunted
+import id.rllyhz.giziplan.domain.model.classification.SeverelyUnderweight
+import id.rllyhz.giziplan.domain.model.classification.SeverelyWasted
+import id.rllyhz.giziplan.domain.model.classification.Stunted
+import id.rllyhz.giziplan.domain.model.classification.Tall
+import id.rllyhz.giziplan.domain.model.classification.Underweight
+import id.rllyhz.giziplan.domain.model.classification.Wasted
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
+import id.rllyhz.giziplan.domain.model.zscore.ZScoreClassificationData
+import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
 
 class AnthropometryInteractor(
     private val anthropometryTables: AnthropometryTables,
-    private val nutritionalStatusCategory: NutritionalStatusCategory,
 ) : AnthropometryUseCase {
     override fun measureZScoreForWeightToAge(
         measuredWeight: Double, age: Int, gender: Gender
-    ): Double? {
+    ): ZScoreData {
         val dataTable = if (gender == Gender.Male) {
             anthropometryTables.weightToAgeDataTable.malePopulationTable
         } else anthropometryTables.weightToAgeDataTable.femalePopulationTable
 
-        var outOfRange = true
+        var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
 
         for (i in dataTable.indices) {
             // find the same age
             if (dataTable[i].referenceValue.toInt() == age) {
-                outOfRange = false
+                isOutOfRangePopulation = false
                 foundIndexPopulation = i
                 break
             }
         }
 
-        if (outOfRange) {
-            return null
+        if (isOutOfRangePopulation) {
+            return ZScoreData(
+                0.0, ZScoreCategory.WeightToAge, true
+            )
         }
 
         val foundPopulationRow = dataTable[foundIndexPopulation]
@@ -47,30 +63,34 @@ class AnthropometryInteractor(
             else -> 0.0
         }
 
-        return measuredMinusMedian / sdp
+        return ZScoreData(
+            measuredMinusMedian / sdp, ZScoreCategory.WeightToAge, false
+        )
     }
 
     override fun measureZScoreForHeightToAge(
         measuredHeight: Double, age: Int, gender: Gender
-    ): Double? {
+    ): ZScoreData {
         val dataTable = if (gender == Gender.Male) {
             anthropometryTables.heightToAgeDataTable.malePopulationTable
         } else anthropometryTables.heightToAgeDataTable.femalePopulationTable
 
-        var outOfRange = true
+        var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
 
         for (i in dataTable.indices) {
             // find the same age
             if (dataTable[i].referenceValue.toInt() == age) {
-                outOfRange = false
+                isOutOfRangePopulation = false
                 foundIndexPopulation = i
                 break
             }
         }
 
-        if (outOfRange) {
-            return null
+        if (isOutOfRangePopulation) {
+            return ZScoreData(
+                0.0, ZScoreCategory.HeightToAge, true
+            )
         }
 
         val foundPopulationRow = dataTable[foundIndexPopulation]
@@ -88,30 +108,34 @@ class AnthropometryInteractor(
             else -> 0.0
         }
 
-        return measuredMinusMedian / sdp
+        return ZScoreData(
+            measuredMinusMedian / sdp, ZScoreCategory.HeightToAge, false
+        )
     }
 
     override fun measureZScoreForWeightToHeight(
         measuredWeight: Double, height: Double, gender: Gender
-    ): Double? {
+    ): ZScoreData {
         val dataTable = if (gender == Gender.Male) {
             anthropometryTables.weightToHeightDataTable.malePopulationTable
         } else anthropometryTables.weightToHeightDataTable.femalePopulationTable
 
-        var outOfRange = true
+        var isOutOfRangePopulation = true
         var foundIndexPopulation = 0
 
         for (i in dataTable.indices) {
             // find the same age
             if (dataTable[i].referenceValue == height) {
-                outOfRange = false
+                isOutOfRangePopulation = false
                 foundIndexPopulation = i
                 break
             }
         }
 
-        if (outOfRange) {
-            return null
+        if (isOutOfRangePopulation) {
+            return ZScoreData(
+                0.0, ZScoreCategory.WeightToHeight, true
+            )
         }
 
         val foundPopulationRow = dataTable[foundIndexPopulation]
@@ -129,35 +153,71 @@ class AnthropometryInteractor(
             else -> 0.0
         }
 
-        return measuredMinusMedian / sdp
+        return ZScoreData(
+            measuredMinusMedian / sdp, ZScoreCategory.WeightToHeight, false
+        )
     }
 
-    override fun classifyZScore(category: ZScoreCategory, zScore: Double): String =
-        when (category) {
+    override fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData =
+        when (zScoreData.zScoreCategory) {
             ZScoreCategory.WeightToAge -> {
-                if (zScore < -3.0) "berat_badan_sangat_kurang"
-                if (zScore >= -3.0 && zScore < -2.0) "berat_badan_kurang"
-                if (zScore >= -2.0 && zScore <= 1.0) "berat_badan_normal"
-                if (zScore > 1.0) "risiko_berat_badan_lebih"
-                else "unknown"
+                if (zScoreData.zScore < -3.0) ZScoreClassificationData(
+                    zScoreData, SeverelyUnderweight
+                )
+                if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
+                    zScoreData, Underweight
+                )
+                if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
+                    zScoreData, NormalWeight
+                )
+                if (zScoreData.zScore > 1.0) ZScoreClassificationData(
+                    zScoreData, RiskOfOverweight
+                )
+                else ZScoreClassificationData(
+                    zScoreData, NormalWeight
+                )
             }
 
             ZScoreCategory.HeightToAge -> {
-                if (zScore < -3.0) "sangat_pendek"
-                if (zScore >= -3.0 && zScore < -2.0) "pendek"
-                if (zScore >= -2.0 && zScore <= 3.0) "normal"
-                if (zScore > 3.0) "tinggi"
-                else "unknown"
+                if (zScoreData.zScore < -3.0) ZScoreClassificationData(
+                    zScoreData, SeverelyStunted
+                )
+                if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
+                    zScoreData, Stunted
+                )
+                if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
+                    zScoreData, NormalHeight
+                )
+                if (zScoreData.zScore > 3.0) ZScoreClassificationData(
+                    zScoreData, Tall
+                )
+                else ZScoreClassificationData(
+                    zScoreData, NormalHeight
+                )
             }
 
             ZScoreCategory.WeightToHeight -> {
-                if (zScore < -3.0) "gizi_buruk"
-                if (zScore >= -3.0 && zScore < -2.0) "gizi_kurang"
-                if (zScore >= -2.0 && zScore <= 1.0) "normal"
-                if (zScore > 1.0 && zScore <= 2.0) "berisiko_gizi_lebih"
-                if (zScore > 2.0 && zScore <= 3.0) "gizi_lebih"
-                if (zScore > 3.0) "obesitas"
-                else "unknown"
+                if (zScoreData.zScore < -3.0) ZScoreClassificationData(
+                    zScoreData, SeverelyWasted
+                )
+                if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
+                    zScoreData, Wasted
+                )
+                if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
+                    zScoreData, GoodNutritionalStatus
+                )
+                if (zScoreData.zScore > 1.0 && zScoreData.zScore <= 2.0) ZScoreClassificationData(
+                    zScoreData, PossibleRiskOfOverweight
+                )
+                if (zScoreData.zScore > 2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
+                    zScoreData, Overweight
+                )
+                if (zScoreData.zScore > 3.0) ZScoreClassificationData(
+                    zScoreData, Obese
+                )
+                else ZScoreClassificationData(
+                    zScoreData, NormalHeight
+                )
             }
         }
 }

@@ -30,7 +30,8 @@ object Wasted : WeightToHeightClassification(ClassificationTypeSuffixId), Classi
         "gizi_kurang"
 }
 
-object Normal : WeightToHeightClassification(ClassificationTypeSuffixId), ClassificationData {
+object GoodNutritionalStatus : WeightToHeightClassification(ClassificationTypeSuffixId),
+    ClassificationData {
     override fun getClassificationClassName(): String =
         WeightToHeightClassification::javaClass.name
 
