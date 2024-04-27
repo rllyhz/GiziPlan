@@ -9,40 +9,44 @@ fun readCSVFileInRawFolder(
     context: Context, resId: Int
 ): String = RawFilesReader(context).readFileByResId(resId)
 
-fun getPopulationTableDataByCSVFile(context: Context, csvResId: Int): List<List<Double>> {
-    val population = arrayListOf<List<Double>>()
-
+fun getPopulationTableDataByCSVFile(context: Context, csvResId: Int): List<List<String>> {
     val csvStringContent = readCSVFileInRawFolder(context, csvResId)
-    val lines = csvStringContent.lines()
+    return parseCSVContentToPopulationDataTable(csvStringContent)
+}
+
+fun parseCSVContentToPopulationDataTable(content: String): List<List<String>> {
+    val populationDataTable = arrayListOf<List<String>>()
+    val lines = content.lines()
 
     // remove header (line 1 and 2)
     lines.forEachIndexed { index, line ->
         if (index <= 1) return@forEachIndexed
 
         val cell = line.split(",").map {
-            it.trim().filter { char -> char.isDigit() || char == '.' }.toDouble()
+            it.trim().filter { char -> char.isDigit() || char == '.' }
         }
 
-        population.add(cell)
+        populationDataTable.add(cell)
     }
 
-    return population
+    return populationDataTable
 }
 
-fun getWeightToAgePopulationTableData(context: Context, gender: Gender): List<List<Double>> =
-    if (gender == Gender.Male)
-        getPopulationTableDataByCSVFile(context, R.raw.bb_menurut_umur_laki_laki)
-    else
-        getPopulationTableDataByCSVFile(context, R.raw.bb_menurut_umur_perempuan)
+fun getWeightToAgePopulationTableData(context: Context, gender: Gender): List<List<String>> =
+    if (gender == Gender.Male) getPopulationTableDataByCSVFile(
+        context, R.raw.lklk_bb_per_u_0_60
+    )
+    else getPopulationTableDataByCSVFile(context, R.raw.perem_bb_per_u_0_60)
 
-fun getHeightToAgePopulationTableData(context: Context, gender: Gender): List<List<Double>> =
-    if (gender == Gender.Male)
-        getPopulationTableDataByCSVFile(context, R.raw.pb_atau_tb_menurut_umur_laki_laki)
-    else
-        getPopulationTableDataByCSVFile(context, R.raw.pb_atau_tb_menurut_umur_perempuan)
+fun getHeightToAgePopulationTableData(context: Context, gender: Gender): List<List<String>> =
+    if (gender == Gender.Male) getPopulationTableDataByCSVFile(
+        context, R.raw.lklk_pb_tb_per_u_0_60
+    )
+    else getPopulationTableDataByCSVFile(context, R.raw.perem_pb_tb_per_u_0_60)
 
-fun getWeightToHeightPopulationTableData(context: Context, gender: Gender): List<List<Double>> =
-    if (gender == Gender.Male)
-        getPopulationTableDataByCSVFile(context, R.raw.bb_menurut_pb_atau_tb_laki_laki)
-    else
-        getPopulationTableDataByCSVFile(context, R.raw.bb_menurut_pb_atau_tb_perempuan)
+fun getWeightToHeightPopulationTableData(context: Context, gender: Gender): List<List<String>> =
+    if (gender == Gender.Male) getPopulationTableDataByCSVFile(
+        context, R.raw.bb_menurut_pb_atau_tb_laki_laki // TODO replace with the actual table
+    )
+    // TODO replace with the actual table
+    else getPopulationTableDataByCSVFile(context, R.raw.bb_menurut_pb_atau_tb_perempuan)

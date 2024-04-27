@@ -4,7 +4,7 @@ import id.rllyhz.giziplan.data.anthropometry.model.PopulationRow
 import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 
-fun List<List<Double>>.toPopulationRow(
+fun List<List<String>>.toPopulationRow(
     referenceValueType: ReferenceValueType,
     populationValueType: PopulationValueType
 ): List<PopulationRow> {

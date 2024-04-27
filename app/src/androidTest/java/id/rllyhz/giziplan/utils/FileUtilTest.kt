@@ -13,7 +13,7 @@ class FileUtilTest {
     @Test
     fun getCSVFileInRawFolder() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val csvContent = readCSVFileInRawFolder(appContext, R.raw.bb_menurut_umur_laki_laki)
+        val csvContent = readCSVFileInRawFolder(appContext, R.raw.lklk_bb_per_u_0_60)
 
         assertTrue(csvContent.isNotEmpty())
     }
@@ -33,12 +33,14 @@ class FileUtilTest {
             )
 
         assertTrue(malePopulationTableTableData.isNotEmpty())
-        assertEquals(30, malePopulationTableTableData.size)
-        assertEquals(29.0, malePopulationTableTableData.last().first(), 0.0)
+        assertEquals(61, malePopulationTableTableData.size)
+        assertEquals("60", malePopulationTableTableData.last().first())
+        assertEquals("27.9", malePopulationTableTableData.last().last())
 
         assertTrue(femalePopulationTableTableData.isNotEmpty())
-        assertEquals(25, femalePopulationTableTableData.size)
-        assertEquals(24.0, femalePopulationTableTableData.last().first(), 0.0)
+        assertEquals(61, femalePopulationTableTableData.size)
+        assertEquals("60", femalePopulationTableTableData.last().first())
+        assertEquals("29.5", femalePopulationTableTableData.last().last())
     }
 
     @Test
@@ -56,12 +58,14 @@ class FileUtilTest {
             )
 
         assertTrue(malePopulationTableTableData.isNotEmpty())
-        assertEquals(25, malePopulationTableTableData.size)
-        assertEquals(24.0, malePopulationTableTableData.last().first(), 0.0)
+        assertEquals(61, malePopulationTableTableData.size)
+        assertEquals("60", malePopulationTableTableData.last().first())
+        assertEquals("123.9", malePopulationTableTableData.last().last())
 
         assertTrue(femalePopulationTableTableData.isNotEmpty())
-        assertEquals(20, femalePopulationTableTableData.size)
-        assertEquals(19.0, femalePopulationTableTableData.last().first(), 0.0)
+        assertEquals(61, femalePopulationTableTableData.size)
+        assertEquals("60", femalePopulationTableTableData.last().first())
+        assertEquals("123.7", femalePopulationTableTableData.last().last())
     }
 
     @Test
@@ -80,10 +84,10 @@ class FileUtilTest {
 
         assertTrue(malePopulationTableTableData.isNotEmpty())
         assertEquals(20, malePopulationTableTableData.size)
-        assertEquals(54.5, malePopulationTableTableData.last().first(), 0.0)
+        assertEquals("54.5", malePopulationTableTableData.last().first())
 
         assertTrue(femalePopulationTableTableData.isNotEmpty())
         assertEquals(15, femalePopulationTableTableData.size)
-        assertEquals(52.0, femalePopulationTableTableData.last().first(), 0.0)
+        assertEquals("52.0", femalePopulationTableTableData.last().first())
     }
 }

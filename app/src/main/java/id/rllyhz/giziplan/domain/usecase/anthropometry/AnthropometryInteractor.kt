@@ -19,10 +19,13 @@ import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreClassificationData
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
 import id.rllyhz.giziplan.domain.repository.AnthropometryRepository
+import java.math.RoundingMode
+import java.text.DecimalFormat
 
 class AnthropometryInteractor(
     private val repository: AnthropometryRepository,
 ) : AnthropometryUseCase {
+
     override suspend fun measureZScoreForWeightToAge(
         measuredWeight: Double, age: Int, gender: Gender
     ): ZScoreData {
@@ -47,22 +50,28 @@ class AnthropometryInteractor(
         }
 
         val foundPopulationRow = dataTable[foundIndexPopulation]
-        val measuredMinusMedian = measuredWeight - foundPopulationRow.median
+
+        val min1SD = foundPopulationRow.min1SD
+        val median = foundPopulationRow.median
+        val plus1SD = foundPopulationRow.plus1SD
 
         val sdp = when {
-            measuredWeight < foundPopulationRow.median -> {
-                foundPopulationRow.median - foundPopulationRow.min1SD
+            measuredWeight > median.toDouble() -> {
+                plus1SD.toBigDecimal() - median.toBigDecimal()
             }
 
-            measuredWeight > foundPopulationRow.median -> {
-                foundPopulationRow.plus1SD - foundPopulationRow.median
+            measuredWeight < median.toDouble() -> {
+                median.toBigDecimal() - min1SD.toBigDecimal()
             }
 
-            else -> 0.0
+            else -> "0.0".toBigDecimal()
         }
 
+        val measuredMinusMedian = measuredWeight.toString().toBigDecimal() - median.toBigDecimal()
+        val zScore = measuredMinusMedian.divide(sdp, 2, RoundingMode.HALF_DOWN)
+
         return ZScoreData(
-            measuredMinusMedian / sdp, ZScoreCategory.WeightToAge, false
+            zScore.toDouble(), ZScoreCategory.WeightToAge, false
         )
     }
 
@@ -90,22 +99,28 @@ class AnthropometryInteractor(
         }
 
         val foundPopulationRow = dataTable[foundIndexPopulation]
-        val measuredMinusMedian = measuredHeight - foundPopulationRow.median
+
+        val min1SD = foundPopulationRow.min1SD
+        val median = foundPopulationRow.median
+        val plus1SD = foundPopulationRow.plus1SD
 
         val sdp = when {
-            measuredHeight < foundPopulationRow.median -> {
-                foundPopulationRow.median - foundPopulationRow.min1SD
+            measuredHeight > median.toDouble() -> {
+                plus1SD.toBigDecimal() - median.toBigDecimal()
             }
 
-            measuredHeight > foundPopulationRow.median -> {
-                foundPopulationRow.plus1SD - foundPopulationRow.median
+            measuredHeight < median.toDouble() -> {
+                median.toBigDecimal() - min1SD.toBigDecimal()
             }
 
-            else -> 0.0
+            else -> "0.0".toBigDecimal()
         }
 
+        val measuredMinusMedian = measuredHeight.toString().toBigDecimal() - median.toBigDecimal()
+        val zScore = measuredMinusMedian.divide(sdp, 2, RoundingMode.HALF_DOWN)
+
         return ZScoreData(
-            measuredMinusMedian / sdp, ZScoreCategory.HeightToAge, false
+            zScore.toDouble(), ZScoreCategory.HeightToAge, false
         )
     }
 
@@ -119,7 +134,7 @@ class AnthropometryInteractor(
 
         for (i in dataTable.indices) {
             // find the same age
-            if (dataTable[i].referenceValue == height) {
+            if (dataTable[i].referenceValue.toDouble() == height) {
                 isOutOfRangePopulation = false
                 foundIndexPopulation = i
                 break
@@ -133,22 +148,28 @@ class AnthropometryInteractor(
         }
 
         val foundPopulationRow = dataTable[foundIndexPopulation]
-        val measuredMinusMedian = measuredWeight - foundPopulationRow.median
+
+        val min1SD = foundPopulationRow.min1SD
+        val median = foundPopulationRow.median
+        val plus1SD = foundPopulationRow.plus1SD
 
         val sdp = when {
-            measuredWeight < foundPopulationRow.median -> {
-                foundPopulationRow.median - foundPopulationRow.min1SD
+            measuredWeight > median.toDouble() -> {
+                plus1SD.toBigDecimal() - median.toBigDecimal()
             }
 
-            measuredWeight > foundPopulationRow.median -> {
-                foundPopulationRow.plus1SD - foundPopulationRow.median
+            measuredWeight < median.toDouble() -> {
+                median.toBigDecimal() - min1SD.toBigDecimal()
             }
 
-            else -> 0.0
+            else -> "0.0".toBigDecimal()
         }
 
+        val measuredMinusMedian = measuredWeight.toString().toBigDecimal() - median.toBigDecimal()
+        val zScore = measuredMinusMedian.divide(sdp, 2, RoundingMode.HALF_DOWN)
+
         return ZScoreData(
-            measuredMinusMedian / sdp, ZScoreCategory.WeightToHeight, false
+            zScore.toDouble(), ZScoreCategory.WeightToHeight, false
         )
     }
 

@@ -8,15 +8,6 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="getHeightToAgePopulationTableData()">
-        <State />
-      </entry>
-      <entry key="getWeightToAgePopulationData()">
-        <State />
-      </entry>
-      <entry key="getWeightToHeightPopulationTableData()">
-        <State />
-      </entry>
     </value>
   </component>
 </project>
