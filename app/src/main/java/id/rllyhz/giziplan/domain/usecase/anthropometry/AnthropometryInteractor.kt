@@ -3,7 +3,7 @@ package id.rllyhz.giziplan.domain.usecase.anthropometry
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryTables
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.domain.model.NutritionalStatusCategory
-import id.rllyhz.giziplan.domain.model.ZScoreCategory
+import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
 
 class AnthropometryInteractor(
     private val anthropometryTables: AnthropometryTables,

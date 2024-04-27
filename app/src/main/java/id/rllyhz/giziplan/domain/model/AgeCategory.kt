@@ -1,7 +1,7 @@
 package id.rllyhz.giziplan.domain.model
 
 sealed class AgeCategory(
-    val stringCategory: String = "A"
+    val stringCategory: String
 ) {
     // age 6-8 months
     data object A : AgeCategory("A")

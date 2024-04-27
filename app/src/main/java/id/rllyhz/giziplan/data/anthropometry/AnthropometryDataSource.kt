@@ -7,7 +7,7 @@ import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.data.anthropometry.type.MeasuredValueType
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.anthropometry.utils.toPopulationRow
-import id.rllyhz.giziplan.domain.model.ZScoreCategory
+import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
 import id.rllyhz.giziplan.utils.getWeightToAgePopulationTableData
 
 open class AnthropometryDataSource(
