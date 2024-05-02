@@ -19,9 +19,11 @@ class FakeAnthropometryDao : AnthropometryDao {
             PopulationValueType.HeightInCentimeters
         )
 
-    override suspend fun getWeightToHeightDataTable(): AnthropometryDataTable =
-        createDummyDataTable(
-            ReferenceValueType.HeightInCentimeters,
-            PopulationValueType.WeightInKilograms
-        )
+    override suspend fun getWeightToHeightLessThan24DataTable(): AnthropometryDataTable {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getWeightToHeightGreaterThan24DataTable(): AnthropometryDataTable {
+        TODO("Not yet implemented")
+    }
 }
