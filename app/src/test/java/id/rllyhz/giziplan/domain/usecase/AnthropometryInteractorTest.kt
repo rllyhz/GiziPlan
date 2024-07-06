@@ -313,22 +313,22 @@ class AnthropometryInteractorTest {
             Assert.assertTrue(result1.isOutOfRangePopulation)
 
             val result2 = interactor.measureZScoreForWeightToHeight(
-                2.8, // in kg
-                48.0, // in cm
+                7.8, // in kg
+                67.0, // in cm
                 false,
                 Gender.Male
             )
 
-            Assert.assertEquals(-0.5, result2.zScore, 0.0)
+            Assert.assertEquals(-0.17, result2.zScore, 0.0)
 
             val result3 = interactor.measureZScoreForWeightToHeight(
-                11.2, // in kg
-                80.5, // in cm
+                10.2, // in kg
+                70.5, // in cm
                 false,
                 Gender.Male
             )
 
-            Assert.assertEquals(0.7, result3.zScore, 0.0)
+            Assert.assertEquals(1.87, result3.zScore, 0.0)
         }
 
     // TODO change assertion statements to adapt to the greater than 24 population
@@ -339,19 +339,19 @@ class AnthropometryInteractorTest {
                 .thenReturn(weightToHeightGreaterThan24DataTable.femalePopulationTable)
 
             val result1 = interactor.measureZScoreForWeightToHeight(
-                2.6, 64.9, false, Gender.Female
+                2.6, 62.0, false, Gender.Female
             )
 
             Assert.assertTrue(result1.isOutOfRangePopulation)
 
             val result2 = interactor.measureZScoreForWeightToHeight(
-                4.2, // in kg
-                50.0, // in cm
+                6.4, // in kg
+                66.0, // in cm
                 false,
                 Gender.Female
             )
 
-            Assert.assertEquals(2.67, result2.zScore, 0.0)
+            Assert.assertEquals(-2.17, result2.zScore, 0.0)
 
             val result3 = interactor.measureZScoreForWeightToHeight(
                 18.3, // in kg
@@ -360,6 +360,6 @@ class AnthropometryInteractorTest {
                 Gender.Female
             )
 
-            Assert.assertEquals(0.41, result3.zScore, 0.0)
+            Assert.assertEquals(0.29, result3.zScore, 0.0)
         }
 }
