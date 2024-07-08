@@ -994,3 +994,37 @@ val femaleWeightToHeight_24_60_CSVContent = """
     "119.5","17.1","18.7","20.5","22.6","25.0","27.7","30.9"
     "120.0","17.3","18.9","20.7","22.8","25.2","28.0","31.2"
 """.trimIndent()
+
+
+// Fake menus
+val fakeMenuList = arrayListOf<MenuModel>().apply {
+    add(
+        MenuModel(
+            0, "Menu 1",
+            "ingredient1; ingredient2; ingredient3;",
+            "instruction1; instruction2; instruction3;",
+            "wasted", "A",
+            0.0, 0.0, 0.0
+        )
+    )
+
+    add(
+        MenuModel(
+            1, "Menu 2",
+            "2,2; Label1, Label2; ingredient1; ingredient2; ingredient3; ingredient4; ingredient5;",
+            "instruction1; instruction2; instruction3;",
+            "normal", "A",
+            0.0, 0.0, 0.0
+        )
+    )
+
+    add(
+        MenuModel(
+            1, "Menu 3",
+            "3,3,3; Label1, Label2, Label3; ingredient1; ingredient2; ingredient3; ingredient4; ingredient5; ingredient6; ingredient7;",
+            "instruction1; instruction2; instruction3;",
+            "normal", "B",
+            0.0, 0.0, 0.0
+        )
+    )
+}
