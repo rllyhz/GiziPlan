@@ -4,8 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
+import id.rllyhz.giziplan.data.local.db.utils.toMenuEntity
+import id.rllyhz.giziplan.utils.getMenuData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Database(
     entities = [MenuEntity::class, RecommendationResultEntity::class],
@@ -26,8 +32,27 @@ abstract class GiziDatabase : RoomDatabase() {
                     GiziDatabase::class.java,
                     "rllyhz_giziplan.db"
                 )
+                    .addCallback(prepopulateMenuCallback(context))
                     .fallbackToDestructiveMigration()
                     .build()
             }
+
+        private fun prepopulateMenuCallback(context: Context): Callback =
+            object : Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+
+                    val menu = getMenuData(context)
+
+                    GlobalScope.launch(Dispatchers.IO) {
+                        val data = menu.toMenuEntity()
+                        populateMenu(context, data)
+                    }
+                }
+            }
+
+        private suspend fun populateMenu(context: Context, data: List<MenuEntity>) {
+            getInstance(context).getDao().insertAllMenus(data)
+        }
     }
 }

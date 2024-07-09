@@ -4,6 +4,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import id.rllyhz.giziplan.R
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
+import id.rllyhz.giziplan.data.local.db.utils.toMenuEntity
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,6 +17,26 @@ class FileUtilTest {
         val csvContent = readCSVFileInRawFolder(appContext, R.raw.lklk_bb_per_u_0_60)
 
         assertTrue(csvContent.isNotEmpty())
+    }
+
+    @Test
+    fun getMenuData() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        val csvContent = getMenuDataByCSVFile(appContext)
+
+        val menuData = csvContent.toMenuEntity()
+
+        assertTrue(csvContent.isNotEmpty())
+        assertTrue(menuData.isNotEmpty())
+        assertEquals(60, menuData.size)
+
+        assertEquals("Bubur Singkong Kukuruyuk Saus Jeruk", menuData.first().name)
+        assertEquals("normal", menuData.first().nutritionalStatusCategory)
+        assertEquals("A", menuData.first().ageCategory)
+
+        assertEquals("Mie Goreng Telur Puyuh", menuData.last().name)
+        assertEquals("lebih", menuData.last().nutritionalStatusCategory)
+        assertEquals("D", menuData.last().ageCategory)
     }
 
     @Test
@@ -72,22 +93,22 @@ class FileUtilTest {
     fun getWeightToHeightPopulationTableData() {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         val malePopulationTableTableData =
-            getWeightToHeightPopulationTableData(
+            getWeightToHeightLessThan24PopulationTableData(
                 appContext,
                 Gender.Male
             )
         val femalePopulationTableTableData =
-            getWeightToHeightPopulationTableData(
+            getWeightToHeightLessThan24PopulationTableData(
                 appContext,
                 Gender.Female
             )
 
         assertTrue(malePopulationTableTableData.isNotEmpty())
-        assertEquals(20, malePopulationTableTableData.size)
-        assertEquals("54.5", malePopulationTableTableData.last().first())
+        assertEquals(131, malePopulationTableTableData.size)
+        assertEquals("110.0", malePopulationTableTableData.last().first())
 
         assertTrue(femalePopulationTableTableData.isNotEmpty())
-        assertEquals(15, femalePopulationTableTableData.size)
-        assertEquals("52.0", femalePopulationTableTableData.last().first())
+        assertEquals(131, femalePopulationTableTableData.size)
+        assertEquals("110.0", femalePopulationTableTableData.last().first())
     }
 }
