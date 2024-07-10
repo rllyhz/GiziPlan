@@ -5,7 +5,7 @@
     <color name="grey_color">#FFF2F2F2</color>
     <color name="dark_grey_color">#FF7A7A7A</color>
 
-    <color name="soft_background">#FFF2FFF0</color>
+    <color name="soft_background">#F4F8F4</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

@@ -1,0 +1,49 @@
+package id.rllyhz.giziplan.ui.detail
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.google.android.material.tabs.TabLayoutMediator
+import id.rllyhz.giziplan.R
+import id.rllyhz.giziplan.databinding.ActivityDetailMenuBinding
+import id.rllyhz.giziplan.domain.model.MenuModel
+
+class DetailMenuActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDetailMenuBinding
+    private lateinit var adapter: DescriptionPagerAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_GiziPlan)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.grey_color)
+
+        binding = ActivityDetailMenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val detailMenu = intent.getParcelableExtra<MenuModel>(intentDetailMenuDataKey)!!
+        adapter = DescriptionPagerAdapter(this, detailMenu)
+
+        with(binding) {
+            detailMenuTvMenuTitle.text = detailMenu.name
+            detailMenuTvEnergyValue.text =
+                resources.getString(R.string.energy_template, detailMenu.energyKiloCal.toString())
+            detailMenuTvProteinValue.text =
+                resources.getString(R.string.protein_template, detailMenu.proteinGr.toString())
+            detailMenuTvFatValue.text =
+                resources.getString(R.string.fat_template, detailMenu.fatGr.toString())
+
+            detailMenuViewPager.adapter = adapter
+            TabLayoutMediator(detailMenuTabLayout, detailMenuViewPager) { tab, position ->
+                tab.text = resources.getString(DescriptionPagerAdapter.tabTitles[position])
+            }.attach()
+
+            detailMenuIvBack.setOnClickListener {
+                finish()
+            }
+        }
+    }
+
+    companion object {
+        const val intentDetailMenuDataKey = "intentDetailMenuDataKey"
+    }
+}

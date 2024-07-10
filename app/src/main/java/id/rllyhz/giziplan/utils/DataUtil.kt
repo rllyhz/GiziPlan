@@ -79,3 +79,7 @@ fun createDummyMenuData(amount: Int = 20): List<MenuModel> {
 
     return menuList
 }
+
+fun String.capitalize(): String = this.replaceFirstChar {
+    it.uppercase()
+}

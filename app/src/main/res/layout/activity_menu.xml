@@ -10,6 +10,28 @@
         android:id="@+id/custom_app_bar_layout"
         layout="@layout/appbar_layout" />
 
+    <ProgressBar
+        android:id="@+id/menu_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_app_bar_layout" />
+
+    <TextView
+        android:id="@+id/menu_tv_error_message"
+        style="@style/TextStyle.Error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/failed_to_load_menu_message"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/menu_tv_heading"
         style="@style/TextStyle.Heading"
@@ -18,6 +40,7 @@
         android:layout_marginTop="32dp"
         android:paddingHorizontal="16dp"
         android:text="@string/text_menu"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/custom_app_bar_layout" />
 
@@ -30,20 +53,25 @@
         android:overScrollMode="never"
         android:paddingTop="8dp"
         android:paddingBottom="12dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/menu_tv_heading"
         tools:itemCount="10"
-        tools:listitem="@layout/item_menu" />
+        tools:listitem="@layout/item_menu"
+        tools:visibility="visible" />
 
     <View
+        android:id="@+id/menu_fading_view"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:background="@drawable/bg_overlay_transparent"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/menu_tv_heading" />
+        app:layout_constraintTop_toBottomOf="@id/menu_tv_heading"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

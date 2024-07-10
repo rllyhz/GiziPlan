@@ -11,6 +11,18 @@
         <item name="android:fontFamily">@font/opensans_light</item>
     </style>
 
+    <style name="TextStyle.Error">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dark_grey_color</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+    </style>
+
+    <style name="TextStyle.Error.OnDark">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+    </style>
+
     <style name="TextStyle.DropdownItem">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/opensans_regular</item>
@@ -23,7 +35,7 @@
     </style>
 
     <style name="TextStyle.MenuTitle">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/opensans_regular</item>
     </style>
@@ -44,6 +56,41 @@
     <style name="TextStyle.StatusValue">
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/dark_grey_color</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextStyle.NutritionInfoLabel">
+        <item name="android:textColor">@color/dark_grey_color</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextStyle.NutritionInfoValue">
+        <item name="android:textColor">@color/dark_grey_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TabLayoutTextAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextStyle.MenuDescriptionLabel">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/brand_color</item>
+        <item name="android:fontFamily">@font/opensans_regular</item>
+    </style>
+
+    <style name="TextStyle.MenuDescriptionRowText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:maxLines">10</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/dark_grey_color</item>
         <item name="android:fontFamily">@font/opensans_regular</item>
     </style>

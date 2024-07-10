@@ -30,10 +30,20 @@
     <string name="text_status_by_bbu_value">Berat Badan \nNormal</string>
     <string name="text_status_by_bbpb_value">Gizi\nBaik</string>
     <string name="text_recommendation_result">Menu Rekomendasi</string>
+    <string name="failed_to_load_menu_message">Maaf! \nGagal memuat data menu</string>
+    <string name="protein_label">Protein</string>
+    <string name="energy_label">Energi</string>
+    <string name="fat_label">Lemak</string>
+    <string name="ingridients_label">Bahan-bahan</string>
+    <string name="instructions_label">Cara Memasak</string>
 
     <string-array name="gender">
         <item>--Jenis Kelamin--</item>
         <item>Laki-laki</item>
         <item>Perempuan</item>
     </string-array>
+
+    <string name="energy_template">%s kkal</string>
+    <string name="protein_template">%s gr</string>
+    <string name="fat_template">%s gr</string>
 </resources>

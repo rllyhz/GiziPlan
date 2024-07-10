@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.rllyhz.giziplan.databinding.ItemMenuBinding
 import id.rllyhz.giziplan.domain.model.MenuModel
+import id.rllyhz.giziplan.utils.capitalize
 
 class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(Comparator) {
 
@@ -36,7 +37,7 @@ class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(C
         fun bind(menu: MenuModel, position: Int) {
             with(binding) {
                 menuItemTvMenuTitle.text = menu.name
-                menuItemTvMenuDescription.text = menu.description
+                menuItemTvMenuDescription.text = menu.description?.capitalize()
 
                 menuItemCardBackground.setOnClickListener {
                     itemClickedListener?.invoke(menu, position)

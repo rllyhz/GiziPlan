@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.DetailMenuActivity">
+
+    <ImageView
+        android:id="@+id/detail_menu_iv_menu_image"
+        android:layout_width="wrap_content"
+        android:layout_height="168dp"
+        android:contentDescription="@string/dummy_text_menu_title"
+        android:scaleType="centerCrop"
+        android:src="@drawable/preview_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/detail_menu_iv_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/icon_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_menu_tv_menu_title"
+        style="@style/TextStyle.MenuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/dummy_text_menu_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_menu_iv_menu_image" />
+
+    <!--  Nutrition Info  -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_menu_card_view_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_menu_title">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/detail_menu_tv_protein_label"
+                style="@style/TextStyle.NutritionInfoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/protein_label"
+                android:textColor="@color/primary_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detail_menu_tv_protein_value"
+                style="@style/TextStyle.NutritionInfoValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_grey_color"
+                app:layout_constraintEnd_toEndOf="@id/detail_menu_tv_protein_label"
+                app:layout_constraintStart_toStartOf="@id/detail_menu_tv_protein_label"
+                app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_protein_label"
+                tools:text="12,2 gr" />
+
+            <View
+                android:id="@+id/detail_menu_info_left_line"
+                android:layout_width="3dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="-28dp"
+                android:background="@drawable/line"
+                app:layout_constraintBottom_toBottomOf="@id/detail_menu_tv_protein_value"
+                app:layout_constraintStart_toStartOf="@id/detail_menu_tv_protein_label"
+                app:layout_constraintTop_toTopOf="@id/detail_menu_tv_protein_label" />
+
+            <View
+                android:id="@+id/detail_menu_info_right_line"
+                android:layout_width="3dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="24dp"
+                android:background="@drawable/line"
+                app:layout_constraintBottom_toBottomOf="@id/detail_menu_tv_protein_value"
+                app:layout_constraintStart_toEndOf="@id/detail_menu_tv_protein_label"
+                app:layout_constraintTop_toTopOf="@id/detail_menu_tv_protein_label" />
+
+            <TextView
+                android:id="@+id/detail_menu_tv_energy_label"
+                style="@style/TextStyle.NutritionInfoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:text="@string/energy_label"
+                android:textColor="@color/primary_color"
+                app:layout_constraintEnd_toStartOf="@id/detail_menu_info_left_line"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detail_menu_tv_energy_value"
+                style="@style/TextStyle.NutritionInfoValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_grey_color"
+                app:layout_constraintEnd_toEndOf="@id/detail_menu_tv_energy_label"
+                app:layout_constraintStart_toStartOf="@id/detail_menu_tv_energy_label"
+                app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_energy_label"
+                tools:text="120,5 kkal" />
+
+            <TextView
+                android:id="@+id/detail_menu_tv_fat_label"
+                style="@style/TextStyle.NutritionInfoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="@string/fat_label"
+                android:textColor="@color/primary_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/detail_menu_info_right_line"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/detail_menu_tv_fat_value"
+                style="@style/TextStyle.NutritionInfoValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/dark_grey_color"
+                app:layout_constraintEnd_toEndOf="@id/detail_menu_tv_fat_label"
+                app:layout_constraintStart_toStartOf="@id/detail_menu_tv_fat_label"
+                app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_fat_label"
+                tools:text="4,1 gr" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+    <!--  Nutrition Info  -->
+
+    <!--  Description  -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bg_detail_menu_description"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_menu_card_view_info">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/detail_menu_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/brand_color"
+            app:tabSelectedTextColor="@color/brand_color"
+            app:tabTextAppearance="@style/TabLayoutTextAppearance"
+            app:tabTextColor="@color/dark_grey_color" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/detail_menu_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+    <!--  Description  -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
