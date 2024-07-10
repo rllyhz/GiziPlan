@@ -46,4 +46,5 @@
     <string name="energy_template">%s kkal</string>
     <string name="protein_template">%s gr</string>
     <string name="fat_template">%s gr</string>
+    <string name="preparing_result_label">Mempersiapkan hasil</string>
 </resources>

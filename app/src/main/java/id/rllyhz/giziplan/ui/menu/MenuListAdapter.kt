@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import id.rllyhz.giziplan.databinding.ItemMenuBinding
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.utils.capitalize
 
 class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(Comparator) {
 
@@ -37,7 +36,13 @@ class MenuListAdapter : ListAdapter<MenuModel, MenuListAdapter.MenuViewHolder>(C
         fun bind(menu: MenuModel, position: Int) {
             with(binding) {
                 menuItemTvMenuTitle.text = menu.name
-                menuItemTvMenuDescription.text = menu.description?.capitalize()
+                menuItemTvMenuDescription.text = when (menu.ageCategory.uppercase()) {
+                    "A" -> "Untuk umur 6-8 bulan"
+                    "B" -> "Untuk umur 9-11 bulan"
+                    "C" -> "Untuk umur 12-23 bulan"
+                    "D" -> "Untuk umur 24-59 bulan"
+                    else -> "Untuk umur 6-8 bulan"
+                }
 
                 menuItemCardBackground.setOnClickListener {
                     itemClickedListener?.invoke(menu, position)

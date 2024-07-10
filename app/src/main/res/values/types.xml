@@ -94,4 +94,10 @@
         <item name="android:textColor">@color/dark_grey_color</item>
         <item name="android:fontFamily">@font/opensans_regular</item>
     </style>
+
+    <style name="TextStyle.PreparingResultLabelText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dark_grey_color</item>
+        <item name="android:fontFamily">@font/opensans_light</item>
+    </style>
 </resources>
