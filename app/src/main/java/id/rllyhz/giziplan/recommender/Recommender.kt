@@ -80,10 +80,12 @@ object Recommender {
     }
 
     fun getRecommendation(
-        nutritionStatus: String, age: Int, overview: List<String>, n: Int = 3
+        nutritionStatus: String, ageInMonths: Int, overview: List<String>, n: Int = 3
     ): List<Int> {
         val query =
-            "status gizi " + parseNutritionStatus(nutritionStatus) + " untuk " + parseAge(age)
+            "status gizi " + parseNutritionStatus(nutritionStatus) + " untuk " + parseAge(
+                ageInMonths
+            )
 
         val tfidfList = calculateTFIDF(overview)
         val queryTFIDF = calculateTFIDF(listOf(query))[0]
