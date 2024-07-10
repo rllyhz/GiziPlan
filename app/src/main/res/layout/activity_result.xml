@@ -92,6 +92,7 @@
                             android:src="@drawable/icon_height" />
 
                         <TextView
+                            android:id="@+id/result_status_pbu_value"
                             style="@style/TextStyle.StatusValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -99,7 +100,6 @@
                             android:text="@string/text_status_by_pbu_value" />
 
                         <TextView
-                            android:id="@+id/result_status_pbu_value"
                             style="@style/TextStyle.StatusLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -120,6 +120,7 @@
                             android:src="@drawable/icon_weight" />
 
                         <TextView
+                            android:id="@+id/result_status_bbu_value"
                             style="@style/TextStyle.StatusValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -127,7 +128,6 @@
                             android:text="@string/text_status_by_bbu_value" />
 
                         <TextView
-                            android:id="@+id/result_status_bbu_value"
                             style="@style/TextStyle.StatusLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -148,6 +148,7 @@
                             android:src="@drawable/icon_baby" />
 
                         <TextView
+                            android:id="@+id/result_status_bbpb_value"
                             style="@style/TextStyle.StatusValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -155,7 +156,6 @@
                             android:text="@string/text_status_by_bbpb_value" />
 
                         <TextView
-                            android:id="@+id/result_status_bbpb_value"
                             style="@style/TextStyle.StatusLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

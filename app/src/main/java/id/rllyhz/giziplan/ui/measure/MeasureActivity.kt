@@ -36,10 +36,7 @@ class MeasureActivity : AppCompatActivity() {
             measureSpinnerGender.onItemSelectedListener =
                 object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
+                        parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         selectedGender = position
                     }
@@ -84,7 +81,16 @@ class MeasureActivity : AppCompatActivity() {
 
                 if (!isValid) return@setOnClickListener
 
+                val weight = measureEtWeight.text.toString().toDoubleOrNull() ?: 0.0
+                val height = measureEtHeight.text.toString().toDoubleOrNull() ?: 0.0
+                val age = measureEtAge.text.toString().toIntOrNull() ?: 0
+                val gender = selectedGender
+
                 Intent(this@MeasureActivity, ResultActivity::class.java).also { i ->
+                    i.putExtra(ResultActivity.intentDataWeight, weight)
+                    i.putExtra(ResultActivity.intentDataHeight, height)
+                    i.putExtra(ResultActivity.intentDataAge, age)
+                    i.putExtra(ResultActivity.intentDataGender, gender)
                     startActivity(i)
                 }
             }

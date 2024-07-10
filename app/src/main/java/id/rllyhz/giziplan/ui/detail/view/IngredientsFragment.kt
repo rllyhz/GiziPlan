@@ -34,7 +34,7 @@ class IngredientsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentViewIngredientsBinding.inflate(inflater, container, false)
         return binding.root
     }

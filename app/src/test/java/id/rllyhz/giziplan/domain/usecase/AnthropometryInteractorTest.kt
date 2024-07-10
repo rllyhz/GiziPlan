@@ -5,6 +5,9 @@ import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.utils.toPopulationRow
+import id.rllyhz.giziplan.domain.model.classification.NormalHeight
+import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
+import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
 import id.rllyhz.giziplan.domain.repository.AnthropometryRepository
 import id.rllyhz.giziplan.domain.usecase.anthropometry.AnthropometryInteractor
 import id.rllyhz.giziplan.utils.femaleHeightToAgeCSVContent
@@ -361,5 +364,20 @@ class AnthropometryInteractorTest {
             )
 
             Assert.assertEquals(0.29, result3.zScore, 0.0)
+        }
+
+
+    // TODO test classifyZScore method
+    @Test
+    fun `check classification for weight to age`() =
+        runTest(UnconfinedTestDispatcher()) {
+            val zScoreData = ZScoreData(2.5, ZScoreCategory.HeightToAge, false)
+
+            val result = interactor.classifyZScore(zScoreData)
+
+            Assert.assertEquals(
+                NormalHeight.getClassificationName(),
+                result.classificationResult.getClassificationName()
+            )
         }
 }

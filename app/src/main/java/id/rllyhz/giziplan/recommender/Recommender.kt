@@ -106,11 +106,11 @@ object Recommender {
     }
 
     private fun parseNutritionStatus(status: String): String = when (status.lowercase()) {
-        "obesitas" -> "lebih,obesitas"
+        "obesitas" -> "lebih dan obesitas"
         else -> status
     }
 
-    private fun parseAge(age: Int): String = when {
+    fun parseAge(age: Int): String = when {
         age <= 8 -> "6-8 bulan"
         age <= 11 -> "9-11 bulan"
         age <= 23 -> "12-23 bulan"

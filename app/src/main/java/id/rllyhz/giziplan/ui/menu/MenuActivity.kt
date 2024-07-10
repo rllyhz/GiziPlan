@@ -52,13 +52,12 @@ class MenuActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.loadMenu().collectLatest { dataState ->
-                val menu = dataState.data
-                val error = dataState.error
+                showLoadingUI()
 
-                when {
-                    error != null -> showErrorUI()
-                    else -> menu?.let { showHasDataUI(it) }
-                }
+                if (dataState.error != null) showErrorUI()
+
+                val menu = dataState.data ?: return@collectLatest
+                showHasDataUI(menu)
             }
         }
     }
@@ -80,12 +79,12 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun showHasDataUI(newMenuData: List<MenuModel>) {
-        menuAdapter.submitList(newMenuData)
-
         binding.menuTvErrorMessage.hide()
         binding.menuProgressbar.hide()
         binding.menuTvHeading.show()
         binding.menuFadingView.show()
         binding.menuRvMenu.show()
+
+        menuAdapter.submitList(newMenuData)
     }
 }

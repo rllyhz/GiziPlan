@@ -64,7 +64,7 @@ class AnthropometryInteractor(
                 median.toBigDecimal() - min1SD.toBigDecimal()
             }
 
-            else -> "0.0".toBigDecimal()
+            else -> "1.0".toBigDecimal()
         }
 
         val measuredMinusMedian = measuredWeight.toString().toBigDecimal() - median.toBigDecimal()
@@ -113,7 +113,7 @@ class AnthropometryInteractor(
                 median.toBigDecimal() - min1SD.toBigDecimal()
             }
 
-            else -> "0.0".toBigDecimal()
+            else -> "1.0".toBigDecimal()
         }
 
         val measuredMinusMedian = measuredHeight.toString().toBigDecimal() - median.toBigDecimal()
@@ -164,7 +164,7 @@ class AnthropometryInteractor(
                 median.toBigDecimal() - min1SD.toBigDecimal()
             }
 
-            else -> "0.0".toBigDecimal()
+            else -> "1.0".toBigDecimal()
         }
 
         val measuredMinusMedian = measuredWeight.toString().toBigDecimal() - median.toBigDecimal()
@@ -175,19 +175,20 @@ class AnthropometryInteractor(
         )
     }
 
+    // TODO Fix classifyZScore
     override suspend fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData =
         when (zScoreData.zScoreCategory) {
             ZScoreCategory.WeightToAge -> {
                 if (zScoreData.zScore < -3.0) ZScoreClassificationData(
                     zScoreData, SeverelyUnderweight
                 )
-                if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
+                else if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
                     zScoreData, Underweight
                 )
-                if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
+                else if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
                     zScoreData, NormalWeight
                 )
-                if (zScoreData.zScore > 1.0) ZScoreClassificationData(
+                else if (zScoreData.zScore > 1.0) ZScoreClassificationData(
                     zScoreData, RiskOfOverweight
                 )
                 else ZScoreClassificationData(
@@ -199,10 +200,10 @@ class AnthropometryInteractor(
                 if (zScoreData.zScore < -3.0) ZScoreClassificationData(
                     zScoreData, SeverelyStunted
                 )
-                if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
+                else if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
                     zScoreData, Stunted
                 )
-                if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
+                else if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
                     zScoreData, NormalHeight
                 )
                 if (zScoreData.zScore > 3.0) ZScoreClassificationData(
@@ -217,19 +218,19 @@ class AnthropometryInteractor(
                 if (zScoreData.zScore < -3.0) ZScoreClassificationData(
                     zScoreData, SeverelyWasted
                 )
-                if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
+                else if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
                     zScoreData, Wasted
                 )
-                if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
+                else if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
                     zScoreData, GoodNutritionalStatus
                 )
-                if (zScoreData.zScore > 1.0 && zScoreData.zScore <= 2.0) ZScoreClassificationData(
+                else if (zScoreData.zScore > 1.0 && zScoreData.zScore <= 2.0) ZScoreClassificationData(
                     zScoreData, PossibleRiskOfOverweight
                 )
-                if (zScoreData.zScore > 2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
+                else if (zScoreData.zScore > 2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
                     zScoreData, Overweight
                 )
-                if (zScoreData.zScore > 3.0) ZScoreClassificationData(
+                else if (zScoreData.zScore > 3.0) ZScoreClassificationData(
                     zScoreData, Obese
                 )
                 else ZScoreClassificationData(
