@@ -42,9 +42,8 @@ abstract class GiziDatabase : RoomDatabase() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
 
-                    val menu = getMenuData(context)
-
                     GlobalScope.launch(Dispatchers.IO) {
+                        val menu = getMenuData(context)
                         val data = menu.toMenuEntity()
                         populateMenu(context, data)
                     }

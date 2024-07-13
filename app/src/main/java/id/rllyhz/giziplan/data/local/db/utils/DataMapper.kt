@@ -63,7 +63,7 @@ fun List<List<String>>.toMenuEntity(): List<MenuEntity> {
             proteinGr = nutritionInfoMap["protein"] ?: 0.0,
             fatGr = nutritionInfoMap["fat"] ?: 0.0,
             description = row[6].trim(),
-            imagePath = null,
+            imagePath = row[7].trim(),
         )
 
         menuList.add(newMenuEntity)

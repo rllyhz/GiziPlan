@@ -44,6 +44,14 @@ fun getMenuDataByCSVFile(context: Context): List<List<String>> {
         val notes = row[6].trim().trim { it == ';' }
         temp.add(notes)
 
+        // not fix
+//        val imagePath = row[7].trim()
+//        temp.add(imagePath)
+
+        // fix
+        val imagePath = row[8].trim()
+        temp.add(imagePath)
+
         data.add(temp)
     }
 

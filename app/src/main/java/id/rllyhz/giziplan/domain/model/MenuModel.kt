@@ -16,5 +16,5 @@ data class MenuModel(
     val fatGr: Double,
     val description: String? = "",
     val notes: String? = "",
-    val imagePath: Int? = null,
+    val imagePath: String? = null,
 ) : Parcelable

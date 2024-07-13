@@ -12,8 +12,10 @@ import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.ui.detail.DetailMenuActivity
 import id.rllyhz.giziplan.ui.utils.hide
 import id.rllyhz.giziplan.ui.utils.show
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMenuBinding
@@ -52,12 +54,16 @@ class MenuActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.loadMenu().collectLatest { dataState ->
-                showLoadingUI()
+                withContext(Dispatchers.Main) { showLoadingUI() }
 
-                if (dataState.error != null) showErrorUI()
+                if (dataState.error != null) withContext(Dispatchers.Main) { showErrorUI() }
+                if (dataState.data == null) {
+                    withContext(Dispatchers.Main) { showLoadingUI() }
+                    return@collectLatest
+                }
 
-                val menu = dataState.data ?: return@collectLatest
-                showHasDataUI(menu)
+                val menu = dataState.data
+                withContext(Dispatchers.Main) { showHasDataUI(menu) }
             }
         }
     }
@@ -84,6 +90,8 @@ class MenuActivity : AppCompatActivity() {
         binding.menuTvHeading.show()
         binding.menuFadingView.show()
         binding.menuRvMenu.show()
+
+        newMenuData.take(4).forEach { println(it.imagePath) }
 
         menuAdapter.submitList(newMenuData)
     }

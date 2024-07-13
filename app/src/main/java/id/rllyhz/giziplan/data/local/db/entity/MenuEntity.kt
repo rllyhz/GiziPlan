@@ -29,5 +29,5 @@ data class MenuEntity(
     @ColumnInfo(name = "catatan")
     val notes: String? = "",
     @ColumnInfo(name = "gambar_path")
-    val imagePath: Int? = null,
+    val imagePath: String? = null,
 )
