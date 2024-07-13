@@ -4,5 +4,6 @@ import id.rllyhz.giziplan.domain.model.classification.ClassificationData
 
 class ZScoreClassificationData(
     val zScoreData: ZScoreData,
-    val classificationResult: ClassificationData
+    val classificationResult: ClassificationData,
+    val zScoreInvalid: Boolean = false
 )

@@ -1,13 +1,10 @@
-package id.rllyhz.giziplan.domain.usecase
+package id.rllyhz.giziplan.domain.usecase.anthropometry.measure
 
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryDataTable
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.anthropometry.utils.toPopulationRow
-import id.rllyhz.giziplan.domain.model.classification.NormalHeight
-import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
-import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
 import id.rllyhz.giziplan.domain.repository.AnthropometryRepository
 import id.rllyhz.giziplan.domain.usecase.anthropometry.AnthropometryInteractor
 import id.rllyhz.giziplan.utils.femaleHeightToAgeCSVContent
@@ -255,8 +252,7 @@ class AnthropometryInteractorTest {
             val result2 = interactor.measureZScoreForWeightToHeight(
                 2.8, // in kg
                 48.0, // in cm
-                true,
-                Gender.Male
+                true, Gender.Male
             )
 
             Assert.assertEquals(-0.5, result2.zScore, 0.0)
@@ -264,8 +260,7 @@ class AnthropometryInteractorTest {
             val result3 = interactor.measureZScoreForWeightToHeight(
                 11.2, // in kg
                 80.5, // in cm
-                true,
-                Gender.Male
+                true, Gender.Male
             )
 
             Assert.assertEquals(0.7, result3.zScore, 0.0)
@@ -286,8 +281,7 @@ class AnthropometryInteractorTest {
             val result2 = interactor.measureZScoreForWeightToHeight(
                 4.2, // in kg
                 50.0, // in cm
-                true,
-                Gender.Female
+                true, Gender.Female
             )
 
             Assert.assertEquals(2.67, result2.zScore, 0.0)
@@ -295,8 +289,7 @@ class AnthropometryInteractorTest {
             val result3 = interactor.measureZScoreForWeightToHeight(
                 18.3, // in kg
                 108.0, // in cm
-                true,
-                Gender.Female
+                true, Gender.Female
             )
 
             Assert.assertEquals(0.41, result3.zScore, 0.0)
@@ -318,8 +311,7 @@ class AnthropometryInteractorTest {
             val result2 = interactor.measureZScoreForWeightToHeight(
                 7.8, // in kg
                 67.0, // in cm
-                false,
-                Gender.Male
+                false, Gender.Male
             )
 
             Assert.assertEquals(-0.17, result2.zScore, 0.0)
@@ -327,8 +319,7 @@ class AnthropometryInteractorTest {
             val result3 = interactor.measureZScoreForWeightToHeight(
                 10.2, // in kg
                 70.5, // in cm
-                false,
-                Gender.Male
+                false, Gender.Male
             )
 
             Assert.assertEquals(1.87, result3.zScore, 0.0)
@@ -350,8 +341,7 @@ class AnthropometryInteractorTest {
             val result2 = interactor.measureZScoreForWeightToHeight(
                 6.4, // in kg
                 66.0, // in cm
-                false,
-                Gender.Female
+                false, Gender.Female
             )
 
             Assert.assertEquals(-2.17, result2.zScore, 0.0)
@@ -359,25 +349,9 @@ class AnthropometryInteractorTest {
             val result3 = interactor.measureZScoreForWeightToHeight(
                 18.3, // in kg
                 108.0, // in cm
-                false,
-                Gender.Female
+                false, Gender.Female
             )
 
             Assert.assertEquals(0.29, result3.zScore, 0.0)
-        }
-
-
-    // TODO test classifyZScore method
-    @Test
-    fun `check classification for weight to age`() =
-        runTest(UnconfinedTestDispatcher()) {
-            val zScoreData = ZScoreData(2.5, ZScoreCategory.HeightToAge, false)
-
-            val result = interactor.classifyZScore(zScoreData)
-
-            Assert.assertEquals(
-                NormalHeight.getClassificationName(),
-                result.classificationResult.getClassificationName()
-            )
         }
 }

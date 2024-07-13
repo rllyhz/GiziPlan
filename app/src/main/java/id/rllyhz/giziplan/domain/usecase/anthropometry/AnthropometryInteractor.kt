@@ -2,6 +2,10 @@ package id.rllyhz.giziplan.domain.usecase.anthropometry
 
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
+import id.rllyhz.giziplan.domain.model.classification.InvalidZScoreHeightToAge
+import id.rllyhz.giziplan.domain.model.classification.InvalidZScoreOfUnknown
+import id.rllyhz.giziplan.domain.model.classification.InvalidZScoreWeightToAge
+import id.rllyhz.giziplan.domain.model.classification.InvalidZScoreWeightToHeight
 import id.rllyhz.giziplan.domain.model.classification.NormalHeight
 import id.rllyhz.giziplan.domain.model.classification.NormalWeight
 import id.rllyhz.giziplan.domain.model.classification.Obese
@@ -176,66 +180,82 @@ class AnthropometryInteractor(
     }
 
     // TODO Fix classifyZScore
-    override suspend fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData =
-        when (zScoreData.zScoreCategory) {
-            ZScoreCategory.WeightToAge -> {
-                if (zScoreData.zScore < -3.0) ZScoreClassificationData(
-                    zScoreData, SeverelyUnderweight
-                )
-                else if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
-                    zScoreData, Underweight
-                )
-                else if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
-                    zScoreData, NormalWeight
-                )
-                else if (zScoreData.zScore > 1.0) ZScoreClassificationData(
-                    zScoreData, RiskOfOverweight
-                )
-                else ZScoreClassificationData(
-                    zScoreData, NormalWeight
-                )
-            }
+    override suspend fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData {
+        val actualZScoreCat = zScoreData.zScoreCategory
+        val actualZScoreValue = zScoreData.zScore
 
-            ZScoreCategory.HeightToAge -> {
-                if (zScoreData.zScore < -3.0) ZScoreClassificationData(
-                    zScoreData, SeverelyStunted
-                )
-                else if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
-                    zScoreData, Stunted
-                )
-                else if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
-                    zScoreData, NormalHeight
-                )
-                if (zScoreData.zScore > 3.0) ZScoreClassificationData(
-                    zScoreData, Tall
-                )
-                else ZScoreClassificationData(
-                    zScoreData, NormalHeight
-                )
-            }
+        val weightToAgeCat = ZScoreCategory.WeightToAge
+        val heightToAgeCat = ZScoreCategory.HeightToAge
+        val weightToHeightCat = ZScoreCategory.WeightToHeight
 
-            ZScoreCategory.WeightToHeight -> {
-                if (zScoreData.zScore < -3.0) ZScoreClassificationData(
-                    zScoreData, SeverelyWasted
-                )
-                else if (zScoreData.zScore >= -3.0 && zScoreData.zScore < -2.0) ZScoreClassificationData(
-                    zScoreData, Wasted
-                )
-                else if (zScoreData.zScore >= -2.0 && zScoreData.zScore <= 1.0) ZScoreClassificationData(
-                    zScoreData, GoodNutritionalStatus
-                )
-                else if (zScoreData.zScore > 1.0 && zScoreData.zScore <= 2.0) ZScoreClassificationData(
-                    zScoreData, PossibleRiskOfOverweight
-                )
-                else if (zScoreData.zScore > 2.0 && zScoreData.zScore <= 3.0) ZScoreClassificationData(
-                    zScoreData, Overweight
-                )
-                else if (zScoreData.zScore > 3.0) ZScoreClassificationData(
-                    zScoreData, Obese
-                )
-                else ZScoreClassificationData(
-                    zScoreData, NormalHeight
-                )
+        // Weight to Age
+        if (actualZScoreCat == weightToAgeCat) {
+            if (actualZScoreValue < -3.0) {
+                // Berat badan sangat kurang
+                return ZScoreClassificationData(zScoreData, SeverelyUnderweight)
+            } else if (actualZScoreValue >= -3.0 && actualZScoreValue < -2.0) {
+                // Berat badan kurang
+                return ZScoreClassificationData(zScoreData, Underweight)
+            } else if (actualZScoreValue >= -2.0 && actualZScoreValue <= 1.0) {
+                // Berat badan normal
+                return ZScoreClassificationData(zScoreData, NormalWeight)
+            } else if (actualZScoreValue > 1.0) {
+                // Risiko berat badan lebih
+                return ZScoreClassificationData(zScoreData, RiskOfOverweight)
+            } else {
+                // Nilai z-score tidak valid
+                return ZScoreClassificationData(zScoreData, InvalidZScoreWeightToAge, true)
             }
         }
+
+        // Height to Age
+        if (actualZScoreCat == heightToAgeCat) {
+            if (actualZScoreValue < -3.0) {
+                // Sangat pendek
+                return ZScoreClassificationData(zScoreData, SeverelyStunted)
+            } else if (actualZScoreValue >= -3.0 && actualZScoreValue < -2.0) {
+                // Pendek
+                return ZScoreClassificationData(zScoreData, Stunted)
+            } else if (actualZScoreValue >= -2.0 && actualZScoreValue <= 3.0) {
+                // Normal
+                return ZScoreClassificationData(zScoreData, NormalHeight)
+            } else if (actualZScoreValue > 3.0) {
+                // Tinggi
+                return ZScoreClassificationData(zScoreData, Tall)
+            } else {
+                // Nilai z-score tidak valid
+                return ZScoreClassificationData(zScoreData, InvalidZScoreHeightToAge, true)
+            }
+        }
+
+        // Weight to Height
+        if (actualZScoreCat == weightToHeightCat) {
+            if (actualZScoreValue < -3.0) {
+                // Gizi buruk
+                return ZScoreClassificationData(zScoreData, SeverelyWasted)
+            } else if (actualZScoreValue >= -3.0 && actualZScoreValue < -2.0) {
+                // Gizi kurang
+                return ZScoreClassificationData(zScoreData, Wasted)
+            } else if (actualZScoreValue >= -2.0 && actualZScoreValue <= 1.0) {
+                // Gizi baik
+                return ZScoreClassificationData(zScoreData, GoodNutritionalStatus)
+            } else if (actualZScoreValue > 1.0 && actualZScoreValue <= 2.0) {
+                // Berisiko gizi lebih
+                return ZScoreClassificationData(zScoreData, PossibleRiskOfOverweight)
+            } else if (actualZScoreValue > 2.0 && actualZScoreValue <= 3.0) {
+                println("Gizi lebih")
+                // Gizi lebih
+                return ZScoreClassificationData(zScoreData, Overweight)
+            } else if (actualZScoreValue > 3.0) {
+                // Obesitas
+                return ZScoreClassificationData(zScoreData, Obese)
+            } else {
+                // Nilai z-score tidak valid
+                return ZScoreClassificationData(zScoreData, InvalidZScoreWeightToHeight, true)
+            }
+        }
+
+        // Nilai z-score tidak valid
+        return ZScoreClassificationData(zScoreData, InvalidZScoreOfUnknown, true)
+    }
 }
