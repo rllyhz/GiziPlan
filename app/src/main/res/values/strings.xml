@@ -19,10 +19,12 @@
     <string name="hint_height">Tinggi Badan (cm)</string>
 
     <string name="message_age_required">Umur tidak boleh kosong</string>
-    <string name="message_min_age_required">Umur minimal 4 bulan</string>
+    <string name="message_min_age_required">Umur minimal 6 bulan</string>
     <string name="message_gender_required">Pilih jenis kelamin terlebih dahulu</string>
     <string name="message_weight_required">Berat badan tidak boleh kosong</string>
+    <string name="message_min_weight_required">Berat badan minimal 1,9 kg</string>
     <string name="message_height_required">Tinggi badan tidak boleh kosong</string>
+    <string name="message_min_height_required">Tinggi badan minimal 45 cm</string>
     <string name="text_status_by_pbu_label">PB/U</string>
     <string name="text_status_by_bbu_label">BB/U</string>
     <string name="text_status_by_bbpb_label">BB/PB</string>

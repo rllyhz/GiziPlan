@@ -15,9 +15,9 @@ class MeasureActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMeasureBinding
 
     private var selectedGender = 0
-    private val minAge = 4 // 4 months
-    private val minWeight = 4 // 4 kg
-    private val minHeight = 4 // 4 cm
+    private val minAge = 6 // 6 months
+    private val minWeight = 1.9 // 4 kg
+    private val minHeight = 45.0 // 45.0 cm
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +63,23 @@ class MeasureActivity : AppCompatActivity() {
                 if (measureEtHeight.text.isNullOrEmpty() || measureEtHeight.text.isBlank()) {
                     measureEtHeight.error = getString(R.string.message_height_required)
                     isValid = false
+                } else {
+                    val height = measureEtHeight.text.toString().toDoubleOrNull() ?: 0.0
+                    if (height < minHeight) {
+                        measureEtHeight.error = getString(R.string.message_min_height_required)
+                        isValid = false
+                    }
                 }
 
                 if (measureEtWeight.text.isNullOrEmpty() || measureEtWeight.text.isBlank()) {
                     measureEtWeight.error = getString(R.string.message_weight_required)
                     isValid = false
+                } else {
+                    val weight = measureEtWeight.text.toString().toDoubleOrNull() ?: 0.0
+                    if (weight < minWeight) {
+                        measureEtWeight.error = getString(R.string.message_min_weight_required)
+                        isValid = false
+                    }
                 }
 
                 if (selectedGender == 0) {
@@ -81,9 +93,13 @@ class MeasureActivity : AppCompatActivity() {
 
                 if (!isValid) return@setOnClickListener
 
-                val weight = measureEtWeight.text.toString().toDoubleOrNull() ?: 0.0
-                val height = measureEtHeight.text.toString().toDoubleOrNull() ?: 0.0
-                val age = measureEtAge.text.toString().toIntOrNull() ?: 0
+                val age = validateAgeValue(measureEtAge.text.toString().toIntOrNull() ?: 0)
+                val height = validateHeightValue(
+                    measureEtHeight.text.toString().toDoubleOrNull() ?: 0.0, age
+                )
+                val weight = validateWeightValue(
+                    measureEtWeight.text.toString().toDoubleOrNull() ?: 0.0, age
+                )
                 val gender = selectedGender
 
                 Intent(this@MeasureActivity, ResultActivity::class.java).also { i ->
@@ -97,5 +113,57 @@ class MeasureActivity : AppCompatActivity() {
 
             measureEtAge.requestFocus()
         }
+    }
+
+    private fun validateAgeValue(age: Int): Int = if (age < 6) 6
+    else if (age > 59) 59
+    else age
+
+    private fun validateHeightValue(height: Double, age: Int): Double {
+        val result: Double
+
+        if (age >= 24) {
+            result = if (height < 65.0) {
+                65.0
+            } else if (height > 120.0) {
+                120.0
+            } else {
+                height
+            }
+        } else {
+            result = if (height < 45.0) {
+                45.0
+            } else if (height > 110.0) {
+                110.0
+            } else {
+                height
+            }
+        }
+
+        return result
+    }
+
+    private fun validateWeightValue(weight: Double, age: Int): Double {
+        val result: Double
+
+        if (age >= 24) {
+            result = if (weight < 5.9) {
+                5.9
+            } else if (weight > 30.1) {
+                30.1
+            } else {
+                weight
+            }
+        } else {
+            result = if (weight < 1.9) {
+                1.9
+            } else if (weight > 24.1) {
+                24.1
+            } else {
+                weight
+            }
+        }
+
+        return result
     }
 }
