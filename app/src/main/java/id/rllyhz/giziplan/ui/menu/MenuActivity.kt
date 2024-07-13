@@ -91,8 +91,6 @@ class MenuActivity : AppCompatActivity() {
         binding.menuFadingView.show()
         binding.menuRvMenu.show()
 
-        newMenuData.take(4).forEach { println(it.imagePath) }
-
         menuAdapter.submitList(newMenuData)
     }
 }

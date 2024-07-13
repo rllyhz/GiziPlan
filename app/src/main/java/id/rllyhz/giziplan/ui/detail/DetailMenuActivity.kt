@@ -1,12 +1,14 @@
 package id.rllyhz.giziplan.ui.detail
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.tabs.TabLayoutMediator
 import id.rllyhz.giziplan.R
 import id.rllyhz.giziplan.databinding.ActivityDetailMenuBinding
 import id.rllyhz.giziplan.domain.model.MenuModel
+import id.rllyhz.giziplan.ui.utils.getDrawableResId
 
 class DetailMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailMenuBinding
@@ -24,6 +26,10 @@ class DetailMenuActivity : AppCompatActivity() {
         adapter = DescriptionPagerAdapter(this, detailMenu)
 
         with(binding) {
+            val imgPath = detailMenu.imagePath ?: ""
+            detailMenuIvMenuImage.setImageResource(getDrawableResId(imgPath, true))
+            detailMenuIvMenuImage.scaleType = ImageView.ScaleType.CENTER_CROP
+
             detailMenuTvMenuTitle.text = detailMenu.name
             detailMenuTvEnergyValue.text =
                 resources.getString(R.string.energy_template, detailMenu.energyKiloCal.toString())
