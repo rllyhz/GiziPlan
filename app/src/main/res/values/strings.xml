@@ -47,4 +47,5 @@
     <string name="protein_template">%s gr</string>
     <string name="fat_template">%s gr</string>
     <string name="preparing_result_label">Mempersiapkan hasil</string>
+    <string name="dummy_text_menu_notes">Untuk memenuhi kebutuhan dalam sehari perlu ditambahkan 1-2 kali selingan</string>
 </resources>

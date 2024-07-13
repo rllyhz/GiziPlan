@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/detail_menu_tv_menu_title"
-        style="@style/TextStyle.MenuTitle"
+        style="@style/TextStyle.MenuDetailTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -37,19 +37,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/detail_menu_iv_menu_image" />
 
+    <TextView
+        android:id="@+id/detail_menu_tv_menu_notes"
+        style="@style/TextStyle.MenuDetailDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/dummy_text_menu_notes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_menu_title" />
+
     <!--  Nutrition Info  -->
     <androidx.cardview.widget.CardView
         android:id="@+id/detail_menu_card_view_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="12dp"
         app:cardElevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_menu_title">
+        app:layout_constraintTop_toBottomOf="@id/detail_menu_tv_menu_notes">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

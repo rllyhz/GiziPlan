@@ -23,9 +23,8 @@ fun Double.roundToNearestHalf(): Double {
     }
 }
 
-fun randomNum(min: Int, max: Int, exclude: Boolean = false) =
-    if (exclude) (min..<max).random()
-    else (min..max).random()
+fun randomNum(min: Int, max: Int, exclude: Boolean = false) = if (exclude) (min..<max).random()
+else (min..max).random()
 
 fun randomAge(): Int = randomNum(12, 60)
 
@@ -37,24 +36,22 @@ fun randomEnergy(): Double = Random.nextDouble(1.0, 5.0)
 fun randomFat(): Double = Random.nextFloat().toDouble()
 fun randomProtein(): Double = Random.nextDouble(3.0, 12.0)
 
-fun getRandomNutritionalStatusCategory(): ClassificationData =
-    when (randomNum(1, 5)) {
-        1 -> SeverelyWasted
-        2 -> Wasted
-        3 -> GoodNutritionalStatus
-        4 -> PossibleRiskOfOverweight
-        5 -> Overweight
-        else -> Obese
-    }
+fun getRandomNutritionalStatusCategory(): ClassificationData = when (randomNum(1, 5)) {
+    1 -> SeverelyWasted
+    2 -> Wasted
+    3 -> GoodNutritionalStatus
+    4 -> PossibleRiskOfOverweight
+    5 -> Overweight
+    else -> Obese
+}
 
-fun getRandomAgeCategory(): AgeCategory =
-    when (randomNum(1, 4)) {
-        1 -> AgeCategory.A
-        2 -> AgeCategory.B
-        3 -> AgeCategory.C
-        4 -> AgeCategory.D
-        else -> AgeCategory.A
-    }
+fun getRandomAgeCategory(): AgeCategory = when (randomNum(1, 4)) {
+    1 -> AgeCategory.A
+    2 -> AgeCategory.B
+    3 -> AgeCategory.C
+    4 -> AgeCategory.D
+    else -> AgeCategory.A
+}
 
 fun createDummyMenuData(amount: Int = 20): List<MenuModel> {
     val menuList = arrayListOf<MenuModel>()
@@ -82,4 +79,20 @@ fun createDummyMenuData(amount: Int = 20): List<MenuModel> {
 
 fun String.capitalize(): String = this.replaceFirstChar {
     it.uppercase()
+}
+
+fun String.addPeriodIfNeeded(): String = if (last() == '.') this
+else "$this."
+
+fun String.concatIfSeparatedBy(delimiters: String): String {
+    val result = StringBuilder()
+    if (!contains(delimiters)) return this.trim().capitalize().addPeriodIfNeeded()
+
+    for (str in split(delimiters)) {
+        if (str.isEmpty()) break
+        result.append(" ")
+        str.trim().capitalize().also { result.append(it.trim().capitalize().addPeriodIfNeeded()) }
+    }
+
+    return result.toString().trim()
 }

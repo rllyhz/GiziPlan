@@ -9,6 +9,9 @@ import id.rllyhz.giziplan.R
 import id.rllyhz.giziplan.databinding.ActivityDetailMenuBinding
 import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.ui.utils.getDrawableResId
+import id.rllyhz.giziplan.ui.utils.hide
+import id.rllyhz.giziplan.ui.utils.show
+import id.rllyhz.giziplan.utils.concatIfSeparatedBy
 
 class DetailMenuActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailMenuBinding
@@ -31,6 +34,18 @@ class DetailMenuActivity : AppCompatActivity() {
             detailMenuIvMenuImage.scaleType = ImageView.ScaleType.CENTER_CROP
 
             detailMenuTvMenuTitle.text = detailMenu.name
+
+            if (detailMenu.description == null) {
+                detailMenuTvMenuNotes.hide()
+            } else {
+                detailMenuTvMenuNotes.text = detailMenu.description
+                    .concatIfSeparatedBy(";")
+
+                detailMenuTvMenuNotes.show()
+            }
+
+            println(detailMenu.description)
+
             detailMenuTvEnergyValue.text =
                 resources.getString(R.string.energy_template, detailMenu.energyKiloCal.toString())
             detailMenuTvProteinValue.text =
