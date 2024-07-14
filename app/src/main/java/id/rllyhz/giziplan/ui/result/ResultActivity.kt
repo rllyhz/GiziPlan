@@ -41,8 +41,6 @@ class ResultActivity : AppCompatActivity() {
     private var gender: Int = 0
     private var height: Double = 0.0
     private var weight: Double = 0.0
-    private var firstTimeGettingRecommendation: Boolean = true
-    private var comingFromMeasureResults: Boolean = false
     private var measureResult: MeasureResultModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,10 +82,10 @@ class ResultActivity : AppCompatActivity() {
         }
 
         // retrieve intent data
-        comingFromMeasureResults = intent.getBooleanExtra(
+        viewModel.comingFromMeasureResults = intent.getBooleanExtra(
             intentDataIsFromMeasureResultsKey, false
         )
-        if (comingFromMeasureResults) {
+        if (viewModel.comingFromMeasureResults) {
             measureResult = intent.getParcelableExtra(intentDataMeasureResultKey)!!
             age = measureResult!!.age
             gender = measureResult!!.gender

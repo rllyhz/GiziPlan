@@ -43,6 +43,7 @@ class ResultViewModel(
 
     val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
     var firstTimeGettingRecommendation = true
+    var comingFromMeasureResults = false
 
     fun getRecommendationOf(
         weight: Double,
@@ -92,7 +93,7 @@ class ResultViewModel(
 
                 recommendationMenu = temp
 
-                if (firstTimeGettingRecommendation) {
+                if (firstTimeGettingRecommendation && !comingFromMeasureResults) {
                     val measureResult = MeasureResultModel(
                         age,
                         gender.ordinal,
