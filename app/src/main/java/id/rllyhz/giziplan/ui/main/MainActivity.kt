@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import id.rllyhz.giziplan.R
 import id.rllyhz.giziplan.databinding.ActivityMainBinding
 import id.rllyhz.giziplan.ui.measure.MeasureActivity
+import id.rllyhz.giziplan.ui.measure_results.MeasureResultsActivity
 import id.rllyhz.giziplan.ui.menu.MenuActivity
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +36,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.mainBtnShowMenu.setOnClickListener {
             Intent(this@MainActivity, MenuActivity::class.java).also { i ->
+                startActivity(i)
+            }
+        }
+
+        binding.mainBtnShowMeasureResults.setOnClickListener {
+            Intent(this@MainActivity, MeasureResultsActivity::class.java).also { i ->
                 startActivity(i)
             }
         }

@@ -1,10 +1,9 @@
 package id.rllyhz.giziplan.domain.utils
 
+import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
-import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.model.RecommendationResultModel
-import id.rllyhz.giziplan.utils.toIntList
 
 fun MenuEntity.toModel(): MenuModel = MenuModel(
     id,
@@ -21,44 +20,6 @@ fun MenuEntity.toModel(): MenuModel = MenuModel(
     imagePath
 )
 
-fun List<MenuEntity>.toModels(): List<MenuModel> = map { it.toModel() }
-
-fun List<RecommendationResultEntity>.toResultModels(): List<RecommendationResultModel> {
-    if (isEmpty()) return emptyList()
-
-    val recommendationResults = arrayListOf<RecommendationResultModel>()
-
-    groupBy { it.resultId }.forEach { (resultId, list) ->
-        val first = list.first()
-
-        var menuIds = ""
-        val lastItemId = list.last().id
-
-        for (eachRecommendation in list) {
-            menuIds += eachRecommendation.menuId.toString()
-
-            if (eachRecommendation.id != lastItemId) {
-                menuIds += ","
-            }
-        }
-
-        val model = RecommendationResultModel(
-            0,
-            resultId,
-            menuIds,
-            first.age,
-            first.height,
-            first.weight,
-            first.nutritionalStatusResults,
-            first.createdAt
-        )
-
-        recommendationResults.add(model)
-    }
-
-    return recommendationResults
-}
-
 fun MenuModel.toEntity(): MenuEntity = MenuEntity(
     id,
     name,
@@ -74,18 +35,39 @@ fun MenuModel.toEntity(): MenuEntity = MenuEntity(
     imagePath
 )
 
-fun List<MenuModel>.toEntities(): List<MenuEntity> = map { it.toEntity() }
+fun MeasureResultModel.toEntity(): MeasureResultEntity = MeasureResultEntity(
+    age = age,
+    gender = gender,
+    height = height,
+    weight = weight,
+    nutritionalStatusResult = nutritionalStatusResult,
+    heightToAgeResult = heightToAgeResult,
+    weightToAgeResult = weightToAgeResult,
+    weightToHeightResult = weightToHeightResult,
+    createdAt = createdAt
+)
 
-fun RecommendationResultModel.toEntities(): List<RecommendationResultEntity> {
-    val entities = arrayListOf<RecommendationResultEntity>()
-    val menuIds = this.menuIds.toIntList()
+fun List<MenuEntity>.toModels(): List<MenuModel> = map { it.toModel() }
 
-    for (id in menuIds) {
-        val newEntity = RecommendationResultEntity(
-            0, resultId, id, age, height, weight, nutritionalStatusResults, createdAt
+fun List<MeasureResultEntity>.toResultModels(): List<MeasureResultModel> {
+    if (isEmpty()) return emptyList()
+
+    val recommendationResults = arrayListOf<MeasureResultModel>()
+
+    forEach {
+        val temp = MeasureResultModel(
+            it.age, it.gender, it.height, it.weight,
+            it.nutritionalStatusResult,
+            it.heightToAgeResult,
+            it.weightToAgeResult,
+            it.weightToHeightResult,
+            it.createdAt,
+            it.id,
         )
-        entities.add(newEntity)
+        recommendationResults.add(temp)
     }
 
-    return entities
+    return recommendationResults
 }
+
+fun List<MenuModel>.toEntities(): List<MenuEntity> = map { it.toEntity() }

@@ -231,10 +231,10 @@ class DatabaseRepositoryTest {
         val recommendationResultEntities = createDummyRecommendationResultEntities(length)
         val recommendationResultModels = recommendationResultEntities.toResultModels()
 
-        Mockito.`when`(giziDao.getAllRecommendationResults())
+        Mockito.`when`(giziDao.getAllMeasureResults())
             .thenReturn(recommendationResultEntities)
 
-        val result = repository.getAllRecommendationResults()
+        val result = repository.getAllMeasureResults()
         val actualData = result.last()
 
         Assert.assertTrue(actualData is DataState.Success)
@@ -246,13 +246,13 @@ class DatabaseRepositoryTest {
         )
 
         Assert.assertEquals(
-            recommendationResultModels.first().resultId,
-            actualData.data?.first()?.resultId
+            recommendationResultModels.first().id,
+            actualData.data?.first()?.id
         )
 
         Assert.assertEquals(
-            recommendationResultModels.last().resultId,
-            actualData.data?.last()?.resultId
+            recommendationResultModels.last().id,
+            actualData.data?.last()?.id
         )
     }
 
@@ -260,10 +260,10 @@ class DatabaseRepositoryTest {
     fun `successfully handle when getAllRecommendationResults throws an exception`() = runTest {
         val message = "Can't get all recommendation results"
 
-        Mockito.`when`(giziDao.getAllRecommendationResults())
+        Mockito.`when`(giziDao.getAllMeasureResults())
             .thenThrow(RuntimeException(message))
 
-        val result = repository.getAllRecommendationResults()
+        val result = repository.getAllMeasureResults()
         val actualData = result.last()
 
         Assert.assertNull(actualData.data)
@@ -280,9 +280,9 @@ class DatabaseRepositoryTest {
     @Test
     fun `successfully delete recommendation results of`() = runTest {
         val resultId = 3
-        Mockito.`when`(giziDao.deleteRecommendationResultOf(resultId)).thenReturn(Unit)
+        Mockito.`when`(giziDao.deleteMeasureResultOf(resultId)).thenReturn(Unit)
 
-        val result = repository.deleteRecommendationResultOf(resultId)
+        val result = repository.deleteMeasureResultOf(resultId)
         val actualData = result.last()
 
         Assert.assertTrue(actualData is DataState.Success)
@@ -294,10 +294,10 @@ class DatabaseRepositoryTest {
         val resultId = 3
         val message = "Can't delete recommendation results of given resultId"
 
-        Mockito.`when`(giziDao.deleteRecommendationResultOf(resultId))
+        Mockito.`when`(giziDao.deleteMeasureResultOf(resultId))
             .thenThrow(RuntimeException(message))
 
-        val result = repository.deleteRecommendationResultOf(resultId)
+        val result = repository.deleteMeasureResultOf(resultId)
         val actualData = result.last()
 
         Assert.assertNull(actualData.data)
@@ -313,9 +313,9 @@ class DatabaseRepositoryTest {
      */
     @Test
     fun `successfully delete all recommendation results`() = runTest {
-        Mockito.`when`(giziDao.deleteAllRecommendationResults()).thenReturn(Unit)
+        Mockito.`when`(giziDao.deleteAllMeasureResults()).thenReturn(Unit)
 
-        val result = repository.deleteAllRecommendationResults()
+        val result = repository.deleteAllMeasureResults()
         val actualData = result.last()
 
         Assert.assertTrue(actualData is DataState.Success)
@@ -326,10 +326,10 @@ class DatabaseRepositoryTest {
     fun `successfully handle when deleteAllRecommendationResults throws an exception`() = runTest {
         val message = "Can't delete all recommendation results"
 
-        Mockito.`when`(giziDao.deleteAllRecommendationResults())
+        Mockito.`when`(giziDao.deleteAllMeasureResults())
             .thenThrow(RuntimeException(message))
 
-        val result = repository.deleteAllRecommendationResults()
+        val result = repository.deleteAllMeasureResults()
         val actualData = result.last()
 
         Assert.assertNull(actualData.data)

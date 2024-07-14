@@ -1,7 +1,7 @@
 package id.rllyhz.giziplan.domain.repository
 
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.model.RecommendationResultModel
 import id.rllyhz.giziplan.domain.utils.DataState
 import kotlinx.coroutines.flow.Flow
 
@@ -14,9 +14,11 @@ interface DatabaseRepository {
 
     suspend fun getMenuById(menuId: Int): Flow<DataState<MenuModel?>>
 
-    suspend fun getAllRecommendationResults(): Flow<DataState<List<RecommendationResultModel>>>
+    suspend fun getAllMeasureResults(): Flow<DataState<List<MeasureResultModel>>>
 
-    suspend fun deleteRecommendationResultOf(resultId: Int): Flow<DataState<Boolean>>
+    suspend fun insertNewMeasureResult(measureResult: MeasureResultModel)
 
-    suspend fun deleteAllRecommendationResults(): Flow<DataState<Boolean>>
+    suspend fun deleteMeasureResultOf(resultId: Int): Flow<DataState<Boolean>>
+
+    suspend fun deleteAllMeasureResults(): Flow<DataState<Boolean>>
 }

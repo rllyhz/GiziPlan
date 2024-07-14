@@ -1,16 +1,14 @@
 package id.rllyhz.giziplan.domain.utils
 
+import id.rllyhz.giziplan.domain.model.AgeCategory
+import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
+import id.rllyhz.giziplan.domain.model.classification.Overweight
+import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
 import id.rllyhz.giziplan.utils.createDummyMenuEntities
 import id.rllyhz.giziplan.utils.createDummyMenuEntity
 import id.rllyhz.giziplan.utils.createDummyMenuModel
 import id.rllyhz.giziplan.utils.createDummyMenuModels
 import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntity
-import id.rllyhz.giziplan.utils.createDummyRecommendationResultModel
-import id.rllyhz.giziplan.domain.model.AgeCategory
-import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
-import id.rllyhz.giziplan.domain.model.classification.Overweight
-import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
-import id.rllyhz.giziplan.utils.toIntList
 import org.junit.Assert
 import org.junit.Test
 
@@ -58,39 +56,35 @@ class DataMapperTest {
 
     @Test
     fun `successfully convert recommendation result entities type into recommendation result model type`() {
-        val resultId1 = 3
-        val resultId2 = 7
         val nutritionalStatusCategory1 = GoodNutritionalStatus
         val nutritionalStatusCategory2 = PossibleRiskOfOverweight
 
         val entities = arrayListOf(
             createDummyRecommendationResultEntity(
-                0, resultId1, 1, nutritionalStatusCategory1
+                0, nutritionalStatusCategory1
             ),
             createDummyRecommendationResultEntity(
-                1, resultId1, 2, nutritionalStatusCategory1
+                1, nutritionalStatusCategory1
             ),
             createDummyRecommendationResultEntity(
-                2, resultId1, 3, nutritionalStatusCategory1
+                2, nutritionalStatusCategory1
             ),
             createDummyRecommendationResultEntity(
-                3, resultId2, 4, nutritionalStatusCategory2
+                3, nutritionalStatusCategory2
             ),
             createDummyRecommendationResultEntity(
-                4, resultId2, 5, nutritionalStatusCategory2
+                4, nutritionalStatusCategory2
             ),
         )
 
         val recommendationResultModel = entities.toResultModels()
-        Assert.assertEquals(recommendationResultModel.count(), 2)
+        Assert.assertEquals(recommendationResultModel.count(), 5)
 
         val firstResult = recommendationResultModel.first()
-        Assert.assertEquals(firstResult.resultId, resultId1)
-        Assert.assertEquals(firstResult.menuIds, "1,2,3")
+        Assert.assertEquals(firstResult.id, 0)
 
         val lastResult = recommendationResultModel.last()
-        Assert.assertEquals(lastResult.resultId, resultId2)
-        Assert.assertEquals(lastResult.menuIds, "4,5")
+        Assert.assertEquals(lastResult.id, 4)
     }
 
     @Test
@@ -131,30 +125,5 @@ class DataMapperTest {
             expectedFirstEntityNutritionalStatusCategory,
             firstEntity.nutritionalStatusCategory
         )
-    }
-
-    @Test
-    fun `successfully convert recommendation result model into entities type`() {
-        val resultId = 4
-        val menuIds = "2,5,6,8,3"
-        val arrayTypeMenuIds = menuIds.toIntList()
-        val expectedLength = arrayTypeMenuIds.count()
-        val expectedFirstMenuId = arrayTypeMenuIds.first()
-        val expectedLastMenuId = arrayTypeMenuIds.last()
-
-        val model = createDummyRecommendationResultModel(
-            0, resultId, menuIds,
-        )
-
-        val entities = model.toEntities()
-        Assert.assertEquals(expectedLength, entities.count())
-
-        val firstEntity = entities.first()
-        Assert.assertEquals(resultId, firstEntity.resultId)
-        Assert.assertEquals(expectedFirstMenuId, firstEntity.menuId)
-
-        val lastEntity = entities.last()
-        Assert.assertEquals(resultId, lastEntity.resultId)
-        Assert.assertEquals(expectedLastMenuId, lastEntity.menuId)
     }
 }

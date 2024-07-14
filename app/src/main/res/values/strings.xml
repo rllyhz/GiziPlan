@@ -2,8 +2,10 @@
     <string name="app_name">GiziPlan</string>
     <string name="btn_measure">Isi Data Bayi</string>
     <string name="btn_show_menu">Lihat Menu</string>
+    <string name="btn_show_measure_results">Lihat Hasil Perhitungan</string>
     <string name="text_menu">Daftar Menu</string>
     <string name="text_measure">Data Bayi</string>
+    <string name="text_measure_results">Hasil Perhitungan</string>
     <string name="text_loading">Sedang memproses</string>
     <string name="text_status_result">Status Gizi</string>
     <string name="description_menu_preview">Menu Preview</string>
@@ -12,6 +14,8 @@
     <string name="description_icon_baby">Baby Icon</string>
     <string name="dummy_text_menu_title">Menu Title</string>
     <string name="dummy_text_menu_description">Menu Description</string>
+    <string name="dummy_text_measure_result_title">Measure Result 1</string>
+    <string name="dummy_text_measure_result_description">Description Measure Result 1</string>
     <string name="btn_submit">Kirim</string>
     <string name="hint_age">Umur (Bulan)</string>
     <string name="hint_gender">Jenis Kelamin</string>
@@ -48,6 +52,10 @@
     <string name="energy_template">%s kkal</string>
     <string name="protein_template">%s gr</string>
     <string name="fat_template">%s gr</string>
+    <string name="measure_result_title_template">Hasil Perhitungan %d</string>
+    <string name="measure_result_description_template">Dihitung pada: %s</string>
+
     <string name="preparing_result_label">Mempersiapkan hasil</string>
     <string name="dummy_text_menu_notes">Untuk memenuhi kebutuhan dalam sehari perlu ditambahkan 1-2 kali selingan</string>
+    <string name="empty_measure_results_message">Belum ada data bayi yang dihitung</string>
 </resources>

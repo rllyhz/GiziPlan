@@ -42,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
@@ -83,4 +82,8 @@ dependencies {
     // others
     implementation("com.opencsv:opencsv:4.6")
     implementation("org.apache.commons:commons-csv:1.5")
+
+    // Threetenabp
+    implementation("com.jakewharton.threetenabp:threetenabp:1.3.0")
+    testImplementation("org.threeten:threetenbp:1.4.0")
 }

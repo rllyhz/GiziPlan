@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
-import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
+import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
 import id.rllyhz.giziplan.data.local.db.utils.toMenuEntity
 import id.rllyhz.giziplan.utils.getMenuData
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [MenuEntity::class, RecommendationResultEntity::class],
+    entities = [MenuEntity::class, MeasureResultEntity::class],
     version = 1,
     exportSchema = false
 )

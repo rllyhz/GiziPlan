@@ -103,10 +103,10 @@ class MeasureActivity : AppCompatActivity() {
                 val gender = selectedGender
 
                 Intent(this@MeasureActivity, ResultActivity::class.java).also { i ->
-                    i.putExtra(ResultActivity.intentDataWeight, weight)
-                    i.putExtra(ResultActivity.intentDataHeight, height)
-                    i.putExtra(ResultActivity.intentDataAge, age)
-                    i.putExtra(ResultActivity.intentDataGender, gender)
+                    i.putExtra(ResultActivity.intentDataWeightKey, weight)
+                    i.putExtra(ResultActivity.intentDataHeightKey, height)
+                    i.putExtra(ResultActivity.intentDataAgeKey, age)
+                    i.putExtra(ResultActivity.intentDataGenderKey, gender)
                     startActivity(i)
                 }
             }

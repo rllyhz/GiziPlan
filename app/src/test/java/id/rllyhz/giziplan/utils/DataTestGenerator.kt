@@ -5,10 +5,10 @@ import id.rllyhz.giziplan.data.anthropometry.model.PopulationRow
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
-import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
+import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
 import id.rllyhz.giziplan.domain.model.AgeCategory
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.model.RecommendationResultModel
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.classification.ClassificationData
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import java.util.Date
@@ -82,52 +82,42 @@ fun createDummyMenuModels(amount: Int = 20): List<MenuModel> {
 
 fun createDummyRecommendationResultEntity(
     id: Int = 0,
-    resultId: Int = 0,
-    menuId: Int = 0,
-    classificationData: ClassificationData = GoodNutritionalStatus
-): RecommendationResultEntity = RecommendationResultEntity(
+    classificationData: ClassificationData = GoodNutritionalStatus,
+    heightToAge: Double = 0.0,
+    weightToAge: Double = 0.0,
+    weightToHeight: Double = 0.0,
+    createdAt: Long = Date().time
+): MeasureResultEntity = MeasureResultEntity(
     id,
-    resultId,
-    menuId,
-    randomNum(60, 120),
-    randomNum(60, 120).toDouble(),
-    12.0,
+    randomAge(),
+    randomHeight(),
+    randomWeight(),
     classificationData.getClassificationName(),
-    0
+    heightToAge,
+    weightToAge,
+    weightToHeight,
+    createdAt
 )
 
 fun createDummyRecommendationResultEntities(
     amount: Int = 20
-): List<RecommendationResultEntity> {
-    val recommendationResults = arrayListOf<RecommendationResultEntity>()
-
-    val range = 3
-    var lastResultId = 0
-    var menuId: Int
-    var counter = 1
+): List<MeasureResultEntity> {
+    val recommendationResults = arrayListOf<MeasureResultEntity>()
 
     for (i in 0..<amount) {
-        menuId = i + 1
-
-        val newRecommendationResult = RecommendationResultEntity(
+        val newRecommendationResult = MeasureResultEntity(
             i,
-            lastResultId,
-            menuId,
             randomAge(),
             randomHeight(),
-            randomHeight(),
+            randomWeight(),
             getRandomNutritionalStatusCategory().getClassificationName(),
+            0.0,
+            0.0,
+            0.0,
             Date().time,
         )
 
         recommendationResults.add(newRecommendationResult)
-
-        if (counter >= range) {
-            counter = 1 // reset
-            lastResultId += 1
-        } else {
-            counter += 1
-        }
     }
 
     return recommendationResults
@@ -153,18 +143,16 @@ fun createDummyMenuModel(
 
 fun createDummyRecommendationResultModel(
     id: Int,
-    resultId: Int,
-    menuIds: String,
     classificationData: ClassificationData = GoodNutritionalStatus
-): RecommendationResultModel = RecommendationResultModel(
+): MeasureResultModel = MeasureResultModel(
     id,
-    resultId,
-    menuIds,
-    randomNum(60, 120),
-    randomNum(60, 120).toDouble(),
-    12.0,
+    randomAge(),
+    randomHeight(),
+    randomWeight(),
     classificationData.getClassificationName(),
-    0
+    0.0,
+    0.0,
+    0.0
 )
 
 private fun createDummyPopulationRows(

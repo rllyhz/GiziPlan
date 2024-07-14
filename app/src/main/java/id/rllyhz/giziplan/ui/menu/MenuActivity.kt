@@ -45,8 +45,7 @@ class MenuActivity : AppCompatActivity() {
 
         binding.menuRvMenu.adapter = menuAdapter
         binding.menuRvMenu.layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.VERTICAL, false
+            this, LinearLayoutManager.VERTICAL, false
         )
         binding.menuRvMenu.setHasFixedSize(true)
 
@@ -54,9 +53,10 @@ class MenuActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             viewModel.loadMenu().collectLatest { dataState ->
-                withContext(Dispatchers.Main) { showLoadingUI() }
-
-                if (dataState.error != null) withContext(Dispatchers.Main) { showErrorUI() }
+                if (dataState.error != null) {
+                    withContext(Dispatchers.Main) { showErrorUI() }
+                    return@collectLatest
+                }
                 if (dataState.data == null) {
                     withContext(Dispatchers.Main) { showLoadingUI() }
                     return@collectLatest

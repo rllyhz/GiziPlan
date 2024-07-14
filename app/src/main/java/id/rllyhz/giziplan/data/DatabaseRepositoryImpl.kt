@@ -1,11 +1,12 @@
 package id.rllyhz.giziplan.data
 
 import id.rllyhz.giziplan.data.local.LocalDataSource
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.MenuModel
-import id.rllyhz.giziplan.domain.model.RecommendationResultModel
 import id.rllyhz.giziplan.domain.repository.DatabaseRepository
 import id.rllyhz.giziplan.domain.utils.DataState
 import id.rllyhz.giziplan.domain.utils.toEntities
+import id.rllyhz.giziplan.domain.utils.toEntity
 import id.rllyhz.giziplan.domain.utils.toModel
 import id.rllyhz.giziplan.domain.utils.toModels
 import id.rllyhz.giziplan.domain.utils.toResultModels
@@ -21,41 +22,39 @@ class DatabaseRepositoryImpl(
     private val isOnTesting: Boolean = false,
 ) : DatabaseRepository {
 
-    override suspend fun getAllMenus(): Flow<DataState<List<MenuModel>>> =
-        flow {
-            emit(DataState.Loading())
+    override suspend fun getAllMenus(): Flow<DataState<List<MenuModel>>> = flow {
+        emit(DataState.Loading())
 
-            try {
-                val menus = localDataSource.getAllMenus().toModels()
-                emit(DataState.Success(menus))
-            } catch (e: Exception) {
-                if (!isOnTesting) e.printStackTrace()
-                emit(
-                    DataState.Error(
-                        RepositoryIOException(e.message.toString()),
-                        "Something went wrong when retrieving all menus",
-                    )
+        try {
+            val menus = localDataSource.getAllMenus().toModels()
+            emit(DataState.Success(menus))
+        } catch (e: Exception) {
+            if (!isOnTesting) e.printStackTrace()
+            emit(
+                DataState.Error(
+                    RepositoryIOException(e.message.toString()),
+                    "Something went wrong when retrieving all menus",
                 )
-            }
-        }.flowOn(ioDispatcher)
+            )
+        }
+    }.flowOn(ioDispatcher)
 
-    override suspend fun insertAllMenus(menus: List<MenuModel>): Flow<DataState<Boolean>> =
-        flow {
-            emit(DataState.Loading())
+    override suspend fun insertAllMenus(menus: List<MenuModel>): Flow<DataState<Boolean>> = flow {
+        emit(DataState.Loading())
 
-            try {
-                localDataSource.insertAllMenus(menus.toEntities())
-                emit(DataState.Success(true))
-            } catch (e: Exception) {
-                if (!isOnTesting) e.printStackTrace()
-                emit(
-                    DataState.Error(
-                        RepositoryIOException(e.message.toString()),
-                        "Something went wrong when inserting all menus",
-                    )
+        try {
+            localDataSource.insertAllMenus(menus.toEntities())
+            emit(DataState.Success(true))
+        } catch (e: Exception) {
+            if (!isOnTesting) e.printStackTrace()
+            emit(
+                DataState.Error(
+                    RepositoryIOException(e.message.toString()),
+                    "Something went wrong when inserting all menus",
                 )
-            }
-        }.flowOn(ioDispatcher)
+            )
+        }
+    }.flowOn(ioDispatcher)
 
     override suspend fun getMenuById(menuId: Int): Flow<DataState<MenuModel?>> =
         flow<DataState<MenuModel?>> {
@@ -75,76 +74,74 @@ class DatabaseRepositoryImpl(
             }
         }.flowOn(ioDispatcher)
 
-    override suspend fun deleteAllMenus(): Flow<DataState<Boolean>> =
-        flow {
-            emit(DataState.Loading())
+    override suspend fun deleteAllMenus(): Flow<DataState<Boolean>> = flow {
+        emit(DataState.Loading())
 
-            try {
-                localDataSource.deleteAllMenus()
-                emit(DataState.Success(true))
-            } catch (e: Exception) {
-                if (!isOnTesting) e.printStackTrace()
-                emit(
-                    DataState.Error(
-                        RepositoryIOException(e.message.toString()),
-                        "Something went wrong when deleting all menus",
-                    )
+        try {
+            localDataSource.deleteAllMenus()
+            emit(DataState.Success(true))
+        } catch (e: Exception) {
+            if (!isOnTesting) e.printStackTrace()
+            emit(
+                DataState.Error(
+                    RepositoryIOException(e.message.toString()),
+                    "Something went wrong when deleting all menus",
                 )
-            }
-        }.flowOn(ioDispatcher)
+            )
+        }
+    }.flowOn(ioDispatcher)
 
-    override suspend fun getAllRecommendationResults(): Flow<DataState<List<RecommendationResultModel>>> =
-        flow {
-            emit(DataState.Loading())
+    override suspend fun getAllMeasureResults(): Flow<DataState<List<MeasureResultModel>>> = flow {
+        emit(DataState.Loading())
 
-            try {
-                val recommendationResults =
-                    localDataSource.getAllRecommendationResults().toResultModels()
-                emit(DataState.Success(recommendationResults))
-            } catch (e: Exception) {
-                if (!isOnTesting) e.printStackTrace()
-                emit(
-                    DataState.Error(
-                        RepositoryIOException(e.message.toString()),
-                        "Something went wrong when retrieving all recommendation results",
-                    )
+        try {
+            val recommendationResults = localDataSource.getAllMeasureResults().toResultModels()
+            emit(DataState.Success(recommendationResults))
+        } catch (e: Exception) {
+            if (!isOnTesting) e.printStackTrace()
+            emit(
+                DataState.Error(
+                    RepositoryIOException(e.message.toString()),
+                    "Something went wrong when retrieving all recommendation results",
                 )
-            }
-        }.flowOn(ioDispatcher)
+            )
+        }
+    }.flowOn(ioDispatcher)
 
-    override suspend fun deleteRecommendationResultOf(resultId: Int): Flow<DataState<Boolean>> =
-        flow {
-            emit(DataState.Loading())
+    override suspend fun insertNewMeasureResult(measureResult: MeasureResultModel) =
+        localDataSource.insertNewMeasureResult(measureResult.toEntity())
 
-            try {
-                localDataSource.deleteRecommendationResultOf(resultId)
-                emit(DataState.Success(true))
-            } catch (e: Exception) {
-                if (!isOnTesting) e.printStackTrace()
-                emit(
-                    DataState.Error(
-                        RepositoryIOException(e.message.toString()),
-                        "Something went wrong when deleting recommendation results of given id",
-                    )
+    override suspend fun deleteMeasureResultOf(resultId: Int): Flow<DataState<Boolean>> = flow {
+        emit(DataState.Loading())
+
+        try {
+            localDataSource.deleteMeasureResultOf(resultId)
+            emit(DataState.Success(true))
+        } catch (e: Exception) {
+            if (!isOnTesting) e.printStackTrace()
+            emit(
+                DataState.Error(
+                    RepositoryIOException(e.message.toString()),
+                    "Something went wrong when deleting recommendation results of given id",
                 )
-            }
-        }.flowOn(ioDispatcher)
+            )
+        }
+    }.flowOn(ioDispatcher)
 
-    override suspend fun deleteAllRecommendationResults(): Flow<DataState<Boolean>> =
-        flow {
-            emit(DataState.Loading())
+    override suspend fun deleteAllMeasureResults(): Flow<DataState<Boolean>> = flow {
+        emit(DataState.Loading())
 
-            try {
-                localDataSource.deleteAllRecommendationResults()
-                emit(DataState.Success(true))
-            } catch (e: Exception) {
-                if (!isOnTesting) e.printStackTrace()
-                emit(
-                    DataState.Error(
-                        RepositoryIOException(e.message.toString()),
-                        "Something went wrong when deleting all recommendation results",
-                    )
+        try {
+            localDataSource.deleteAllMeasureResults()
+            emit(DataState.Success(true))
+        } catch (e: Exception) {
+            if (!isOnTesting) e.printStackTrace()
+            emit(
+                DataState.Error(
+                    RepositoryIOException(e.message.toString()),
+                    "Something went wrong when deleting all recommendation results",
                 )
-            }
-        }.flowOn(ioDispatcher)
+            )
+        }
+    }.flowOn(ioDispatcher)
 }

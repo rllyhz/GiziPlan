@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import id.rllyhz.giziplan.domain.model.classification.NormalHeight
@@ -41,6 +42,7 @@ class ResultViewModel(
     var recommendationMenu: List<MenuModel> = emptyList()
 
     val isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    var firstTimeGettingRecommendation = true
 
     fun getRecommendationOf(
         weight: Double,
@@ -89,6 +91,21 @@ class ResultViewModel(
                 }
 
                 recommendationMenu = temp
+
+                if (firstTimeGettingRecommendation) {
+                    val measureResult = MeasureResultModel(
+                        age,
+                        gender.ordinal,
+                        height,
+                        weight,
+                        nutritionStatus,
+                        heightToAgeResult.zScore,
+                        weightToAgeResult.zScore,
+                        weightToHeightResult.zScore
+                    )
+                    dbRepository.insertNewMeasureResult(measureResult)
+                    firstTimeGettingRecommendation = false
+                }
 
                 isLoading.emit(false)
             }

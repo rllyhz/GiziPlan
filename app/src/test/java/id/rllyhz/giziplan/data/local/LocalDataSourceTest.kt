@@ -74,10 +74,10 @@ class LocalDataSourceTest {
         val length = 5
         val recommendationResultsEntities = createDummyRecommendationResultEntities(length)
 
-        Mockito.`when`(giziDao.getAllRecommendationResults())
+        Mockito.`when`(giziDao.getAllMeasureResults())
             .thenReturn(recommendationResultsEntities)
 
-        val data = localDataSource.getAllRecommendationResults()
+        val data = localDataSource.getAllMeasureResults()
 
         Assert.assertEquals(length, data.count())
         Assert.assertEquals(

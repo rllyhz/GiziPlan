@@ -5,7 +5,7 @@ import id.rllyhz.giziplan.utils.createDummyMenuEntity
 import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntities
 import id.rllyhz.giziplan.data.local.db.GiziDao
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
-import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
+import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
 
 class FakeGiziDao(
     private val menuCount: Int
@@ -20,10 +20,10 @@ class FakeGiziDao(
 
     override suspend fun deleteAllMenus() {}
 
-    override suspend fun getAllRecommendationResults(): List<RecommendationResultEntity> =
+    override suspend fun getAllMeasureResults(): List<MeasureResultEntity> =
         createDummyRecommendationResultEntities()
 
-    override suspend fun deleteRecommendationResultOf(resultId: Int) {}
+    override suspend fun deleteMeasureResultOf(resultId: Int) {}
 
-    override suspend fun deleteAllRecommendationResults() {}
+    override suspend fun deleteAllMeasureResults() {}
 }

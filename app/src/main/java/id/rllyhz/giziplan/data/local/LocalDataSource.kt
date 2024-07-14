@@ -1,8 +1,8 @@
 package id.rllyhz.giziplan.data.local
 
 import id.rllyhz.giziplan.data.local.db.GiziDao
+import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
 import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
-import id.rllyhz.giziplan.data.local.db.entity.RecommendationResultEntity
 
 open class LocalDataSource(
     private val giziDao: GiziDao
@@ -19,12 +19,15 @@ open class LocalDataSource(
     open suspend fun deleteAllMenus() =
         giziDao.deleteAllMenus()
 
-    open suspend fun getAllRecommendationResults(): List<RecommendationResultEntity> =
-        giziDao.getAllRecommendationResults()
+    open suspend fun getAllMeasureResults(): List<MeasureResultEntity> =
+        giziDao.getAllMeasureResults()
 
-    open suspend fun deleteRecommendationResultOf(resultId: Int) =
-        giziDao.deleteRecommendationResultOf(resultId)
+    open suspend fun insertNewMeasureResult(measureResult: MeasureResultEntity) =
+        giziDao.insertNewMeasureResult(measureResult)
 
-    open suspend fun deleteAllRecommendationResults() =
-        giziDao.deleteAllRecommendationResults()
+    open suspend fun deleteMeasureResultOf(resultId: Int) =
+        giziDao.deleteMeasureResultOf(resultId)
+
+    open suspend fun deleteAllMeasureResults() =
+        giziDao.deleteAllMeasureResults()
 }

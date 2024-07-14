@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import id.rllyhz.giziplan.GiziPlanApplication
 import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.databinding.ActivityResultBinding
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import id.rllyhz.giziplan.domain.model.classification.NormalHeight
 import id.rllyhz.giziplan.domain.model.classification.NormalWeight
@@ -31,30 +32,29 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ResultActivity : AppCompatActivity() {
-    companion object {
-        const val intentDataWeight = "intentDataWeight"
-        const val intentDataHeight = "intentDataHeight"
-        const val intentDataAge = "intentDataAge"
-        const val intentDataGender = "intentDataGender"
-    }
-
     private lateinit var binding: ActivityResultBinding
     private lateinit var viewModel: ResultViewModel
 
     private lateinit var menuAdapter: MenuListAdapter
+
+    private var age: Int = 0
+    private var gender: Int = 0
+    private var height: Double = 0.0
+    private var weight: Double = 0.0
+    private var firstTimeGettingRecommendation: Boolean = true
+    private var comingFromMeasureResults: Boolean = false
+    private var measureResult: MeasureResultModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val appModule = (applicationContext as GiziPlanApplication).appModule!!
+        val appModule = (applicationContext as GiziPlanApplication).appModule ?: return
 
         viewModel = ViewModelProvider(
-            this,
-            ResultViewModel.Factory(
-                appModule.getMainRepository(),
-                appModule.getAnthropometryRepository()
+            this, ResultViewModel.Factory(
+                appModule.getMainRepository(), appModule.getAnthropometryRepository()
             )
         )[ResultViewModel::class.java]
 
@@ -82,22 +82,33 @@ class ResultActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // retrieve intent data
+        comingFromMeasureResults = intent.getBooleanExtra(
+            intentDataIsFromMeasureResultsKey, false
+        )
+        if (comingFromMeasureResults) {
+            measureResult = intent.getParcelableExtra(intentDataMeasureResultKey)!!
+            age = measureResult!!.age
+            gender = measureResult!!.gender
+            weight = measureResult!!.weight
+            height = measureResult!!.height
+        } else {
+            age = intent.getIntExtra(intentDataAgeKey, 0)
+            gender = intent.getIntExtra(intentDataGenderKey, 0)
+            weight = intent.getDoubleExtra(intentDataWeightKey, 0.0)
+            height = intent.getDoubleExtra(intentDataHeightKey, 0.0)
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
-        val weight = intent.getDoubleExtra(intentDataWeight, 0.0)
-        val height = intent.getDoubleExtra(intentDataHeight, 0.0)
-        val age = intent.getIntExtra(intentDataAge, 0)
-        val gender = intent.getIntExtra(intentDataGender, 0)
-
-        viewModel.getRecommendationOf(
-            weight,
-            height,
-            age,
-            if (gender == 0) Gender.Male else Gender.Female
-        )
+        if (viewModel.firstTimeGettingRecommendation) {
+            viewModel.getRecommendationOf(
+                weight, height, age, if (gender == 0) Gender.Male else Gender.Female
+            )
+        }
     }
 
     private fun showResult() {
@@ -136,5 +147,14 @@ class ResultActivity : AppCompatActivity() {
 
             menuAdapter.submitList(viewModel.recommendationMenu)
         }
+    }
+
+    companion object {
+        const val intentDataWeightKey = "intentDataWeightKey"
+        const val intentDataHeightKey = "intentDataHeightKey"
+        const val intentDataAgeKey = "intentDataAgeKey"
+        const val intentDataGenderKey = "intentDataGenderKey"
+        const val intentDataMeasureResultKey = "intentDataMeasureResultKey"
+        const val intentDataIsFromMeasureResultsKey = "intentDataIsFromMeasureResultsKey"
     }
 }
