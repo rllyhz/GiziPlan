@@ -65,3 +65,23 @@ private fun parseMonth(month: String) =
         "12" -> "Desember"
         else -> "Jan"
     }
+
+fun getDummyDateString(total: Int): List<Long> {
+    val currentEpochTime = System.currentTimeMillis()
+    val millisecondsInDay = 86400000 // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
+    val daysAgo = 65L
+
+    val millisecondsAgo = currentEpochTime - (daysAgo * millisecondsInDay)
+
+    val intervalEpoch = 60000 // 1 min
+
+    val results = ArrayList<Long>()
+    var tempEpoch = millisecondsAgo
+
+    for (i in 0..<total) {
+        results.add(tempEpoch)
+        tempEpoch += intervalEpoch
+    }
+
+    return results
+}

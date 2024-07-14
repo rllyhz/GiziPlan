@@ -1,6 +1,7 @@
 package id.rllyhz.giziplan.utils
 
 import id.rllyhz.giziplan.domain.model.AgeCategory
+import id.rllyhz.giziplan.domain.model.MeasureResultModel
 import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.classification.ClassificationData
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
@@ -95,4 +96,25 @@ fun String.concatIfSeparatedBy(delimiters: String): String {
     }
 
     return result.toString().trim()
+}
+
+fun getDummyMeasureResult(): List<MeasureResultModel> {
+    val dateString = getDummyDateString(3)
+    val height = arrayOf(62.0, 62.0, 56.0, 72.0, 120.0)
+    val weight = arrayOf(8.2, 8.2, 5.2, 5.2, 8.2, 14.2)
+    val age = arrayOf(6, 6, 7, 10, 32)
+    val gender = arrayOf(0, 1, 0, 1, 0)
+
+    val results = ArrayList<MeasureResultModel>()
+    dateString.forEachIndexed { index, epoch ->
+        results.add(
+            MeasureResultModel(
+                age[index], gender[index], height[index], weight[index], "baik",
+                0.0, 0.0, 0.0,
+                epoch
+            )
+        )
+    }
+
+    return results
 }
