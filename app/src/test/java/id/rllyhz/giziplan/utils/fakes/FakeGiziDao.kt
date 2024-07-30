@@ -1,15 +1,19 @@
 package id.rllyhz.giziplan.utils.fakes
 
+import id.rllyhz.giziplan.data.local.db.GiziDao
+import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
+import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.utils.createDummyMenuEntities
 import id.rllyhz.giziplan.utils.createDummyMenuEntity
 import id.rllyhz.giziplan.utils.createDummyRecommendationResultEntities
-import id.rllyhz.giziplan.data.local.db.GiziDao
-import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
-import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
 
 class FakeGiziDao(
     private val menuCount: Int
 ) : GiziDao {
+    override suspend fun insertNewMeasureResult(measureResult: MeasureResultEntity) {
+        // inserting new measure result
+    }
+
     override suspend fun getAllMenus(): List<MenuEntity> =
         createDummyMenuEntities(menuCount)
 

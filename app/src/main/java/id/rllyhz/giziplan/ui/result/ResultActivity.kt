@@ -114,11 +114,11 @@ class ResultActivity : AppCompatActivity() {
 
             resultStatusBbuValue.text =
                 when (viewModel.weightToAgeClassificationData.classificationResult.getClassificationId()) {
-                    SeverelyUnderweight.getClassificationId() -> "Berat Badan\nSangat Kurang"
-                    Underweight.getClassificationId() -> "Berat Badan\nKurang"
-                    NormalWeight.getClassificationId() -> "Normal"
-                    RiskOfOverweight.getClassificationId() -> "Berat Badan Lebih"
-                    else -> "Normal"
+                    SeverelyUnderweight.getClassificationId() -> "Berat Badan\nNormal"
+                    Underweight.getClassificationId() -> "Berat Badan\nNormal"
+                    NormalWeight.getClassificationId() -> "Berat Badan\nNormal"
+                    RiskOfOverweight.getClassificationId() -> "Berat Badan\nNormal"
+                    else -> "Berat Badan\nNormal"
                 }
 
             resultStatusPbuValue.text =

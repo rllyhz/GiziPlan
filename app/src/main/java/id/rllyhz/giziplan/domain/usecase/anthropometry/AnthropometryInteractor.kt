@@ -60,7 +60,7 @@ class AnthropometryInteractor(
         val plus1SD = foundPopulationRow.plus1SD
 
         val sdp = when {
-            measuredWeight > median.toDouble() -> {
+            measuredWeight >= median.toDouble() -> {
                 plus1SD.toBigDecimal() - median.toBigDecimal()
             }
 
@@ -109,7 +109,7 @@ class AnthropometryInteractor(
         val plus1SD = foundPopulationRow.plus1SD
 
         val sdp = when {
-            measuredHeight > median.toDouble() -> {
+            measuredHeight >= median.toDouble() -> {
                 plus1SD.toBigDecimal() - median.toBigDecimal()
             }
 
@@ -160,7 +160,7 @@ class AnthropometryInteractor(
         val plus1SD = foundPopulationRow.plus1SD
 
         val sdp = when {
-            measuredWeight > median.toDouble() -> {
+            measuredWeight >= median.toDouble() -> {
                 plus1SD.toBigDecimal() - median.toBigDecimal()
             }
 

@@ -2,13 +2,14 @@ package id.rllyhz.giziplan.utils
 
 import id.rllyhz.giziplan.data.anthropometry.model.AnthropometryDataTable
 import id.rllyhz.giziplan.data.anthropometry.model.PopulationRow
+import id.rllyhz.giziplan.data.anthropometry.type.Gender
 import id.rllyhz.giziplan.data.anthropometry.type.PopulationValueType
 import id.rllyhz.giziplan.data.anthropometry.type.ReferenceValueType
-import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.data.local.db.entity.MeasureResultEntity
+import id.rllyhz.giziplan.data.local.db.entity.MenuEntity
 import id.rllyhz.giziplan.domain.model.AgeCategory
-import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.MeasureResultModel
+import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.classification.ClassificationData
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import java.util.Date
@@ -90,6 +91,7 @@ fun createDummyRecommendationResultEntity(
 ): MeasureResultEntity = MeasureResultEntity(
     id,
     randomAge(),
+    Gender.Male.ordinal,
     randomHeight(),
     randomWeight(),
     classificationData.getClassificationName(),
@@ -108,6 +110,7 @@ fun createDummyRecommendationResultEntities(
         val newRecommendationResult = MeasureResultEntity(
             i,
             randomAge(),
+            Gender.Male.ordinal,
             randomHeight(),
             randomWeight(),
             getRandomNutritionalStatusCategory().getClassificationName(),
