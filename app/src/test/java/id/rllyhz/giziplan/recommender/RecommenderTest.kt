@@ -1,11 +1,8 @@
 package id.rllyhz.giziplan.recommender
 
-import id.rllyhz.giziplan.utils.fakeMenuCsvStringContent
-import org.apache.commons.csv.CSVFormat
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.io.StringReader
 import kotlin.system.measureTimeMillis
 
 class RecommenderTest {
@@ -20,7 +17,7 @@ class RecommenderTest {
     }
 
     @Test
-    fun `successfully recommend related menu`() {
+    fun `successfully recommend n-size menu`() {
         val overview = menuList.map { it.last() }
         val expectedNutritionStatus = "buruk"
         val expectedAge = 12
@@ -31,11 +28,33 @@ class RecommenderTest {
         val relatedMenuList = menuList.filterIndexed { idx, _ -> relatedIndexes.contains(idx) }
 
         Assert.assertEquals(topN, relatedMenuList.size)
+    }
 
-//        relatedMenuList.forEach {
-//            val nutritionStatus = it[2].lowercase()
-//            Assert.assertTrue(nutritionStatus.contains(expectedNutritionStatus))
-//        }
+    @Test
+    fun `successfully recommend related menu`() {
+        val overview = menuList.map { it.last() }
+        val expectedNutritionStatus = "normal"
+        val age = 9
+        val expectedAgeCategory = Recommender.parseAge(age)
+        val topN = 3
+
+        val relatedIndexes =
+            Recommender.getRecommendation(expectedNutritionStatus, age, overview, topN)
+        val relatedMenuList = menuList.filterIndexed { idx, _ -> relatedIndexes.contains(idx) }
+
+        relatedMenuList.forEach { menu ->
+            val statusCategory = menu[2]
+            val ageCategory = menu[1]
+
+            Assert.assertEquals(
+                statusCategory.lowercase(),
+                expectedNutritionStatus.lowercase()
+            )
+            Assert.assertEquals(
+                ageCategory.lowercase(),
+                expectedAgeCategory.lowercase()
+            )
+        }
     }
 
     @Test
@@ -155,49 +174,5 @@ class RecommenderTest {
     private fun recallScore(truePositives: Int, falseNegatives: Int): Double {
         if (truePositives + falseNegatives == 0) return 0.0
         return truePositives.toDouble() / (truePositives + falseNegatives)
-    }
-
-    private fun getMenu(): List<List<String>> {
-        val data = arrayListOf<List<String>>()
-        val parser = CSVFormat.DEFAULT.parse(StringReader(fakeMenuCsvStringContent))
-
-        parser.forEachIndexed { index, row ->
-            if (index <= 0) return@forEachIndexed
-
-            val temp = arrayListOf<String>()
-
-            val name = row[0].trim()
-            temp.add(name)
-
-            val age = row[1].trim().lowercase()
-            temp.add(age)
-
-            val nutritionalStatus = row[2].trim()
-            temp.add(nutritionalStatus)
-
-            val ingredients = row[3].trim().trim { it == ';' }
-            temp.add(ingredients)
-
-            val instructions = row[4].trim().trim { it == ';' }
-            temp.add(instructions)
-
-            val nutritionInfo = row[5].trim().trim { it == ';' }
-            temp.add(nutritionInfo)
-
-            val notes = row[6].trim().trim { it == ';' }
-            temp.add(notes)
-
-            var status = nutritionalStatus
-            if (nutritionalStatus.contains(",")) {
-                status = nutritionalStatus.split(",").joinToString(" dan ")
-            }
-
-            val overview = "status gizi ${status.lowercase()} untuk umur ${age.lowercase()}"
-            temp.add(overview)
-
-            data.add(temp)
-        }
-
-        return data
     }
 }

@@ -243,7 +243,6 @@ class AnthropometryInteractor(
                 // Berisiko gizi lebih
                 return ZScoreClassificationData(zScoreData, PossibleRiskOfOverweight)
             } else if (actualZScoreValue > 2.0 && actualZScoreValue <= 3.0) {
-                println("Gizi lebih")
                 // Gizi lebih
                 return ZScoreClassificationData(zScoreData, Overweight)
             } else if (actualZScoreValue > 3.0) {

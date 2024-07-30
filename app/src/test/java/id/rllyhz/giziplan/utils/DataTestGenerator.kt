@@ -1048,6 +1048,29 @@ val fakeMenuCsvStringContent = """
     Mie Goreng Telur Puyuh,24-59 Bulan,Lebih,"2,9; Bahan, Bahan Halus; 300 gram mie telur, rebus hingga lunak; 10 butir telur puyuh rebus;  50 gram udang kupas; 1 batang caisim, iris; 1 1/2 sdm wortel potong kecil; 3 sdm kecap manis; 1 1/2 sdm kecap asin; 15 ml minyak jagung untuk menumis; saus tiram, garam, merica secukupnya;  3 siung bawang putih; 2 buah bawang merah;","tumis bumbu halus hingga harum, lalu masukkan udang, caisim, dan wortel; masukkan garam dan merica, jika terlalu kering boleh ditambahkan air; masukkan mie, dan tambahkan kecap asin, kecap manis, dan saus tiram; aduk hingga tercampur rata; sajikan dengan telur puyuh rebus;","Energi;240 kkal;Karbo;25,4 gr;Protein;12,2 gr;Lemak;10,1 gr;",satu resep menghasilkan 3 porsi; berikan secara bertahap dan sesuaikan dengan kebutuhan hariannya; untuk memenuhi kebutuhan dalam sehari perlu ditambahkan 1-2 kali selingan;,mie_goreng_telur_puyuh.png,menu_mie_goreng_telur_puyuh.png
 """.trimIndent()
 
+val validationDataTest = """
+    Nama Balita,Umur (Bulan),Jenis Kelamin,Tinggi Badan (cm),Berat Badan (Kg),Status Gizi BB/TB,Total Menu Rekomendasi
+    Balita 1,8,Laki-laki,56.2,3.2,Gizi Buruk,3
+    Balita 2,7,Laki-laki,55.5,4.75,Gizi Normal,4
+    Balita 3,6,Laki-laki,52.5,3.87,Gizi Normal,4
+    Balita 4,12,Laki-laki,56.4,5.11,Gizi Normal,3
+    Balita 5,20,Perempuan,74.0,7.2,Gizi Kurang,2
+    Balita 6,13,Perempuan,57.1,3.86,Gizi Kurang,2
+    Balita 7,12,Laki-laki,55.5,4.72,Gizi Normal,3
+    Balita 8,8,Perempuan,52.0,4.58,Gizi Lebih,4
+    Balita 9,7,Perempuan,50.5,4.23,Gizi Lebih,4
+    Balita 10,18,Perempuan,70.0,8.2,Gizi Normal,3
+    Balita 11,11,Laki-laki,57.0,5.18,Gizi Normal,4
+    Balita 12,10,Perempuan,55.0,4.51,Gizi Normal,4
+    Balita 13,15,Laki-laki,62.1,6.56,Gizi Normal,3
+    Balita 14,26,Laki-laki,84.0,11.25,Gizi Normal,3
+    Balita 15,20,Laki-laki,73.0,9.14,Gizi Normal,3
+    Balita 16,21,Perempuan,73.0,6.12,Gizi Buruk,3
+    Balita 17,35,Laki-laki,92.0,9.3,Gizi Buruk,3
+    Balita 18,16,Perempuan,69.0,5.83,Gizi Buruk,3
+    Balita 19,32,Laki-laki,92.4,13.34,Gizi Normal,3
+    Balita 20,29,Laki-laki,83.0,11.06,Gizi Normal,3
+""".trimIndent()
 
 // Fake menus
 val fakeMenuList = arrayListOf<MenuModel>().apply {
