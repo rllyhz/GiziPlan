@@ -296,4 +296,19 @@ class AnthropometryInteractorForClassifyWeightToHeightTest {
                 resultNotObese2.classificationResult.getClassificationName()
             )
         }
+
+    /* ========================================
+     * PossibleRiskOfOverweight Classification test cases
+     * ----------------------------------------
+     */
+    @Test
+    fun `verify zScore classification for Gizi Buruk test cases`() =
+        runTest(UnconfinedTestDispatcher()) {
+            val zScoreData = ZScoreData(-3.0, ZScoreCategory.WeightToHeight)
+            val result = interactor.classifyZScore(zScoreData)
+            Assert.assertEquals(
+                result.classificationResult.getClassificationName(),
+                SeverelyWasted.getClassificationName()
+            )
+        }
 }

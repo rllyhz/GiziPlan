@@ -60,12 +60,12 @@ class ResultViewModel(
             val weightToHeightResult =
                 interactor.measureZScoreForWeightToHeight(weight, height, age < 24, gender)
 
-            // classify anthropometry
+            // classify anthropometry z-score value
             weightToAgeClassificationData = interactor.classifyZScore(weightToAgeResult)
             heightToAgeClassificationData = interactor.classifyZScore(heightToAgeResult)
             weightToHeightClassificationData = interactor.classifyZScore(weightToHeightResult)
 
-            // get recommendation
+            // get menu
             val allMenus = dbRepository.getAllMenus().last().data ?: return@launch
 
             dbRepository.getAllMenus().collectLatest {
@@ -75,11 +75,11 @@ class ResultViewModel(
                 val nutritionStatus =
                     when (weightToHeightClassificationData.classificationResult.getClassificationId()) {
                         SeverelyWasted.getClassificationId() -> "buruk"
-                        Wasted.getClassificationId() -> "buruk"
+                        Wasted.getClassificationId() -> "kurang"
                         GoodNutritionalStatus.getClassificationId() -> "normal"
                         PossibleRiskOfOverweight.getClassificationId() -> "lebih"
                         Overweight.getClassificationId() -> "lebih"
-                        Obese.getClassificationId() -> "lebih"
+                        Obese.getClassificationId() -> "obesitas"
                         else -> "normal"
                     }
 
