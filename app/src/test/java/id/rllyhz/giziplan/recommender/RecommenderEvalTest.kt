@@ -153,7 +153,7 @@ class RecommenderEvalTest {
         val gender = if (first[2] == "Laki-laki") Gender.Male else Gender.Female
         val height = first[3].toDoubleOrNull() ?: 0.0
         val weight = first[4].toDoubleOrNull() ?: 0.0
-        val expectedNutritionalStatus = first[5]
+        val actualNutritionalStatus = first[5]
         val totalRecommendationMenu = first[6].toIntOrNull() ?: 0
 
         val zScoreData = interactor.measureZScoreForWeightToHeight(
@@ -174,29 +174,33 @@ class RecommenderEvalTest {
             val menuOverviews = menuList.map { it.last() }
             val nTop = 3
 
-            val first = dataTest[0]
+            val first = dataTest[3]
             val age = first[1].toIntOrNull() ?: 0
             val gender = if (first[2] == "Laki-laki") Gender.Male else Gender.Female
             val height = first[3].toDoubleOrNull() ?: 0.0
             val weight = first[4].toDoubleOrNull() ?: 0.0
-            val expectedNutritionalStatus = first[5]
+            val actualNutritionalStatus = first[5]
             val totalRecommendationMenu = first[6].toIntOrNull() ?: 0
 
             val zScoreData = interactor.measureZScoreForWeightToHeight(
                 weight, height, age < 24, gender
             )
             val classificationData = interactor.classifyZScore(zScoreData)
+            val nutritionalStatusResult = Recommender.parseClassificationId(
+                classificationData.classificationResult.getClassificationId()
+            )
 
             // get recommendation result
             val recommendedIndexes = Recommender.getRecommendation(
-                expectedNutritionalStatus, age, menuOverviews, nTop
+                nutritionalStatusResult, age, menuOverviews, nTop
             )
-            val recommendedMenu =
-                menuList.filterIndexed { menuIndex, _ -> recommendedIndexes.contains(menuIndex) }
+            val recommendedMenu = menuList.filterIndexed { idx, _ ->
+                recommendedIndexes.contains(idx)
+            }
 
             recommendedMenu.forEach {
                 Assert.assertEquals(
-                    expectedNutritionalStatus.lowercase(),
+                    nutritionalStatusResult.lowercase(),
                     it[2].lowercase()
                 )
             }
@@ -229,37 +233,77 @@ class RecommenderEvalTest {
                     weight, height, age < 24, gender
                 )
                 val classificationData = interactor.classifyZScore(zScoreData)
+                val nutritionalStatusResult = Recommender.parseClassificationId(
+                    classificationData.classificationResult.getClassificationId()
+                )
 
                 // get recommendation result
                 val recommendedIndexes = Recommender.getRecommendation(
-                    actualNutritionalStatus, age, menuOverviews, nTop
+                    nutritionalStatusResult, age, menuOverviews, nTop
                 )
-                val recommendedMenu =
-                    menuList.filterIndexed { menuIndex, _ -> recommendedIndexes.contains(menuIndex) }
+                val recommendedMenu = menuList.filterIndexed { idx, _ ->
+                    recommendedIndexes.contains(idx)
+                }
+
                 actualTotalMenuFound += recommendedMenu.size
 
                 Assert.assertEquals(nTop, recommendedMenu.size)
 
                 // menu[2] => nutritional status on each menu
+                // menu[1] => age on each menu
                 val foundTP =
-                    recommendedMenu.count { menu -> menu[2].lowercase() == actualNutritionalStatus }
+                    recommendedMenu.count { menu ->
+                        menu[2].lowercase() == actualNutritionalStatus &&
+                                menu[1].lowercase() == Recommender.parseAge(age)
+                    }
+
                 val foundFP =
-                    recommendedMenu.count { menu -> menu[2].lowercase() != actualNutritionalStatus }
-                val foundFN = if (actualTotalRecommendationMenu >= foundTP) {
+                    recommendedMenu.count { menu ->
+                        menu[2].lowercase() != actualNutritionalStatus ||
+                                menu[1].lowercase() != Recommender.parseAge(age)
+                    }
+
+                val foundFN = if (actualTotalRecommendationMenu > nTop) {
+                    0
+                } else if (actualTotalRecommendationMenu > foundTP) {
                     actualTotalRecommendationMenu - foundTP
                 } else 0
 
+                // accumulate all found TP, FP, and FN
                 tp += foundTP
                 fp += foundFP
                 fn += foundFN
             }
 
             println("\n\n")
+            println("Total menu found: $actualTotalMenuFound")
             println("TP: $tp")
             println("FP: $fp")
             println("FN: $fn")
-            println("Expected total menu found: $expectedTotalMenuFound")
-            println("Actual total menu found: $actualTotalMenuFound")
-            println("\n\n")
+
+            val precision = precisionScore(tp, fp)
+            val recall = recallScore(tp, fn)
+            val f1Score = f1Score(precision, recall)
+
+            println("\nPrecision: $precision")
+            println("Recall: $recall")
+            println("F1-Score: $f1Score")
+            println("\n")
         }
+
+    // Measure precision score
+    private fun precisionScore(truePositives: Int, falsePositives: Int): Double {
+        if (truePositives + falsePositives == 0) return 0.0
+        return truePositives.toDouble() / (truePositives + falsePositives)
+    }
+
+    // Measure recall score
+    private fun recallScore(truePositives: Int, falseNegatives: Int): Double {
+        if (truePositives + falseNegatives == 0) return 0.0
+        return truePositives.toDouble() / (truePositives + falseNegatives)
+    }
+
+    // Measure f1-score
+    private fun f1Score(precision: Double, recall: Double): Double =
+        2 * (precision * recall) / (precision + recall)
 }

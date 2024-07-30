@@ -139,7 +139,7 @@ class AnthropometryInteractor(
         var foundIndexPopulation = 0
 
         for (i in dataTable.indices) {
-            // find the same age
+            // find the same height
             if (dataTable[i].referenceValue.toDouble() == height.roundToNearestHalf()) {
                 isOutOfRangePopulation = false
                 foundIndexPopulation = i
@@ -179,7 +179,6 @@ class AnthropometryInteractor(
         )
     }
 
-    // TODO Fix classifyZScore
     override suspend fun classifyZScore(zScoreData: ZScoreData): ZScoreClassificationData {
         val actualZScoreCat = zScoreData.zScoreCategory
         val actualZScoreValue = zScoreData.zScore

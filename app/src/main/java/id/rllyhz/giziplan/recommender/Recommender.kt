@@ -1,5 +1,11 @@
 package id.rllyhz.giziplan.recommender
 
+import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
+import id.rllyhz.giziplan.domain.model.classification.Obese
+import id.rllyhz.giziplan.domain.model.classification.Overweight
+import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
+import id.rllyhz.giziplan.domain.model.classification.SeverelyWasted
+import id.rllyhz.giziplan.domain.model.classification.Wasted
 import kotlin.math.log
 import kotlin.math.sqrt
 
@@ -83,7 +89,7 @@ object Recommender {
         nutritionStatus: String, ageInMonths: Int, overview: List<String>, n: Int = 3
     ): List<Int> {
         val query =
-            "status gizi " + parseNutritionStatus(nutritionStatus) + " untuk " + parseAge(
+            "status gizi " + nutritionStatus.lowercase() + " untuk " + parseAge(
                 ageInMonths
             )
 
@@ -105,10 +111,16 @@ object Recommender {
         return scoredByDocumentIndex.map { it.first }.take(n)
     }
 
-    private fun parseNutritionStatus(status: String): String = when (status.lowercase()) {
-        "obesitas" -> "lebih dan obesitas"
-        else -> status
-    }
+    fun parseClassificationId(classificationId: Int): String =
+        when (classificationId) {
+            SeverelyWasted.getClassificationId() -> "buruk"
+            Wasted.getClassificationId() -> "kurang"
+            GoodNutritionalStatus.getClassificationId() -> "normal"
+            PossibleRiskOfOverweight.getClassificationId() -> "lebih"
+            Overweight.getClassificationId() -> "lebih"
+            Obese.getClassificationId() -> "obesitas"
+            else -> "normal"
+        }
 
     fun parseAge(age: Int): String = when {
         age <= 8 -> "6-8 bulan"

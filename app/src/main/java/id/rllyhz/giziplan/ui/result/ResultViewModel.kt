@@ -9,11 +9,6 @@ import id.rllyhz.giziplan.domain.model.MenuModel
 import id.rllyhz.giziplan.domain.model.classification.GoodNutritionalStatus
 import id.rllyhz.giziplan.domain.model.classification.NormalHeight
 import id.rllyhz.giziplan.domain.model.classification.NormalWeight
-import id.rllyhz.giziplan.domain.model.classification.Obese
-import id.rllyhz.giziplan.domain.model.classification.Overweight
-import id.rllyhz.giziplan.domain.model.classification.PossibleRiskOfOverweight
-import id.rllyhz.giziplan.domain.model.classification.SeverelyWasted
-import id.rllyhz.giziplan.domain.model.classification.Wasted
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreCategory
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreClassificationData
 import id.rllyhz.giziplan.domain.model.zscore.ZScoreData
@@ -65,7 +60,7 @@ class ResultViewModel(
             heightToAgeClassificationData = interactor.classifyZScore(heightToAgeResult)
             weightToHeightClassificationData = interactor.classifyZScore(weightToHeightResult)
 
-            // get menu
+            // get all menu
             val allMenus = dbRepository.getAllMenus().last().data ?: return@launch
 
             dbRepository.getAllMenus().collectLatest {
@@ -73,15 +68,10 @@ class ResultViewModel(
                 if (it.data.isNullOrEmpty()) return@collectLatest
 
                 val nutritionStatus =
-                    when (weightToHeightClassificationData.classificationResult.getClassificationId()) {
-                        SeverelyWasted.getClassificationId() -> "buruk"
-                        Wasted.getClassificationId() -> "kurang"
-                        GoodNutritionalStatus.getClassificationId() -> "normal"
-                        PossibleRiskOfOverweight.getClassificationId() -> "lebih"
-                        Overweight.getClassificationId() -> "lebih"
-                        Obese.getClassificationId() -> "obesitas"
-                        else -> "normal"
-                    }
+                    Recommender.parseClassificationId(
+                        weightToHeightClassificationData
+                            .classificationResult.getClassificationId()
+                    )
 
                 val indexes =
                     Recommender.getRecommendation(nutritionStatus, age, getMenuOverviews())
